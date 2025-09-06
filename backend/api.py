@@ -307,8 +307,29 @@ def chatbot_step(state: dict, user_input: Optional[str] = None) -> Tuple[dict, d
             if any(word in user_lower for word in ["stick", "proceed", "continue", "broad", "general", "yes", "fine", "ok", "okay"]):
                 state["topic"] = state["pending_topic"]
                 state["step"] = "difficulty"
-                response = f"Perfect! What's your experience level with {state['topic']}? (Beginner/Intermediate/Advanced)"
-            
+                
+                # Generate context-aware difficulty examples for the broad topic too
+                difficulty_prompt = f"""
+                The user wants to learn "{state['pending_topic']}". Provide a brief question asking about their experience level with helpful examples specific to this topic.
+                
+                Format: "Perfect! What's your experience level with {state['pending_topic']}?
+                
+                • Beginner: [specific example for this topic]
+                • Intermediate: [specific example for this topic]  
+                • Advanced: [specific example for this topic]"
+                
+                Examples of good difficulty descriptions:
+                For "cryptography":
+                - Beginner: New to encryption concepts, unfamiliar with algorithms
+                - Intermediate: Know basic encryption methods, some programming experience
+                - Advanced: Familiar with advanced algorithms and cryptographic protocols
+                
+                Keep the entire response under 60 words.
+                """
+                
+                messages = [{"role": "user", "content": difficulty_prompt}]
+                response = ask_claude(messages, temperature=0.3, max_tokens=150).strip()
+                
             # Use Claude to determine if this is background info or a new topic choice
             else:
                 intent_prompt = f"""
@@ -332,11 +353,11 @@ def chatbot_step(state: dict, user_input: Optional[str] = None) -> Tuple[dict, d
                     state["step"] = "difficulty"
                     response = f"Got it! What's your experience level with {state['topic']}? (Beginner/Intermediate/Advanced)"
                 else:
-                    # New topic choice - use user_input, not undefined 'topic'
-                    state["topic"] = user_input.strip()  # ✅ Fixed: use user_input instead of topic
+                    # New topic choice
+                    state["topic"] = user_input.strip()
                     state["step"] = "difficulty"
                     
-                    # Generate context-aware difficulty examples
+                    # Generate context-aware difficulty examples for the new specific topic
                     difficulty_prompt = f"""
                     The user wants to learn "{user_input}". Provide a brief question asking about their experience level with helpful examples specific to this topic.
                     
@@ -346,17 +367,6 @@ def chatbot_step(state: dict, user_input: Optional[str] = None) -> Tuple[dict, d
                     • Intermediate: [specific example for this topic]  
                     • Advanced: [specific example for this topic]"
                     
-                    Examples of good difficulty descriptions:
-                    For "Python programming":
-                    - Beginner: Never coded before or just learning variables/loops
-                    - Intermediate: Can write functions and work with libraries
-                    - Advanced: Experience with frameworks and complex projects
-                    
-                    For "human geography":
-                    - Beginner: Basic understanding of world regions
-                    - Intermediate: Familiar with population and cultural patterns
-                    - Advanced: Deep knowledge of spatial analysis and theory
-                    
                     Keep the entire response under 60 words.
                     """
                     
@@ -365,12 +375,38 @@ def chatbot_step(state: dict, user_input: Optional[str] = None) -> Tuple[dict, d
             
             state.pop("pending_topic", None)
             return state, {"bot": response}
-        
-        # Difficulty/experience level  
+
+        # Difficulty/experience level with question detection
         elif current_step == "difficulty" and user_input:
-            state["difficulty"] = user_input.strip()
-            state["step"] = "duration"
-            return state, {"bot": "How much time can you dedicate? (e.g., '2 weeks', '1 hour daily for a month')"}
+            user_lower = user_input.lower()
+            
+            # Check if user is asking a question about difficulty levels
+            if any(phrase in user_lower for phrase in ["what is", "what's", "explain", "define", "help", "clarify", "don't understand"]):
+                # They're asking for clarification - provide examples
+                clarification_prompt = f"""
+                The user is asking about difficulty levels for learning "{state.get('topic', 'this subject')}". 
+                Provide clear, helpful examples of what each level means for this specific topic.
+                
+                Format: "Here's what each level means for {state.get('topic', 'this subject')}:
+                
+                • Beginner: [specific description]
+                • Intermediate: [specific description]
+                • Advanced: [specific description]
+                
+                Which level best describes you?"
+                
+                Keep response under 80 words.
+                """
+                
+                messages = [{"role": "user", "content": clarification_prompt}]
+                response = ask_claude(messages, temperature=0.3, max_tokens=200).strip()
+                return state, {"bot": response}
+            
+            # Otherwise, treat as their difficulty level
+            else:
+                state["difficulty"] = user_input.strip()
+                state["step"] = "duration"
+                return state, {"bot": "How much time can you dedicate? (e.g., '2 weeks', '1 hour daily for a month')"}
         
         # Duration and scope checking
         elif current_step == "duration" and user_input:
@@ -566,14 +602,19 @@ async def chatbot_step_api(req: ChatbotRequest):
 async def initialize_course(req: CourseRequest):
     """Initialize a full course from syllabus text"""
     try:
+        
         course_data = initialize_course_from_syllabus(req.syllabus_text, req.course_context)
+        
         return {
             "success": True,
             "course_data": course_data,
             "message": "Course initialized successfully!"
         }
     except Exception as e:
-        logger.error(f"Error initializing course: {str(e)}")
+        logger.error(f"Error in API initialize_course: {str(e)}")
+        logger.error(f"Exception type: {type(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/get_week_content")
@@ -583,6 +624,11 @@ async def get_week_content(req: WeekContentRequest):
         course_data = req.course_data
         weeks = course_data.get("weeks", [])
         
+        # Add debugging logs
+        logger.info(f"Requested week number: {req.week_number}")
+        logger.info(f"Total weeks in course data: {len(weeks)}")
+        logger.info(f"Available week numbers: {[w.get('week_number') for w in weeks]}")
+
         week_content = None
         for week in weeks:
             if week.get("week_number") == req.week_number:
@@ -682,3 +728,22 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+class LessonContentRequest(BaseModel):
+    lesson_info: dict
+    course_context: dict
+
+@app.post("/get_lesson_content")
+async def get_lesson_content(req: LessonContentRequest):
+    """Get detailed content for a specific lesson point"""
+    try:
+        generator = SyllabusGenerator()
+        lesson_content = generator.generate_lesson_content(req.lesson_info, req.course_context)
+        
+        return {
+            "success": True,
+            "lesson_content": lesson_content
+        }
+    except Exception as e:
+        logger.error(f"Error getting lesson content: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

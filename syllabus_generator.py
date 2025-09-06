@@ -55,52 +55,107 @@ class SyllabusGenerator:
         """Parse the generated syllabus into structured weeks/modules"""
         weeks = []
         
-        # Look for week patterns in the text
-        week_pattern = r'\*\*Week (\d+):[^*]+\*\*'
-        week_matches = re.finditer(week_pattern, syllabus_text, re.IGNORECASE)
+        logger.info(f"Parsing syllabus for week patterns...")
         
-        for match in week_matches:
-            week_num = int(match.group(1))
-            week_title = match.group(0).replace('**', '').strip()
-            
-            # Find the content for this week (everything until the next week or end)
-            start_pos = match.end()
-            next_match = None
-            for next_week in re.finditer(week_pattern, syllabus_text[start_pos:], re.IGNORECASE):
-                next_match = next_week
+        # Multiple patterns to catch different week formats
+        patterns = [
+            r'### Week (\d+):\s*(.+?)(?=\n|$)',  # ### Week 1: Title
+            r'## Week (\d+):\s*(.+?)(?=\n|$)',   # ## Week 1: Title  
+            r'\*\*Week (\d+):\s*(.+?)\*\*',      # **Week 1: Title**
+            r'Week (\d+):\s*(.+?)(?=\n|$)',      # Week 1: Title
+            r'(\d+)\.\s*Week (\d+):\s*(.+?)(?=\n|$)'  # 1. Week 1: Title
+        ]
+        
+        week_matches = []
+        matched_pattern = None
+        
+        for pattern in patterns:
+            matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
+            if matches:
+                week_matches = matches
+                matched_pattern = pattern
+                logger.info(f"Found {len(matches)} weeks using pattern: {pattern}")
                 break
-            
-            end_pos = start_pos + next_match.start() if next_match else len(syllabus_text)
-            week_content = syllabus_text[start_pos:end_pos].strip()
-            
-            # Extract topics from the week content
-            topics = self._extract_topics(week_content)
-            
-            weeks.append({
-                "week_number": week_num,
-                "title": week_title,
-                "content": week_content,
-                "topics": topics,
-                "completed": False
-            })
         
+        if not week_matches:
+            logger.error("No weeks found with any pattern!")
+            return []
+        
+        # Sort matches by their position in text
+        week_matches.sort(key=lambda x: x.start())
+        
+        for i, match in enumerate(week_matches):
+            try:
+                # Extract week number and title based on pattern
+                if matched_pattern == patterns[4]:  # 1. Week 1: Title pattern
+                    week_num = int(match.group(2))
+                    week_title = match.group(3).strip()
+                else:
+                    week_num = int(match.group(1))
+                    week_title = match.group(2).strip() if len(match.groups()) > 1 else f"Week {week_num}"
+                
+                # Find the content for this week
+                start_pos = match.end()
+                
+                # Find next week or end of text
+                if i + 1 < len(week_matches):
+                    end_pos = week_matches[i + 1].start()
+                else:
+                    end_pos = len(syllabus_text)
+                
+                week_content = syllabus_text[start_pos:end_pos].strip()
+                
+                # Extract topics from the week content
+                topics = self._extract_topics(week_content)
+                
+                # If no topics found, create some based on the title
+                if not topics:
+                    topics = [
+                        f"Introduction to {week_title}",
+                        "Key concepts and definitions",
+                        "Historical context",
+                        "Important events and figures"
+                    ]
+                
+                week_data = {
+                    "week_number": week_num,
+                    "title": f"Week {week_num}: {week_title}",
+                    "content": week_content,
+                    "topics": topics,
+                    "completed": False
+                }
+                
+                weeks.append(week_data)
+                logger.info(f"Created week {week_num}: Week {week_num}: {week_title}")
+                
+            except Exception as e:
+                logger.error(f"Error parsing week {i}: {str(e)}")
+                continue
+        
+        logger.info(f"Successfully parsed {len(weeks)} weeks")
         return weeks
     
     def _extract_topics(self, week_content: str) -> List[str]:
         """Extract individual topics from week content"""
-        # Look for bullet points or dashes
         lines = week_content.split('\n')
         topics = []
         
         for line in lines:
             line = line.strip()
-            if line.startswith('-') or line.startswith('•') or line.startswith('*'):
+            # Look for various bullet point styles
+            if (line.startswith('-') or line.startswith('•') or 
+                line.startswith('*') or line.startswith('+')):
                 topic = line[1:].strip()
-                if topic and len(topic) > 5:  # Filter out very short items
+                if topic and len(topic) > 3:  # Filter out very short items
                     topics.append(topic)
-        
-        return topics[:5]  # Limit to 5 main topics per week
-    
+            # Also look for numbered lists
+            elif re.match(r'^\d+\.', line):
+                topic = re.sub(r'^\d+\.\s*', '', line).strip()
+                if topic and len(topic) > 3:
+                    topics.append(topic)
+
+        return topics[:3]  # Limit to 3 main topics per week
+
     def generate_week_content(self, week_info: Dict, course_context: Dict) -> Dict:
         """Generate detailed content for a specific week"""
         prompt = f"""You are Sandwich, an expert AI tutor. Create comprehensive learning content for this week of the course.
@@ -290,29 +345,102 @@ Format as a list with clear separators. Make sure these sound like real YouTube 
         else:
             return f"{remaining_weeks} lessons remaining"
 
-# Example usage and helper functions
+# Move this function OUTSIDE the class, at the end of the file
 def initialize_course_from_syllabus(syllabus_text: str, course_context: Dict) -> Dict:
     """Initialize a complete course structure from syllabus text"""
-    generator = SyllabusGenerator()
+    logger.info("Initializing course from syllabus")
     
-    # Parse the syllabus into weeks
-    weeks = generator.parse_course_structure(syllabus_text)
-    
-    # Generate detailed content for each week
-    detailed_weeks = []
-    for week in weeks:
-        detailed_week = generator.generate_week_content(week, course_context)
-        detailed_weeks.append(detailed_week)
-    
-    # Get course navigation
-    navigation = generator.get_course_navigation(detailed_weeks, 1)  # Start at week 1
-    
-    # Get course summary
-    summary = generator.get_course_summary(detailed_weeks, course_context)
-    
-    return {
-        "weeks": detailed_weeks,
-        "navigation": navigation,
-        "summary": summary,
-        "course_context": course_context
-    }
+    try:
+        generator = SyllabusGenerator()
+        
+        # Parse the syllabus into weeks
+        weeks = generator.parse_course_structure(syllabus_text)
+        logger.info(f"Parsed {len(weeks)} weeks from syllabus")
+        
+        # If no weeks found, create fallback structure
+        if not weeks:
+            logger.warning("No weeks found, creating fallback")
+            topic = course_context.get('topic', 'the subject')
+            duration = course_context.get('duration', '4 weeks')
+            
+            # Estimate number of weeks from duration
+            num_weeks = 4  # default
+            if 'month' in duration.lower():
+                import re
+                month_match = re.search(r'(\d+)', duration)
+                if month_match:
+                    num_weeks = int(month_match.group(1)) * 4
+            
+            # Create simple fallback weeks
+            weeks = []
+            for i in range(1, min(num_weeks + 1, 9)):
+                weeks.append({
+                    "week_number": i,
+                    "title": f"Week {i}: {topic.title()} - Part {i}",
+                    "content": f"Learning content for week {i}",
+                    "topics": [f"Topic {i}.1", f"Topic {i}.2", f"Topic {i}.3"],
+                    "completed": False
+                })
+        
+        # Generate detailed content for each week
+        detailed_weeks = []
+        for week in weeks:
+            try:
+                detailed_week = generator.generate_week_content(week, course_context)
+                detailed_weeks.append(detailed_week)
+            except Exception as e:
+                logger.error(f"Error generating content for week {week.get('week_number')}: {str(e)}")
+                detailed_weeks.append(week)  # Use original if generation fails
+        
+        # Simple navigation
+        navigation = {
+            "current_week": 1,
+            "total_weeks": len(detailed_weeks),
+            "completed_weeks": 0,
+            "progress_percentage": 0,
+            "next_week": 2 if len(detailed_weeks) > 1 else None,
+            "previous_week": None
+        }
+        
+        # Simple summary
+        summary = {
+            "course_title": f"Learning {course_context.get('topic', 'Course')}",
+            "total_weeks": len(detailed_weeks),
+            "completed_weeks": 0,
+            "progress_percentage": 0
+        }
+        
+        logger.info(f"Course initialized with {len(detailed_weeks)} weeks")
+        
+        return {
+            "weeks": detailed_weeks,
+            "navigation": navigation,
+            "summary": summary,
+            "course_context": course_context
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in course initialization: {str(e)}")
+        
+        # Simple emergency fallback
+        return {
+            "weeks": [{
+                "week_number": 1,
+                "title": f"Week 1: {course_context.get('topic', 'Course')}",
+                "content": syllabus_text,
+                "topics": ["Introduction", "Basic Concepts"],
+                "completed": False
+            }],
+            "navigation": {
+                "current_week": 1,
+                "total_weeks": 1,
+                "completed_weeks": 0,
+                "progress_percentage": 0
+            },
+            "summary": {
+                "course_title": f"Learning {course_context.get('topic', 'Course')}",
+                "total_weeks": 1,
+                "completed_weeks": 0
+            },
+            "course_context": course_context
+        }

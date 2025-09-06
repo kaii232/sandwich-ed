@@ -55,35 +55,77 @@ class SyllabusGenerator:
         """Parse the generated syllabus into structured weeks/modules"""
         weeks = []
         
-        # Look for week patterns in the text
-        week_pattern = r'\*\*Week (\d+):[^*]+\*\*'
-        week_matches = re.finditer(week_pattern, syllabus_text, re.IGNORECASE)
+        # Add debugging
+        logger.info(f"Parsing syllabus text: {syllabus_text[:500]}...")
         
-        for match in week_matches:
-            week_num = int(match.group(1))
-            week_title = match.group(0).replace('**', '').strip()
-            
-            # Find the content for this week (everything until the next week or end)
-            start_pos = match.end()
-            next_match = None
-            for next_week in re.finditer(week_pattern, syllabus_text[start_pos:], re.IGNORECASE):
-                next_match = next_week
+        # Updated regex patterns to catch different formats
+        patterns = [
+            r'\*\*Week (\d+):(.*?)\*\*',  # **Week 1: Title**
+            r'\*\*Week (\d+):(.*?)$',     # **Week 1: Title (end of line)
+            r'Week (\d+):(.*?)$',         # Week 1: Title (without **)
+            r'(\d+)\.\s*Week (\d+):(.*?)$', # 1. Week 1: Title
+            r'# Week (\d+):(.*?)$',       # # Week 1: Title (markdown header)
+            r'## Week (\d+):(.*?)$'       # ## Week 1: Title (markdown header)
+        ]
+        
+        for pattern in patterns:
+            week_matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
+            if week_matches:
+                logger.info(f"Found {len(week_matches)} weeks using pattern: {pattern}")
                 break
-            
-            end_pos = start_pos + next_match.start() if next_match else len(syllabus_text)
-            week_content = syllabus_text[start_pos:end_pos].strip()
-            
-            # Extract topics from the week content
-            topics = self._extract_topics(week_content)
-            
-            weeks.append({
-                "week_number": week_num,
-                "title": week_title,
-                "content": week_content,
-                "topics": topics,
-                "completed": False
-            })
+        else:
+            logger.warning("No weeks found with any pattern. Trying broader search...")
+            # Fallback: look for any mention of weeks
+            week_matches = list(re.finditer(r'week\s+(\d+)', syllabus_text, re.IGNORECASE))
+            logger.info(f"Fallback found {len(week_matches)} week mentions")
         
+        if not week_matches:
+            logger.error("No weeks found in syllabus text!")
+            return []
+        
+        for i, match in enumerate(week_matches):
+            try:
+                if len(match.groups()) >= 2:
+                    week_num = int(match.group(1))
+                    week_title = f"Week {week_num}: {match.group(2).strip()}"
+                else:
+                    week_num = int(match.group(1))
+                    week_title = f"Week {week_num}"
+                
+                # Find the content for this week
+                start_pos = match.end()
+                
+                # Find next week or end of text
+                if i + 1 < len(week_matches):
+                    end_pos = week_matches[i + 1].start()
+                else:
+                    end_pos = len(syllabus_text)
+                
+                week_content = syllabus_text[start_pos:end_pos].strip()
+                
+                # Extract topics from the week content
+                topics = self._extract_topics(week_content)
+                
+                # If no topics found, create generic ones
+                if not topics:
+                    topics = [f"Introduction to {week_title}", f"Core concepts", f"Practice exercises"]
+                
+                week_data = {
+                    "week_number": week_num,
+                    "title": week_title,
+                    "content": week_content,
+                    "topics": topics,
+                    "completed": False
+                }
+                
+                weeks.append(week_data)
+                logger.info(f"Created week {week_num}: {week_title}")
+                
+            except Exception as e:
+                logger.error(f"Error parsing week {i}: {str(e)}")
+                continue
+        
+        logger.info(f"Successfully parsed {len(weeks)} weeks")
         return weeks
     
     def _extract_topics(self, week_content: str) -> List[str]:
@@ -102,124 +144,251 @@ class SyllabusGenerator:
         return topics[:5]  # Limit to 5 main topics per week
     
     def generate_week_content(self, week_info: Dict, course_context: Dict) -> Dict:
-        """Generate detailed content for a specific week"""
-        prompt = f"""You are Sandwich, an expert AI tutor. Create comprehensive learning content for this week of the course.
-
-**Course Context:**
-- Topic: {course_context.get('topic', '')}
-- Difficulty: {course_context.get('difficulty', '')}
-- Learning Style: {course_context.get('learner_type', '')}
-
-**Week Details:**
-- {week_info['title']}
-- Topics to cover: {', '.join(week_info['topics'])}
-
-Create detailed learning content including:
-
-1. **📋 Week Overview** (2-3 sentences about what students will learn)
-
-2. **🎯 Learning Objectives** (3-4 specific, measurable goals)
-
-3. **📚 Lesson Content** for each main topic:
-   - Clear explanations with examples
-   - Key concepts and definitions
-   - Real-world applications
-   - Common misconceptions to avoid
-
-4. **🛠️ Hands-on Activities** (2-3 practical exercises)
-
-5. **🔍 Additional Resources** (suggest types of materials to look for)
-
-6. **✅ Week Completion Checklist** (what students should be able to do)
-
-Make the content engaging, practical, and appropriate for their difficulty level. Use clear formatting with headers and bullet points."""
-
-        messages = [{"role": "user", "content": prompt}]
-        content = self._ask_claude(messages, temperature=0.6, max_tokens=1500)
+        """Generate detailed content for a specific week with expandable lessons"""
         
-        # Generate YouTube video suggestions
-        videos = self._suggest_youtube_videos(week_info, course_context)
+        # Generate week overview and objectives first
+        overview_prompt = f"""You are Sandwich, an expert AI tutor. Create a week overview and learning objectives for this course week.
+
+    **Course Context:**
+    - Topic: {course_context.get('topic', '')}
+    - Difficulty: {course_context.get('difficulty', '')}
+    - Learning Style: {course_context.get('learner_type', '')}
+
+    **Week Details:**
+    - {week_info['title']}
+    - Topics to cover: {', '.join(week_info['topics'])}
+
+    Create ONLY:
+
+    1. **📋 Week Overview** (2-3 sentences about what students will learn this week)
+
+    2. **🎯 Learning Objectives** (3-4 specific, measurable goals students will achieve)
+
+    Keep it concise and engaging. This will be the first thing students see."""
+
+        messages = [{"role": "user", "content": overview_prompt}]
+        overview_content = self._ask_claude(messages, temperature=0.6, max_tokens=400)
+        
+        # Generate expandable lesson content structure
+        lesson_content = self._generate_expandable_lessons(week_info, course_context)
+        
+        # Generate activities and resources
+        activities_prompt = f"""You are Sandwich, an expert AI tutor. Create hands-on activities and resources for this week.
+
+    **Course Context:**
+    - Topic: {course_context.get('topic', '')}
+    - Week: {week_info['title']}
+
+    Create:
+
+    1. **🛠️ Hands-on Activities** (2-3 practical, engaging exercises)
+
+    2. **🔍 Additional Resources** (suggest specific types of materials to explore)
+
+    3. **✅ Week Completion Checklist** (what students should be able to do by week end)
+
+    Make activities appropriate for {course_context.get('difficulty', 'beginner')} level."""
+
+        messages = [{"role": "user", "content": activities_prompt}]
+        activities_content = self._ask_claude(messages, temperature=0.6, max_tokens=600)
         
         return {
             "week_number": week_info['week_number'],
             "title": week_info['title'],
-            "content": content,
-            "videos": videos,
+            "overview": overview_content,
+            "lesson_content": lesson_content,
+            "activities": activities_content,
             "completed": False,
-            "progress": 0
+            "progress": 0,
+            "structure": {
+                "sections": [
+                    {"id": "overview", "title": "Week Overview & Objectives", "type": "overview"},
+                    *[{"id": f"lesson_{i+1}", "title": lesson["title"], "type": "lesson", "expandable": True} 
+                    for i, lesson in enumerate(lesson_content)],
+                    {"id": "activities", "title": "Activities & Resources", "type": "activities"}
+                ]
+            }
         }
-    
-    def _suggest_youtube_videos(self, week_info: Dict, course_context: Dict) -> List[Dict]:
-        """Suggest relevant YouTube videos for the week"""
-        # Generate search queries for the main topics
-        topic = course_context.get('topic', '')
-        difficulty = course_context.get('difficulty', 'beginner')
+
+    def _generate_expandable_lessons(self, week_info: Dict, course_context: Dict) -> List[Dict]:
+        """Generate expandable lesson structure"""
+        lessons = []
         
-        videos = []
+        # Create 3-4 main lesson points from the topics
+        lesson_topics = week_info['topics'][:4]  # Max 4 lessons per week
         
-        # Create search terms for each topic in the week
-        for i, subtopic in enumerate(week_info['topics'][:3]):  # Limit to 3 videos per week
-            # Create search query
-            search_terms = [topic, subtopic]
+        for i, topic in enumerate(lesson_topics):
+            lesson = {
+                "id": f"lesson_{i+1}",
+                "title": topic,
+                "summary": f"Learn about {topic.lower()}",
+                "expandable": True,
+                "loaded": False,  # Content loaded on demand
+                "lesson_info": {
+                    "title": topic,
+                    "week_title": week_info['title'],
+                    "lesson_number": i+1
+                }
+            }
+            lessons.append(lesson)
+        
+        return lessons
+
+    def generate_lesson_content(self, lesson_info: Dict, course_context: Dict) -> Dict:
+        """Generate detailed content for a specific lesson point"""
+        
+        content_prompt = f"""You are Sandwich, an expert AI tutor in {course_context.get('topic', 'this subject')}. 
+
+Generate comprehensive content for this specific lesson point:
+
+**Lesson Point:** {lesson_info.get('title', '')}
+
+**Context:**
+- Course: {course_context.get('topic', '')}
+- Difficulty: {course_context.get('difficulty', 'beginner')}
+- Week: {lesson_info.get('week_title', '')}
+
+Create detailed content including:
+
+1. **Detailed Explanation** (3-4 paragraphs explaining the concept clearly)
+2. **Key Points** (4-5 bullet points of essential information)  
+3. **Real-World Examples** (2-3 practical examples)
+4. **Common Mistakes** (2-3 things students often get wrong)
+5. **Quick Tips** (2-3 helpful tips for understanding/remembering)
+
+Make it engaging and appropriate for {course_context.get('difficulty', 'beginner')} level students."""
+
+        messages = [{"role": "user", "content": content_prompt}]
+        detailed_content = self._ask_claude(messages, temperature=0.6, max_tokens=1000)
+        
+        return {
+            "title": lesson_info.get('title', ''),
+            "content": detailed_content,
+            "videos": self._get_youtube_videos(lesson_info.get('title', ''), course_context),
+            "duration_estimate": "15-20 minutes",
+            "difficulty": course_context.get('difficulty', 'beginner')
+        }
+
+    def _get_youtube_videos(self, lesson_title: str, course_context: Dict, max_videos: int = 2) -> List[Dict]:
+        """Get YouTube videos using API or AI suggestions"""
+        
+        if self.youtube_api_key:
+            return self._search_youtube_api(lesson_title, course_context, max_videos)
+        else:
+            return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
+
+    def _search_youtube_api(self, lesson_title: str, course_context: Dict, max_videos: int) -> List[Dict]:
+        """Search YouTube using the actual YouTube Data API"""
+        try:
+            # Build search query
+            topic = course_context.get('topic', '')
+            difficulty = course_context.get('difficulty', '')
+            
+            search_terms = [topic, lesson_title]
             if 'beginner' in difficulty.lower():
-                search_terms.append('tutorial')
+                search_terms.append('tutorial basics')
             elif 'advanced' in difficulty.lower():
                 search_terms.append('advanced')
-            
+                
             query = ' '.join(search_terms)
             
-            # Generate likely video suggestions (you can enhance this with actual YouTube API)
-            video_suggestions = self._generate_video_suggestions(query, subtopic)
-            videos.extend(video_suggestions)
+            # YouTube API request
+            url = "https://www.googleapis.com/youtube/v3/search"
+            params = {
+                'part': 'snippet',
+                'q': query,
+                'type': 'video',
+                'maxResults': max_videos,
+                'order': 'relevance',
+                'videoDuration': 'medium',  # 4-20 minutes
+                'key': self.youtube_api_key
+            }
+            
+            response = requests.get(url, params=params)
+            data = response.json()
+            
+            videos = []
+            if 'items' in data:
+                for item in data['items']:
+                    videos.append({
+                        'title': item['snippet']['title'],
+                        'channel': item['snippet']['channelTitle'],
+                        'description': item['snippet']['description'][:150] + '...',
+                        'url': f"https://www.youtube.com/watch?v={item['id']['videoId']}",
+                        'thumbnail': item['snippet']['thumbnails']['medium']['url'],
+                        'published': item['snippet']['publishedAt'][:10]
+                    })
+            
+            return videos
+            
+        except Exception as e:
+            logger.error(f"YouTube API error: {str(e)}")
+            return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
+
+    def _generate_video_suggestions_ai(self, lesson_title: str, course_context: Dict, max_videos: int) -> List[Dict]:
+        """Generate realistic YouTube video suggestions using AI"""
         
-        return videos[:4]  # Return up to 4 video suggestions
-    
-    def _generate_video_suggestions(self, query: str, subtopic: str) -> List[Dict]:
-        """Generate video suggestions using AI (fallback when YouTube API not available)"""
-        prompt = f"""You are an expert at finding educational YouTube videos. For the search query "{query}" related to "{subtopic}", suggest 1-2 realistic YouTube videos that would likely exist.
+        prompt = f"""You are an expert at finding educational YouTube videos. For the lesson "{lesson_title}" in {course_context.get('topic', '')}, suggest {max_videos} REAL YouTube videos that actually exist and would be helpful.
 
-For each video suggestion, provide:
-- A realistic video title (how it would appear on YouTube)
-- Channel name (realistic educational channel)
-- Brief description of what the video covers
-- Estimated duration (realistic for the topic)
+For each video, provide:
+- **Title:** [Exact video title as it appears on YouTube]
+- **Channel:** [Actual channel name - use well-known educational channels]
+- **URL:** [Actual YouTube URL if you know it, or realistic search URL]
+- **Description:** [Brief description of video content]
+- **Duration:** [Realistic duration]
 
-Format as a list with clear separators. Make sure these sound like real YouTube videos that would help someone learn about "{subtopic}"."""
+Use channels like: Khan Academy, Crash Course, 3Blue1Brown, Professor Leonard, StatQuest, etc. for educational content.
+
+Format each video clearly separated."""
 
         messages = [{"role": "user", "content": prompt}]
-        response = self._ask_claude(messages, temperature=0.8, max_tokens=400)
+        response = self._ask_claude(messages, temperature=0.7, max_tokens=400)
         
-        # Parse the response into video objects
-        videos = self._parse_video_suggestions(response, query)
-        return videos
-    
-    def _parse_video_suggestions(self, response: str, query: str) -> List[Dict]:
+        return self._parse_video_suggestions(response, lesson_title, course_context)
+
+    def _parse_video_suggestions(self, response: str, lesson_title: str, course_context: Dict) -> List[Dict]:
         """Parse AI-generated video suggestions into structured format"""
         videos = []
-        lines = response.split('\n')
+        video_blocks = response.split('\n\n')
         
-        current_video = {}
-        for line in lines:
-            line = line.strip()
-            if 'title' in line.lower() and ':' in line:
-                if current_video:
-                    videos.append(current_video)
-                    current_video = {}
-                current_video['title'] = line.split(':', 1)[1].strip().replace('"', '')
-                # Generate a search URL (users can click to search)
-                search_query = quote_plus(f"{current_video['title']} {query}")
-                current_video['url'] = f"https://www.youtube.com/results?search_query={search_query}"
-            elif 'channel' in line.lower() and ':' in line:
-                current_video['channel'] = line.split(':', 1)[1].strip()
-            elif 'description' in line.lower() and ':' in line:
-                current_video['description'] = line.split(':', 1)[1].strip()
-            elif 'duration' in line.lower() and ':' in line:
-                current_video['duration'] = line.split(':', 1)[1].strip()
-        
-        if current_video:
-            videos.append(current_video)
+        for block in video_blocks:
+            if not block.strip():
+                continue
+                
+            video = {}
+            lines = block.split('\n')
+            
+            for line in lines:
+                line = line.strip()
+                if line.startswith('**Title:**'):
+                    video['title'] = line.replace('**Title:**', '').strip()
+                elif line.startswith('**Channel:**'):
+                    video['channel'] = line.replace('**Channel:**', '').strip()
+                elif line.startswith('**URL:**'):
+                    url = line.replace('**URL:**', '').strip()
+                    if url.startswith('http'):
+                        video['url'] = url
+                    else:
+                        # Create search URL if no direct URL provided
+                        search_query = quote_plus(f"{video.get('title', lesson_title)} {course_context.get('topic', '')}")
+                        video['url'] = f"https://www.youtube.com/results?search_query={search_query}"
+                elif line.startswith('**Description:**'):
+                    video['description'] = line.replace('**Description:**', '').strip()
+                elif line.startswith('**Duration:**'):
+                    video['duration'] = line.replace('**Duration:**', '').strip()
+            
+            if video.get('title'):
+                videos.append(video)
+                
+            if len(videos) >= 2:  # Limit to 2 videos
+                break
         
         return videos
+
+    def _suggest_youtube_videos(self, week_info: Dict, course_context: Dict) -> List[Dict]:
+        """Suggest relevant YouTube videos for the week (legacy method)"""
+        # This method exists for backward compatibility
+        return self._get_youtube_videos(week_info.get('title', ''), course_context, 3)
     
     def get_course_navigation(self, weeks: List[Dict], current_week: int) -> Dict:
         """Generate course navigation information"""
@@ -238,7 +407,7 @@ Format as a list with clear separators. Make sure these sound like real YouTube 
                     "week_number": week["week_number"],
                     "title": week["title"],
                     "completed": week.get("completed", False),
-                    "available": week["week_number"] <= current_week + 1  # Allow access to current and next week
+                    "available": week["week_number"] <= current_week + 1
                 }
                 for week in weeks
             ]
@@ -290,25 +459,43 @@ Format as a list with clear separators. Make sure these sound like real YouTube 
         else:
             return f"{remaining_weeks} lessons remaining"
 
-# Example usage and helper functions
+
+# Standalone helper function
 def initialize_course_from_syllabus(syllabus_text: str, course_context: Dict) -> Dict:
     """Initialize a complete course structure from syllabus text"""
+    logger.info(f"Initializing course from syllabus (length: {len(syllabus_text)})")
+    
     generator = SyllabusGenerator()
     
     # Parse the syllabus into weeks
     weeks = generator.parse_course_structure(syllabus_text)
+    logger.info(f"Parsed {len(weeks)} weeks from syllabus")
+    
+    if not weeks:
+        logger.warning("No weeks found, creating fallback structure")
+        # Create a fallback single week if parsing fails
+        weeks = [{
+            "week_number": 1,
+            "title": "Week 1: Course Introduction",
+            "content": syllabus_text[:1000] + "..." if len(syllabus_text) > 1000 else syllabus_text,
+            "topics": [f"Introduction to {course_context.get('topic', 'the subject')}", "Core concepts", "Getting started"],
+            "completed": False
+        }]
     
     # Generate detailed content for each week
     detailed_weeks = []
     for week in weeks:
+        logger.info(f"Generating detailed content for week {week['week_number']}")
         detailed_week = generator.generate_week_content(week, course_context)
         detailed_weeks.append(detailed_week)
     
     # Get course navigation
-    navigation = generator.get_course_navigation(detailed_weeks, 1)  # Start at week 1
+    navigation = generator.get_course_navigation(detailed_weeks, 1)
     
     # Get course summary
     summary = generator.get_course_summary(detailed_weeks, course_context)
+    
+    logger.info(f"Course initialization complete with {len(detailed_weeks)} weeks")
     
     return {
         "weeks": detailed_weeks,
