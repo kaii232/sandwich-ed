@@ -1,6 +1,8 @@
 import os
 import json
 import logging
+import traceback
+import uvicorn
 from typing import Dict, Tuple, Optional, List
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, HTTPException
@@ -52,6 +54,10 @@ class TutoringRequest(BaseModel):
 class WeekContentRequest(BaseModel):
     week_number: int
     course_data: dict
+
+class LessonContentRequest(BaseModel):
+    lesson_info: dict
+    course_context: dict
 
 class ChatbotResponse(BaseModel):
     state: dict
@@ -720,19 +726,6 @@ async def get_study_tips(req: TutoringRequest):
         logger.error(f"Error getting study tips: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "message": "AI Course System is running"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-class LessonContentRequest(BaseModel):
-    lesson_info: dict
-    course_context: dict
-
 @app.post("/get_lesson_content")
 async def get_lesson_content(req: LessonContentRequest):
     """Get detailed content for a specific lesson point"""
@@ -747,3 +740,11 @@ async def get_lesson_content(req: LessonContentRequest):
     except Exception as e:
         logger.error(f"Error getting lesson content: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "message": "AI Course System is running"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
