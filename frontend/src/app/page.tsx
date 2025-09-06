@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatPanel from "@/components/ChatPanel";
 import SyllabusViewer from "@/components/SyllabusViewer";
 import StartLessonButton from "@/components/StartLessonButton";
@@ -23,6 +23,16 @@ function StartLessonCTA({
   async function handleStart() {
     setLoading(true);
     try {
+      // Clear previous session data when starting new lesson
+      sessionStorage.removeItem('sessionQuizResults');
+      sessionStorage.removeItem('currentSessionActive');
+      sessionStorage.removeItem('completedLessons');
+      
+      // Clear individual quiz results
+      for (let i = 1; i <= 20; i++) {
+        sessionStorage.removeItem(`sessionQuizResult:week${i}`);
+      }
+      
       // fallback syllabus if chat hasn't produced one yet
       const fallback = `# Machine Learning (Beginner)
 - Week 1: Intro to ML, basic terminology
@@ -54,8 +64,11 @@ function StartLessonCTA({
         "weekContent:1",
         JSON.stringify(wk1.week_content ?? null)
       );
+      
+      // 4) Mark session as active
+      sessionStorage.setItem('currentSessionActive', 'true');
 
-      // 4) navigate
+      // 5) navigate
       router.push("/lesson");
     } catch (e) {
       console.error(e);
@@ -82,6 +95,28 @@ export default function Page() {
   const [chatState, setChatState] = useState<any>({});
   const [syllabus, setSyllabus] = useState<string>("");
 
+  // Clear previous session data when page loads (new conversation)
+  useEffect(() => {
+    // Clear quiz results and session data on page load
+    sessionStorage.removeItem('sessionQuizResults');
+    sessionStorage.removeItem('currentSessionActive');
+    sessionStorage.removeItem('completedLessons');
+    
+    // Clear individual quiz results
+    for (let i = 1; i <= 20; i++) {
+      sessionStorage.removeItem(`sessionQuizResult:week${i}`);
+    }
+    
+    // Clear any existing course data from previous sessions
+    sessionStorage.removeItem('courseData');
+    sessionStorage.removeItem('currentWeek');
+    
+    // Clear cached week content
+    for (let i = 1; i <= 20; i++) {
+      sessionStorage.removeItem(`weekContent:${i}`);
+    }
+  }, []); // Empty dependency array means this runs once when component mounts
+
   return (
     <main className="max-w-4xl mx-auto p-6 space-y-6">
       <header className="space-y-1">
@@ -106,12 +141,7 @@ export default function Page() {
       {/* 2) Syllabus viewer (only shows if we have one) */}
       {syllabus && (
         <section>
-          <SyllabusViewer
-            syllabus={syllabus}
-            onStart={() => {
-              /* you can keep this noop; we use the CTA below */
-            }}
-          />
+          <SyllabusViewer syllabus={syllabus} chatState={chatState} />
         </section>
       )}
 

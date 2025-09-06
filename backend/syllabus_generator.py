@@ -169,11 +169,11 @@ class SyllabusGenerator:
         messages = [{"role": "user", "content": overview_prompt}]
         overview_content = self._ask_claude(messages, temperature=0.6, max_tokens=400)
         
-        # Generate expandable lesson content structure
-        lesson_content = self._generate_expandable_lessons(week_info, course_context)
+        # Generate lesson topics (for sidebar)
+        lesson_topics = self._generate_lesson_topics(week_info, course_context)
         
         # Generate activities and resources
-        activities_prompt = f"""You are Sandwich, an expert AI tutor. Create hands-on activities and resources for this week.
+        activities_prompt = f"""You are Sandwich, an expert AI tutor. Create hands-on activities for this week.
 
     **Course Context:**
     - Topic: {course_context.get('topic', '')}
@@ -181,51 +181,66 @@ class SyllabusGenerator:
 
     Create:
 
-    1. **🛠️ Hands-on Activities** (2-3 practical, engaging exercises)
-
-    2. **🔍 Additional Resources** (suggest specific types of materials to explore)
-
-    3. **✅ Week Completion Checklist** (what students should be able to do by week end)
+    🛠️ Hands-on Activities
+    Create 3-4 practical, engaging exercises that reinforce the week's learning objectives.
 
     Make activities appropriate for {course_context.get('difficulty', 'beginner')} level."""
 
         messages = [{"role": "user", "content": activities_prompt}]
         activities_content = self._ask_claude(messages, temperature=0.6, max_tokens=600)
         
+        # Generate additional resources
+        resources_prompt = f"""You are Sandwich, an expert AI tutor. Suggest additional resources for this week.
+
+    **Course Context:**
+    - Topic: {course_context.get('topic', '')}
+    - Week: {week_info['title']}
+
+    🔍 Additional Resources
+    Suggest specific types of materials students can explore for deeper understanding:
+    - Recommended readings
+    - Online tools and websites  
+    - Practice exercises
+    - Community forums or groups
+
+    Make suggestions appropriate for {course_context.get('difficulty', 'beginner')} level."""
+
+        messages = [{"role": "user", "content": resources_prompt}]
+        resources_content = self._ask_claude(messages, temperature=0.6, max_tokens=600)
+        
         return {
             "week_number": week_info['week_number'],
             "title": week_info['title'],
             "overview": overview_content,
-            "lesson_content": lesson_content,
+            "lesson_topics": lesson_topics,  # ✅ This is what frontend expects
             "activities": activities_content,
+            "resources": resources_content,
             "completed": False,
             "progress": 0,
-            "structure": {
-                "sections": [
-                    {"id": "overview", "title": "Week Overview & Objectives", "type": "overview"},
-                    *[{"id": f"lesson_{i+1}", "title": lesson["title"], "type": "lesson", "expandable": True} 
-                    for i, lesson in enumerate(lesson_content)],
-                    {"id": "activities", "title": "Activities & Resources", "type": "activities"}
-                ]
-            }
+            "quiz_completed": False,
+            "videos": self._get_youtube_videos(week_info.get('title', ''), course_context, 3)
         }
 
-    def _generate_expandable_lessons(self, week_info: Dict, course_context: Dict) -> List[Dict]:
-        """Generate expandable lesson structure"""
+    def _generate_lesson_topics(self, week_info: Dict, course_context: Dict) -> List[Dict]:
+        """Generate lesson topics for sidebar"""
         lessons = []
         
         # Create 3-4 main lesson points from the topics
         lesson_topics = week_info['topics'][:4]  # Max 4 lessons per week
         
         for i, topic in enumerate(lesson_topics):
+            # Post-process topic names to avoid quiz-like naming for lessons
+            processed_topic = self._process_lesson_title(topic)
+            
             lesson = {
                 "id": f"lesson_{i+1}",
-                "title": topic,
-                "summary": f"Learn about {topic.lower()}",
+                "title": processed_topic,
+                "summary": f"Learn about {processed_topic.lower()}",
                 "expandable": True,
-                "loaded": False,  # Content loaded on demand
+                "loaded": False,
+                "completed": False,
                 "lesson_info": {
-                    "title": topic,
+                    "title": processed_topic,
                     "week_title": week_info['title'],
                     "lesson_number": i+1
                 }
@@ -233,6 +248,37 @@ class SyllabusGenerator:
             lessons.append(lesson)
         
         return lessons
+
+    def _process_lesson_title(self, title: str) -> str:
+        """Process lesson titles to avoid quiz-like naming"""
+        title_lower = title.lower()
+        
+        # Replace assessment/quiz-related terms for lessons
+        if any(term in title_lower for term in ['final assessment', 'final exam', 'assessment', 'evaluation']):
+            # Replace with more appropriate lesson titles
+            if 'final' in title_lower:
+                return "Course Review & Summary"
+            elif 'assessment' in title_lower:
+                return "Key Concepts Review"
+            elif 'evaluation' in title_lower:
+                return "Learning Consolidation"
+        
+        # Replace other quiz-like terms
+        replacements = {
+            'quiz': 'Practice',
+            'test': 'Review',
+            'exam': 'Summary',
+            'evaluation': 'Analysis'
+        }
+        
+        processed_title = title
+        for old_term, new_term in replacements.items():
+            if old_term in title_lower:
+                processed_title = processed_title.replace(old_term.title(), new_term)
+                processed_title = processed_title.replace(old_term.lower(), new_term.lower())
+                processed_title = processed_title.replace(old_term.upper(), new_term.upper())
+        
+        return processed_title
 
     def generate_lesson_content(self, lesson_info: Dict, course_context: Dict) -> Dict:
         """Generate detailed content for a specific lesson point"""
