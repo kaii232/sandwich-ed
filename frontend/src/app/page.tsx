@@ -1,8 +1,11 @@
+//Home
+
 "use client";
 
 import { useState } from "react";
 import ChatPanel from "@/components/ChatPanel";
 import SyllabusViewer from "@/components/SyllabusViewer";
+import StartLessonButton from "@/components/StartLessonButton";
 import { useRouter } from "next/navigation";
 import { initializeCourse, getWeekContent } from "@/lib/api";
 
@@ -114,9 +117,9 @@ export default function Page() {
 
       {/* 3) Always-visible CTA so you can proceed even if chat didn't produce a syllabus yet */}
       <section className="flex items-center gap-3">
-        <StartLessonCTA syllabus={syllabus} chatState={chatState} />
-        <span className="text-xs text-gray-500">
-          Works even without a syllabus — uses a safe default.
+        <span className="text-sm text-gray-500">
+          Complete the chat (topic, level, duration, style) or generate a
+          syllabus to enable <b>Start Lesson</b>.
         </span>
       </section>
 

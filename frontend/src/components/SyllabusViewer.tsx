@@ -1,6 +1,7 @@
 "use client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import StartLessonButton from "./StartLessonButton";
 
 export default function SyllabusViewer({
   syllabus,
@@ -16,12 +17,7 @@ export default function SyllabusViewer({
       <div className="prose max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{syllabus}</ReactMarkdown>
       </div>
-      <button
-        onClick={onStart}
-        className="px-4 py-2 rounded-lg bg-green-600 text-white"
-      >
-        Start Course
-      </button>
+      <StartLessonButton />
     </div>
   );
 }

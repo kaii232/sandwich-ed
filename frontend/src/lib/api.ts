@@ -36,6 +36,16 @@ export async function initializeCourse(
   return res.json();
 }
 
+export async function getLessonContent(lesson_info: any, course_context: any) {
+  const res = await fetch(`${API_BASE}/get_lesson_content`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ lesson_info, course_context }),
+  });
+  if (!res.ok) throw new Error(`get_lesson_content failed: ${res.status}`);
+  return res.json(); // -> { success, lesson_content }
+}
+
 export async function getWeekContent(week_number: number, course_data: any) {
   const res = await fetch(`${API_BASE}/get_week_content`, {
     method: "POST",

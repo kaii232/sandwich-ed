@@ -5,42 +5,73 @@ import { useRouter } from "next/navigation";
 import { initializeCourse, getWeekContent } from "@/lib/api";
 
 type Props = {
-  syllabus?: string; // if you already have one from the chatbot
-  chatState?: any; // optional: topic/difficulty/etc captured during chat
+  syllabus?: string; // optional: markdown syllabus from chatbot
+  chatState?: {
+    topic?: string;
+    difficulty?: string;
+    duration?: string; // e.g. "6 weeks" or "1 month"
+    learner_type?: string;
+  };
 };
-
-const DEFAULT_SYLLABUS = `# Machine Learning (Beginner)
-- Week 1: Intro to ML, basic terminology
-- Week 2: Data prep (cleaning, splitting, metrics)
-- Week 3: Regression (linear, evaluation)
-- Week 4: Classification (logistic, kNN)
-- Week 5: Unsupervised (k-means, PCA)
-- Week 6: Mini-project & recap
-`;
 
 export default function StartLessonButton({ syllabus, chatState }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  function buildFallbackSyllabus(topic: string, totalWeeks: number) {
+    // a minimal, parseable markdown syllabus (Week headings + a few bullets)
+    const weeks = Array.from({ length: totalWeeks }).map((_, i) => {
+      const n = i + 1;
+      const title =
+        n === 1 ? "Introduction" : n === 2 ? "Core Concepts" : `Module ${n}`;
+      return `# Week ${n}: ${title}
+- Overview of ${topic}
+- Key ideas & examples
+- Practice exercise
+`;
+    });
+    return `# ${topic} — Auto Syllabus\n\n${weeks.join("\n")}`.trim();
+  }
+
+  function parseWeeks(duration: string | undefined) {
+    if (!duration) return 8; // default
+    // very light parsing; you can enhance later
+    const m = duration.match(/(\d+)\s*(week|weeks|wk)/i);
+    if (m) return Math.max(1, parseInt(m[1], 10));
+    const m2 = duration.match(/(\d+)\s*(month|months|mo)/i);
+    if (m2) return Math.max(4, parseInt(m2[1], 10) * 4);
+    return 8;
+  }
+
   async function handleStart() {
+    if (loading) return;
     setLoading(true);
     try {
+      const topic = (chatState?.topic || "Machine Learning").trim();
+      const duration = (chatState?.duration || "6 weeks").trim();
+      const totalWeeks = parseWeeks(duration);
+
       const syllabusText =
-        syllabus && syllabus.trim().length > 0 ? syllabus : DEFAULT_SYLLABUS;
+        syllabus && syllabus.trim().length > 0
+          ? syllabus.trim()
+          : buildFallbackSyllabus(topic, totalWeeks);
+
       const course_context = {
-        topic: chatState?.topic ?? "Machine Learning",
-        difficulty: chatState?.difficulty ?? "Beginner",
-        duration: chatState?.duration ?? "6 weeks",
-        learner_type: chatState?.learner_type ?? "General",
+        topic,
+        difficulty: (chatState?.difficulty || "beginner").toLowerCase(),
+        duration,
+        learner_type: chatState?.learner_type || "Mix of all approaches",
       };
 
       // 1) Initialize course on backend
       const init = await initializeCourse(syllabusText, course_context);
-      // 2) Prefetch Week 1 content
-      const wk1 = await getWeekContent(1, init.course_data);
+      const course_data = init.course_data; // contains { weeks, navigation, summary, ... }
 
-      // 3) Persist minimal state for the /lesson page
-      sessionStorage.setItem("courseData", JSON.stringify(init.course_data));
+      // 2) Prefetch Week 1 content
+      const wk1 = await getWeekContent(1, course_data);
+
+      // 3) Persist for the /lesson page
+      sessionStorage.setItem("courseData", JSON.stringify(course_data));
       sessionStorage.setItem("currentWeek", JSON.stringify(1));
       sessionStorage.setItem(
         "weekContent:1",
@@ -49,9 +80,15 @@ export default function StartLessonButton({ syllabus, chatState }: Props) {
 
       // 4) go to lesson page
       router.push("/lesson");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      alert("Could not start lesson. Is the backend running on port 8000?");
+      alert(
+        `Could not start lesson.\n` +
+          `• Is the backend running at ${
+            process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000"
+          }?\n` +
+          `• Check the server logs for /initialize_course and /get_week_content.`
+      );
     } finally {
       setLoading(false);
     }
@@ -61,6 +98,7 @@ export default function StartLessonButton({ syllabus, chatState }: Props) {
     <button
       onClick={handleStart}
       disabled={loading}
+      aria-busy={loading}
       className="px-4 py-2 rounded-lg bg-green-600 text-white disabled:opacity-60"
       title="Generate your first lesson"
     >
