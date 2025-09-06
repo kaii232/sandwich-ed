@@ -3,6 +3,7 @@ import json
 import logging
 import traceback
 import uvicorn
+from datetime import datetime
 from typing import Dict, Tuple, Optional, List
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, HTTPException
@@ -46,6 +47,14 @@ class QuizSubmissionRequest(BaseModel):
     quiz_session: dict
     user_answers: dict
 
+class AdaptiveWeekRequest(BaseModel):
+    week_info: dict
+    course_context: dict
+    
+class WeekContentRequest(BaseModel):
+    week_info: dict
+    course_context: dict
+
 class TutoringRequest(BaseModel):
     question: str
     week_info: dict
@@ -85,6 +94,287 @@ def get_bedrock_client():
         raise
 
 client = get_bedrock_client()
+
+# Global storage for course data and progressive content
+course_storage = {}
+COURSE_DATA_FILE = "progressive_course_data.json"
+
+async def generate_next_week_content(completed_week_number: int, course_context: dict, quiz_results: dict) -> dict:
+    """Generate content for the next week after successful quiz completion"""
+    next_week_number = completed_week_number + 1
+    course_topic = course_context.get('topic', 'General Studies')
+    
+    try:
+        # Load existing course data
+        course_data = load_course_data()
+        
+        # Check if next week already exists
+        existing_weeks = course_data.get('weeks', [])
+        if any(week.get('week_number') == next_week_number for week in existing_weeks):
+            logger.info(f"Week {next_week_number} already exists, skipping generation")
+            return course_data
+        
+        # Generate next week content based on previous week performance
+        generator = SyllabusGenerator()
+        
+        # Analyze performance to determine content focus
+        performance_percentage = quiz_results.get('percentage', 75)
+        weak_areas = identify_weak_areas(quiz_results)
+        
+        # Generate new week content
+        logger.info(f"Generating Week {next_week_number} content based on {performance_percentage}% performance")
+        
+        next_week_data = await generate_adaptive_week_content(
+            week_number=next_week_number,
+            course_topic=course_topic,
+            performance_data=quiz_results,
+            weak_areas=weak_areas,
+            course_context=course_context
+        )
+        
+        # Add the new week to course data
+        course_data.setdefault('weeks', []).append(next_week_data)
+        
+        # Update navigation
+        course_data['navigation'] = {
+            'current_week': next_week_number,
+            'total_weeks': len(course_data['weeks']),
+            'course_status': 'in_progress'
+        }
+        
+        # Pre-generate quiz for the new week
+        try:
+            logger.info(f"Pre-generating quiz for Week {next_week_number}")
+            tutor = AITutor()
+            quiz_data = tutor.create_quiz(next_week_data, course_context)
+            
+            # Store the pre-generated quiz
+            course_data.setdefault('pre_generated_quizzes', {})[str(next_week_number)] = quiz_data
+            logger.info(f"Successfully pre-generated quiz for Week {next_week_number}")
+        except Exception as e:
+            logger.error(f"Failed to pre-generate quiz for Week {next_week_number}: {str(e)}")
+            # Continue without pre-generated quiz
+        
+        # Save updated course data
+        save_course_data(course_data)
+        
+        logger.info(f"Successfully generated Week {next_week_number}: {next_week_data.get('title', 'Untitled')}")
+        return course_data
+        
+    except Exception as e:
+        logger.error(f"Error generating next week content: {str(e)}")
+        raise
+
+async def generate_adaptive_week_content(week_number: int, course_topic: str, performance_data: dict, 
+                                       weak_areas: list, course_context: dict) -> dict:
+    """Generate adaptive content for a new week based on previous performance"""
+    
+    performance_percentage = performance_data.get('percentage', 75)
+    
+    # Determine content difficulty and focus
+    if performance_percentage >= 85:
+        difficulty_level = "advanced"
+        focus_type = "expansion"
+    elif performance_percentage >= 70:
+        difficulty_level = "standard"
+        focus_type = "progression"
+    else:
+        difficulty_level = "supportive"
+        focus_type = "reinforcement"
+    
+    prompt = f"""
+Generate comprehensive content for Week {week_number} of a {course_topic} course.
+
+**Previous Performance Analysis:**
+- Week {week_number - 1} Quiz Score: {performance_percentage}%
+- Weak Areas: {', '.join(weak_areas) if weak_areas else 'None identified'}
+- Content Focus: {focus_type}
+- Difficulty Level: {difficulty_level}
+
+**Week {week_number} Content Requirements:**
+
+1. **Week Title**: Create an engaging, specific title that builds on previous content
+
+2. **Overview**: Brief paragraph explaining what students will learn this week
+
+3. **Lesson Topics**: Generate 4 detailed lesson topics, each with:
+   - Clear, descriptive title
+   - Learning objectives (3-4 specific goals)
+   - Key concepts to cover
+   - Practical applications
+
+4. **Additional Resources**: Suggest 3-4 supplementary materials or activities
+
+**Adaptive Considerations:**
+{f"- Focus on reinforcing concepts from weak areas: {', '.join(weak_areas)}" if weak_areas else ""}
+{f"- Increase complexity and introduce advanced concepts" if difficulty_level == "advanced" else ""}
+{f"- Provide extra support and practice opportunities" if difficulty_level == "supportive" else ""}
+
+Generate engaging, educational content that appropriately challenges students while addressing their learning needs.
+
+**Format your response as a structured outline with clear sections.**
+"""
+
+    try:
+        messages = [{"role": "user", "content": prompt}]
+        response = ask_claude(messages, temperature=0.3, max_tokens=2000)
+        
+        # Parse the response into structured data
+        week_data = parse_week_content_response(response, week_number, difficulty_level, course_context)
+        
+        return week_data
+        
+    except Exception as e:
+        logger.error(f"Error generating adaptive week content: {str(e)}")
+        # Return a basic fallback structure
+        return create_fallback_week_data(week_number, course_topic, difficulty_level)
+
+def parse_week_content_response(response: str, week_number: int, difficulty_level: str, course_context: dict) -> dict:
+    """Parse AI response into structured week data"""
+    try:
+        # Extract title
+        title_match = response.split('\n')[0]
+        title = title_match.replace('**', '').replace('#', '').strip() or f"Week {week_number}: Advanced Concepts"
+        
+        # Basic structure
+        week_data = {
+            "week_number": week_number,
+            "title": title,
+            "difficulty_level": difficulty_level,
+            "overview": "This week builds on previous concepts with new challenging material.",
+            "lesson_topics": [],
+            "additional_resources": [],
+            "created_at": datetime.now().isoformat(),
+            "status": "ready"
+        }
+        
+        # Extract lesson topics (simplified parsing)
+        lines = response.split('\n')
+        current_section = None
+        lesson_count = 0
+        
+        for line in lines:
+            line = line.strip()
+            
+            if 'lesson' in line.lower() and lesson_count < 4:
+                lesson_count += 1
+                week_data["lesson_topics"].append({
+                    "title": line.replace('**', '').replace('-', '').strip() or f"Lesson {lesson_count}",
+                    "type": "lesson",
+                    "content": f"Detailed content for lesson {lesson_count} covering key concepts.",
+                    "learning_objectives": [
+                        f"Understand key concept {lesson_count}",
+                        f"Apply learned principles in practical scenarios",
+                        f"Analyze complex problems using new methods"
+                    ]
+                })
+        
+        # Ensure we have at least 4 lessons
+        while len(week_data["lesson_topics"]) < 4:
+            lesson_num = len(week_data["lesson_topics"]) + 1
+            week_data["lesson_topics"].append({
+                "title": f"Advanced Topic {lesson_num}",
+                "type": "lesson",
+                "content": f"Comprehensive coverage of advanced topic {lesson_num}.",
+                "learning_objectives": [
+                    f"Master advanced concept {lesson_num}",
+                    "Apply knowledge to real-world scenarios",
+                    "Develop critical thinking skills"
+                ]
+            })
+        
+        return week_data
+        
+    except Exception as e:
+        logger.error(f"Error parsing week content response: {str(e)}")
+        return create_fallback_week_data(week_number, course_context.get('topic', 'Studies'), difficulty_level)
+
+def create_fallback_week_data(week_number: int, course_topic: str, difficulty_level: str) -> dict:
+    """Create fallback week data if AI generation fails"""
+    return {
+        "week_number": week_number,
+        "title": f"Week {week_number}: {course_topic} - Advanced Concepts",
+        "difficulty_level": difficulty_level,
+        "overview": f"This week covers advanced {course_topic} concepts building on previous learning.",
+        "lesson_topics": [
+            {
+                "title": f"{course_topic} Fundamentals Review",
+                "type": "lesson",
+                "content": "Review and reinforce fundamental concepts.",
+                "learning_objectives": ["Review key principles", "Strengthen understanding", "Prepare for advanced topics"]
+            },
+            {
+                "title": f"Advanced {course_topic} Concepts",
+                "type": "lesson", 
+                "content": "Introduction to more complex topics and applications.",
+                "learning_objectives": ["Learn advanced concepts", "Understand complex applications", "Develop problem-solving skills"]
+            },
+            {
+                "title": f"Practical Applications",
+                "type": "lesson",
+                "content": "Real-world applications and case studies.",
+                "learning_objectives": ["Apply knowledge practically", "Analyze real scenarios", "Develop implementation skills"]
+            },
+            {
+                "title": f"Assessment Guide",
+                "type": "lesson", 
+                "content": "Preparation for assessment and skill evaluation.",
+                "learning_objectives": ["Prepare for assessment", "Self-evaluate progress", "Identify areas for improvement"]
+            }
+        ],
+        "additional_resources": [
+            "Supplementary reading materials",
+            "Practice exercises and examples", 
+            "Additional learning resources"
+        ],
+        "created_at": datetime.now().isoformat(),
+        "status": "ready"
+    }
+
+def identify_weak_areas(quiz_results: dict) -> list:
+    """Identify areas where student struggled based on quiz results"""
+    weak_areas = []
+    
+    if not quiz_results.get('feedback'):
+        return weak_areas
+    
+    for question_feedback in quiz_results['feedback']:
+        if not question_feedback.get('is_correct', True):
+            # Extract topic/concept from question text
+            question_text = question_feedback.get('question_text', '').lower()
+            
+            # Simple keyword extraction for common topics
+            if 'calculate' in question_text or 'math' in question_text:
+                weak_areas.append('Mathematical calculations')
+            elif 'theory' in question_text or 'concept' in question_text:
+                weak_areas.append('Theoretical understanding')
+            elif 'apply' in question_text or 'practical' in question_text:
+                weak_areas.append('Practical application')
+            elif 'problem' in question_text:
+                weak_areas.append('Problem solving')
+    
+    # Remove duplicates
+    return list(set(weak_areas))
+
+def load_course_data() -> dict:
+    """Load course data from storage"""
+    try:
+        if os.path.exists(COURSE_DATA_FILE):
+            with open(COURSE_DATA_FILE, 'r') as f:
+                return json.load(f)
+    except Exception as e:
+        logger.error(f"Error loading course data: {str(e)}")
+    
+    return {"weeks": [], "navigation": {"current_week": 1, "total_weeks": 1}}
+
+def save_course_data(course_data: dict):
+    """Save course data to storage"""
+    try:
+        with open(COURSE_DATA_FILE, 'w') as f:
+            json.dump(course_data, f, indent=2)
+        logger.info(f"Course data saved to {COURSE_DATA_FILE}")
+    except Exception as e:
+        logger.error(f"Error saving course data: {str(e)}")
 
 def ask_claude(messages: list, temperature: float = 0.7, max_tokens: int = 800) -> str:
     """Send a conversation to Claude and return response text with improved error handling"""
@@ -630,24 +920,45 @@ async def get_week_content(req: WeekContentRequest):
         course_data = req.course_data
         weeks = course_data.get("weeks", [])
         
+        # Also check progressive course data for dynamically generated weeks
+        progressive_data = load_course_data()
+        progressive_weeks = progressive_data.get("weeks", [])
+        
+        # Combine static and progressive weeks
+        all_weeks = weeks + [w for w in progressive_weeks if not any(sw.get('week_number') == w.get('week_number') for sw in weeks)]
+        
         # Add debugging logs
         logger.info(f"Requested week number: {req.week_number}")
-        logger.info(f"Total weeks in course data: {len(weeks)}")
-        logger.info(f"Available week numbers: {[w.get('week_number') for w in weeks]}")
+        logger.info(f"Total weeks in static course data: {len(weeks)}")
+        logger.info(f"Total weeks in progressive data: {len(progressive_weeks)}")
+        logger.info(f"Combined available week numbers: {[w.get('week_number') for w in all_weeks]}")
 
         week_content = None
-        for week in weeks:
+        for week in all_weeks:
             if week.get("week_number") == req.week_number:
                 week_content = week
                 break
         
         if not week_content:
-            raise HTTPException(status_code=404, detail="Week not found")
+            # If week not found, check if it should be generated
+            if req.week_number > 1:
+                logger.info(f"Week {req.week_number} not found, may need to complete previous weeks first")
+                raise HTTPException(status_code=404, detail=f"Week {req.week_number} is not available yet. Complete previous weeks to unlock it.")
+            else:
+                raise HTTPException(status_code=404, detail="Week not found")
+        
+        # Update navigation info
+        navigation = course_data.get("navigation", {})
+        navigation.update({
+            "total_weeks": len(all_weeks),
+            "available_weeks": len(all_weeks)
+        })
         
         return {
             "success": True,
             "week_content": week_content,
-            "navigation": course_data.get("navigation", {})
+            "navigation": navigation,
+            "is_progressive": week_content.get("created_at") is not None  # Flag to indicate dynamically generated content
         }
     except Exception as e:
         logger.error(f"Error getting week content: {str(e)}")
@@ -657,47 +968,140 @@ async def get_week_content(req: WeekContentRequest):
 async def create_quiz(req: QuizRequest):
     """Create a quiz for a specific week"""
     try:
-        quiz_session = create_quiz_session(req.week_info, req.course_context)
-        return {
-            "success": True,
-            "quiz_session": quiz_session
-        }
+        week_number = req.week_info.get('week_number')
+        
+        # Check for pre-generated quiz first
+        progressive_data = load_course_data()
+        pre_generated_quizzes = progressive_data.get('pre_generated_quizzes', {})
+        
+        if str(week_number) in pre_generated_quizzes:
+            logger.info(f"Using pre-generated quiz for Week {week_number}")
+            pre_generated_quiz = pre_generated_quizzes[str(week_number)]
+            
+            # Create quiz session with pre-generated content
+            quiz_session = {
+                "quiz": pre_generated_quiz,
+                "week_info": req.week_info,
+                "course_context": req.course_context,
+                "start_time": datetime.now().isoformat(),
+                "time_remaining": 30 * 60,  # 30 minutes in seconds
+                "status": "active"
+            }
+            
+            return {
+                "success": True,
+                "quiz_session": quiz_session,
+                "pre_generated": True
+            }
+        else:
+            # Generate quiz dynamically as usual
+            logger.info(f"Generating new quiz for Week {week_number}")
+            quiz_session = create_quiz_session(req.week_info, req.course_context)
+            
+            return {
+                "success": True,
+                "quiz_session": quiz_session,
+                "pre_generated": False
+            }
     except Exception as e:
         logger.error(f"Error creating quiz: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/course_progress")
+async def get_course_progress():
+    """Get the current course progress and available weeks"""
+    try:
+        progressive_data = load_course_data()
+        weeks = progressive_data.get("weeks", [])
+        navigation = progressive_data.get("navigation", {"current_week": 1, "total_weeks": 1})
+        
+        return {
+            "success": True,
+            "total_weeks": len(weeks),
+            "available_weeks": [w.get('week_number') for w in weeks],
+            "navigation": navigation,
+            "course_status": navigation.get("course_status", "in_progress")
+        }
+    except Exception as e:
+        logger.error(f"Error getting course progress: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/submit_quiz")
 async def submit_quiz(req: QuizSubmissionRequest):
     try:
+        logger.info(f"Submitting quiz with answers: {req.user_answers}")
         completed_quiz = submit_quiz_answers(req.quiz_session, req.user_answers)
+        
+        # Log the quiz results for debugging
+        quiz_results = completed_quiz.get("results", {})
+        percentage = quiz_results.get('percentage', 0)
+        logger.info(f"Quiz graded - Score: {quiz_results.get('user_score', 0)}/{quiz_results.get('total_points', 0)} ({percentage}%)")
 
-        # Get current week number from the quiz session
-        current_week_number = req.quiz_session.get("week_number", 1)
-        course_data = req.quiz_session.get("course_data", {})
-        weeks = course_data.get("weeks", [])
-
-        # Find the next week info
-        next_week_info = None
-        for week in weeks:
-            if week.get("week_number") == current_week_number + 1:
-                next_week_info = week
-                break
-
+        # Get quiz context for adaptive learning
+        quiz = req.quiz_session.get("quiz", {})
+        current_week_number = quiz.get("week_number", 1)
+        
+        # Get course context - need to extract from request or session
         course_context = req.quiz_session.get("course_context", {})
-        recent_quiz = completed_quiz
-
-        if next_week_info:
-            revised_week_info = adjust_next_week_content(next_week_info, course_context, recent_quiz)
-        else:
-            revised_week_info = None
+        
+        # For next week adaptation, we need the original next week plan
+        # This should ideally come from the course data structure
+        next_week_number = current_week_number + 1
+        
+        # Create a generic next week template if not provided
+        # In a real implementation, this would come from the original syllabus
+        next_week_template = {
+            "week_number": next_week_number,
+            "title": f"Week {next_week_number}: Advanced Topics",
+            "topics": [
+                f"Advanced concepts in {course_context.get('topic', 'the subject')}",
+                f"Complex problem solving",
+                f"Practical applications",
+                f"Integration of concepts"
+            ]
+        }
+        
+        # Apply adaptive learning based on quiz performance
+        logger.info(f"Adapting Week {next_week_number} based on {percentage}% performance")
+        adapted_week = adjust_next_week_content(next_week_template, course_context, completed_quiz)
+        
+        # Trigger progressive content generation if quiz passed (70% or higher)
+        if percentage >= 70:
+            try:
+                logger.info(f"Quiz passed with {percentage}%, generating next week content...")
+                course_data = await generate_next_week_content(current_week_number, course_context, quiz_results)
+                logger.info(f"Successfully generated content for week {next_week_number}")
+                
+                # Update the adapted_week with the newly generated content
+                generated_weeks = course_data.get('weeks', [])
+                for week in generated_weeks:
+                    if week.get('week_number') == next_week_number:
+                        adapted_week = week
+                        break
+                        
+            except Exception as e:
+                logger.error(f"Failed to generate progressive content: {str(e)}")
+                # Continue with basic adaptation if progressive generation fails
+        
+        # Log the adaptation
+        adaptation_type = "accelerated" if percentage >= 90 else "reinforced" if percentage < 70 else "balanced"
+        logger.info(f"Week {next_week_number} {adaptation_type} - New title: {adapted_week.get('title', 'Unknown')}")
 
         return {
             "success": True,
-            "quiz_results": completed_quiz,
-            "revised_week_info": revised_week_info
+            "quiz_results": quiz_results,
+            "adapted_next_week": adapted_week,
+            "adaptation_summary": {
+                "current_week": current_week_number,
+                "performance": percentage,
+                "adaptation_type": adaptation_type,
+                "next_week_difficulty": adapted_week.get("difficulty_level", "standard"),
+                "next_quiz_difficulty": adapted_week.get("quiz_difficulty", "same")
+            }
         }
     except Exception as e:
         logger.error(f"Error submitting quiz: {str(e)}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/get_tutoring_help")
@@ -739,6 +1143,23 @@ async def get_lesson_content(req: LessonContentRequest):
         }
     except Exception as e:
         logger.error(f"Error getting lesson content: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/generate_adaptive_week")
+async def generate_adaptive_week(req: WeekContentRequest):
+    """Generate detailed content for an adapted week"""
+    try:
+        logger.info(f"Generating adaptive week content for: {req.week_info.get('title', 'Unknown')}")
+        
+        generator = SyllabusGenerator()
+        detailed_week = generator.generate_week_content(req.week_info, req.course_context)
+        
+        return {
+            "success": True,
+            "week_content": detailed_week
+        }
+    except Exception as e:
+        logger.error(f"Error generating adaptive week: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")

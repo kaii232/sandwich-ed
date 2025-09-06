@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import QuizComponent from "./QuizComponent";
 
 export type Lesson = {
   id: string;
@@ -22,133 +23,293 @@ export type Lesson = {
   }[];
 };
 
+// Lesson component for individual lesson content
+function LessonComponent({ 
+  lesson, 
+  onLoadLesson,
+  weekInfo,
+  onNavigateNext
+}: { 
+  lesson: any; 
+  onLoadLesson?: (info: any) => Promise<any | null>; 
+  weekInfo?: any;
+  onNavigateNext?: () => void;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [content, setContent] = useState<any>(null);
+
+  // Auto-load content when component mounts or lesson changes
+  useEffect(() => {
+    if (onLoadLesson && !loading) {
+      // Reset content when lesson changes and load new content
+      setContent(null);
+      loadContent();
+    }
+  }, [lesson.id]);
+
+  const loadContent = async () => {
+    if (!onLoadLesson || loading) return;
+    
+    setLoading(true);
+    try {
+      const loadedContent = await onLoadLesson(lesson.lesson_info);
+      setContent(loadedContent);
+    } catch (error) {
+      console.error("Error loading lesson content:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-3 animate-pulse">
+        <div className="h-4 w-1/2 bg-neutral-200 rounded" />
+        <div className="h-3 w-2/3 bg-neutral-200 rounded" />
+        <div className="h-3 w-2/5 bg-neutral-200 rounded" />
+        <div className="h-48 w-full bg-neutral-200 rounded-xl" />
+      </div>
+    );
+  }
+
+  if (!content) {
+    return (
+      <div className="space-y-3 animate-pulse">
+        <div className="h-4 w-1/2 bg-neutral-200 rounded" />
+        <div className="h-3 w-2/3 bg-neutral-200 rounded" />
+        <div className="h-3 w-2/5 bg-neutral-200 rounded" />
+        <div className="h-48 w-full bg-neutral-200 rounded-xl" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="prose prose-neutral max-w-none">
+        <div dangerouslySetInnerHTML={{ __html: mdToHtml(content.content || "") }} />
+        {content.videos && content.videos.length > 0 && (
+          <div className="not-prose mt-6">
+            <h4 className="text-lg font-semibold mb-3">Related Videos</h4>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {content.videos.map((video: any, index: number) => (
+                <a
+                  key={index}
+                  href={video.url}
+                  target="_blank"
+                  className="block rounded-lg border p-3 hover:bg-neutral-50 transition"
+                >
+                  <div className="font-medium text-sm">{video.title}</div>
+                  <div className="text-xs text-neutral-600 mt-1">{video.channel}</div>
+                  {video.description && (
+                    <div className="text-xs text-neutral-500 mt-2 line-clamp-2">
+                      {video.description}
+                    </div>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      
+      {/* Lesson Navigation */}
+      <div className="pt-6 border-t">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-neutral-600">
+            {lesson.title}
+          </div>
+          
+          <Button 
+            onClick={() => onNavigateNext && onNavigateNext()}
+            disabled={!onNavigateNext}
+          >
+            Next →
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function WeekViewer({
   week,
+  activeSection = "overview",
+  weekInfo,
+  courseContext,
   onLoadLesson,
+  onQuizComplete,
+  onContinueToNextWeek,
+  onSectionChange,
+  onNavigateNext,
 }: {
   week: any;
+  activeSection?: string;
+  weekInfo?: any;
+  courseContext?: any;
   onLoadLesson?: (info: any) => Promise<any | null>;
+  onQuizComplete?: (results: any, adaptationSummary?: any) => void;
+  onContinueToNextWeek?: () => void;
+  onSectionChange?: (section: string) => void;
+  onNavigateNext?: () => void;
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [lessonMap, setLessonMap] = useState<Record<string, Lesson>>({});
-  if (!week)
+  
+  if (!week) {
     return (
       <div className="text-sm text-neutral-600">
         Select a week to get started.
       </div>
     );
-
-  const lessons: Lesson[] = week?.lesson_content || [];
-
-  async function toggle(id: string, info: any) {
-    setOpenId((prev) => (prev === id ? null : id));
-    // Lazy load
-    if (!lessonMap[id] && onLoadLesson) {
-      const loaded = await onLoadLesson(info);
-      if (loaded) {
-        setLessonMap((m) => ({
-          ...m,
-          [id]: {
-            id,
-            title: info.title,
-            summary: info.summary,
-            expandable: true,
-            lesson_info: info,
-            ...loaded,
-          },
-        }));
-      }
-    }
   }
 
+  // Show different content based on active section
+  if (activeSection === "overview") {
+    return (
+      <div className="space-y-6">
+        <div className="prose prose-neutral max-w-none">
+          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeSection === "activities") {
+    return (
+      <div className="space-y-6">
+        <div className="prose prose-neutral max-w-none">
+          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.activities || "") }} />
+        </div>
+        
+        {/* Activities Navigation */}
+        <div className="pt-6 border-t">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-neutral-600">
+              Week {weekInfo?.week_number || 1} Activities
+            </div>
+            
+            <Button 
+              onClick={() => onNavigateNext && onNavigateNext()}
+              disabled={!onNavigateNext}
+            >
+              Next →
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (activeSection === "resources") {
+    return (
+      <div className="space-y-6">
+        <div className="prose prose-neutral max-w-none">
+          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.resources || "") }} />
+        </div>
+        
+        {/* Resources Navigation */}
+        <div className="pt-6 border-t">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-neutral-600">
+              Week {weekInfo?.week_number || 1} Additional Resources
+            </div>
+            
+            <Button 
+              onClick={() => onNavigateNext && onNavigateNext()}
+              disabled={!onNavigateNext}
+            >
+              Next →
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (activeSection === "quiz") {
+    return (
+      <QuizComponent
+        quiz={week.quiz || null}
+        weekInfo={weekInfo}
+        courseContext={courseContext}
+        onQuizComplete={onQuizComplete || (() => {})}
+        onContinueToNextWeek={onContinueToNextWeek}
+      />
+    );
+  }
+
+  // Show individual lesson content
+  const lesson = week.lesson_topics?.find((l: any) => l.id === activeSection);
+  if (lesson) {
+    return (
+      <LessonComponent 
+        lesson={lesson} 
+        onLoadLesson={onLoadLesson}
+        weekInfo={weekInfo}
+        onNavigateNext={onNavigateNext}
+      />
+    );
+  }
+
+  // Default to overview
   return (
     <div className="space-y-6">
-      <section>
-        <h2 className="text-xl font-semibold mb-2">{week.title}</h2>
-        <article
-          className="prose prose-neutral max-w-none"
-          dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }}
-        />
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="text-lg font-semibold">Lessons</h3>
-        {lessons.length === 0 && (
-          <div className="text-sm text-neutral-600">
-            No lessons for this week.
-          </div>
-        )}
-        {lessons.map((ls: any) => {
-          const isOpen = openId === ls.id;
-          const loaded = lessonMap[ls.id];
-          return (
-            <Card key={ls.id} className="rounded-xl">
-              <CardHeader className="flex flex-row items-center justify-between gap-2">
-                <CardTitle className="text-base">{ls.title}</CardTitle>
-                <Button variant="outline" onClick={() => toggle(ls.id, ls)}>
-                  {isOpen ? "Collapse" : "Expand"}
-                </Button>
-              </CardHeader>
-              {isOpen && (
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-neutral-700">{ls.summary}</p>
-                  <div
-                    className="prose prose-neutral max-w-none"
-                    dangerouslySetInnerHTML={{
-                      __html: mdToHtml(loaded?.content || "Loading…"),
-                    }}
-                  />
-                  {loaded?.videos?.length ? (
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {loaded.videos.map((v: any, i: number) => (
-                        <a
-                          key={i}
-                          href={v.url}
-                          target="_blank"
-                          className="block rounded-lg border p-3 hover:bg-neutral-50"
-                        >
-                          <div className="text-sm font-medium line-clamp-2">
-                            {v.title || "Search results"}
-                          </div>
-                          <div className="text-xs text-neutral-600">
-                            {v.channel || "YouTube"}
-                          </div>
-                          {v.description && (
-                            <p className="text-xs mt-1 line-clamp-2">
-                              {v.description}
-                            </p>
-                          )}
-                        </a>
-                      ))}
-                    </div>
-                  ) : null}
-                </CardContent>
-              )}
-            </Card>
-          );
-        })}
-      </section>
-
-      <section className="space-y-2">
-        <h3 className="text-lg font-semibold">Activities & Resources</h3>
-        <article
-          className="prose prose-neutral max-w-none"
-          dangerouslySetInnerHTML={{ __html: mdToHtml(week.activities || "") }}
-        />
-      </section>
+      <div className="prose prose-neutral max-w-none">
+        <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }} />
+      </div>
     </div>
   );
 }
 
-// Tiny markdown-to-HTML helper (very small subset)
+// Simple markdown-to-HTML helper
 function mdToHtml(md: string) {
-  return md
-    .replace(/^###\s(.+)$/gm, "<h3>$1</h3>")
-    .replace(/^##\s(.+)$/gm, "<h2>$1</h2>")
-    .replace(/^#\s(.+)$/gm, "<h1>$1</h1>")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/^\-\s(.+)$/gm, "<li>$1</li>")
-    .replace(/\n\n/g, "<br/><br/>")
-    .replace(/^(?:(?:<li>.*<\/li>\n?)+)$/gms, "<ul>$&</ul>");
+  if (!md) return "";
+  
+  let html = md;
+  
+  // Headers
+  html = html.replace(/^###\s(.+)$/gm, "<h3>$1</h3>");
+  html = html.replace(/^##\s(.+)$/gm, "<h2>$1</h2>");
+  html = html.replace(/^#\s(.+)$/gm, "<h1>$1</h1>");
+  
+  // Bold and italic
+  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  
+  // Simple list handling
+  const lines = html.split('\n');
+  const processedLines = [];
+  let inList = false;
+  
+  for (const line of lines) {
+    if (line.match(/^\s*[-*]\s(.+)$/)) {
+      if (!inList) {
+        processedLines.push('<ul>');
+        inList = true;
+      }
+      processedLines.push(`<li>${line.replace(/^\s*[-*]\s/, '')}</li>`);
+    } else {
+      if (inList) {
+        processedLines.push('</ul>');
+        inList = false;
+      }
+      processedLines.push(line);
+    }
+  }
+  
+  if (inList) {
+    processedLines.push('</ul>');
+  }
+  
+  // Join and handle paragraphs
+  html = processedLines.join('\n');
+  html = html.replace(/\n\n+/g, '</p><p>');
+  html = `<p>${html}</p>`;
+  
+  // Clean up
+  html = html.replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/g, "$1");
+  html = html.replace(/<p>(<ul>.*?<\/ul>)<\/p>/g, "$1");
+  html = html.replace(/<p><\/p>/g, "");
+  
+  return html;
 }

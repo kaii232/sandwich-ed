@@ -5,10 +5,10 @@ import StartLessonButton from "./StartLessonButton";
 
 export default function SyllabusViewer({
   syllabus,
-  onStart,
+  chatState,
 }: {
   syllabus: string;
-  onStart: () => void;
+  chatState: any;
 }) {
   if (!syllabus) return null;
   return (
@@ -17,7 +17,7 @@ export default function SyllabusViewer({
       <div className="prose max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{syllabus}</ReactMarkdown>
       </div>
-      <StartLessonButton />
+      <StartLessonButton syllabus={syllabus} chatState={chatState} />
     </div>
   );
 }
