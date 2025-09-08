@@ -328,5 +328,775 @@
     "generated_at": "2025-09-08T20:19:31.003589",
     "last_accessed": "2025-09-08T20:19:31.042129",
     "cache_key": "_beginner_Week_1__Grammar_Essentials_Introduction_to_the_parts_of_speech__nouns__verbs__adjectives__adverbs__etc__"
+  },
+  "_beginner_Week_1__Algebra_Foundations_Introduction_to_algebra_and_its_importance_in_everyday_life": {
+    "title": "Introduction to algebra and its importance in everyday life",
+    "content": "Hello, I am Sandwich, an expert AI tutor in algebra. Let's dive into the introduction to algebra and its importance in everyday life.\n\n**Detailed Explanation:**\nAlgebra is a fundamental branch of mathematics that deals with the study of mathematical symbols and the rules for manipulating them. It is a powerful tool that allows us to represent and solve a wide range of problems, from simple calculations to complex equations. At its core, algebra involves the use of variables, which are symbols that represent unknown or unspecified quantities. These variables can be used to represent numbers, quantities, or even relationships between different elements.\n\nOne of the key aspects of algebra is its ability to generalize and abstract mathematical concepts. Instead of working with specific numbers, algebra allows us to work with general expressions and equations, which can be applied to a wide range of situations. This makes algebra an essential tool for problem-solving, as it enables us to tackle problems that may not have a single, straightforward solution.\n\nAlgebra is not just a theoretical subject; it has numerous practical applications in our everyday lives. From balancing a checkbook to calculating the cost of a loan, algebra is used in a variety of financial and business-related tasks. It is also essential for understanding and analyzing data, which is becoming increasingly important in our data-driven world. Additionally, algebra is a fundamental building block for more advanced mathematical concepts, such as calculus and statistics, which are crucial in fields like engineering, science, and technology.\n\n**Key Points:**\n- Algebra involves the use of variables to represent unknown or unspecified quantities.\n- Algebra allows for the generalization and abstraction of mathematical concepts, making it a powerful problem-solving tool.\n- Algebra has numerous practical applications in everyday life, from personal finance to data analysis.\n- Algebra is a foundational subject that serves as a building block for more advanced mathematical concepts.\n- Proficiency in algebra is essential for success in various academic and professional fields.\n\n**Real-World Examples:**\n1. **Calculating the cost of a loan:** Suppose you want to take out a loan to buy a new car. Algebra can help you calculate the monthly payments, total interest paid, and the overall cost of the loan based on variables like the loan amount, interest rate, and loan duration.\n2. **Budgeting and personal finance:** When creating a personal budget, you can use algebra to represent your income, expenses, and savings as variables, and then solve for the optimal allocation of your financial resources.\n3. **Interpreting data and statistics:** In today's data-driven world, algebra is essential for understanding and analyzing data. For example, you might use algebra to calculate the mean, median, or standard deviation of a set of data points, or to identify trends and patterns in data.\n\n**Common Mistakes:**\n1. **Confusing variables with constants:** Students sometimes struggle to distinguish between variables and constants in algebraic expressions, leading to incorrect manipulations and solutions.\n2. **Difficulty with algebraic operations:** Performing basic algebraic operations, such as addition, subtraction, multiplication, and division, can be challenging for some students, especially when dealing with variables and complex expressions.\n3. **Inability to translate real-world problems into algebraic expressions:** Translating a word problem or a real-world scenario into an algebraic equation or expression can be a common stumbling block for beginner students.\n\nRemember, algebra is a powerful tool that will serve you well throughout your academic and professional journey. With practice and a solid understanding of the fundamental concepts, you'll be well on your way to mastering this essential branch of mathematics.",
+    "videos": [
+      {
+        "title": "What is Algebra? An EASY Introduction to Algebra!",
+        "channel": "TabletClass Math",
+        "description": "An easy to understand introduction to algebra. Learn more math at https://TCMathAcademy.com/. TabletClass Math Academy ...",
+        "url": "https://www.youtube.com/watch?v=vMJYlFIn_l0",
+        "video_id": "vMJYlFIn_l0",
+        "thumbnail": "https://i.ytimg.com/vi/vMJYlFIn_l0/mqdefault.jpg",
+        "published": "2024-09-12",
+        "duration": "12 min",
+        "view_count": 78096,
+        "relevance_score": 7.5
+      },
+      {
+        "title": "Algebra Basics: What Is Algebra? - Math Antics",
+        "channel": "mathantics",
+        "description": "This video gives an overview of Algebra and introduces the concepts of unknown values and variables. It also explains that ...",
+        "url": "https://www.youtube.com/watch?v=NybHckSEQBI",
+        "video_id": "NybHckSEQBI",
+        "thumbnail": "https://i.ytimg.com/vi/NybHckSEQBI/mqdefault.jpg",
+        "published": "2015-05-22",
+        "duration": "12 min",
+        "view_count": 9718301,
+        "relevance_score": 4.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T20:44:52.730430",
+    "last_accessed": "2025-09-08T20:45:08.285681",
+    "cache_key": "_beginner_Week_1__Algebra_Foundations_Introduction_to_algebra_and_its_importance_in_everyday_life"
+  },
+  "_beginner_Week_1__Algebra_Foundations_Understanding_variables__constants__and_algebraic_expressions": {
+    "title": "Understanding variables, constants, and algebraic expressions",
+    "content": "*Hello, I am Sandwich, your expert AI tutor for this lesson on understanding variables, constants, and algebraic expressions.*\n\n**Detailed Explanation:**\nIn algebra, we work with two main types of values: variables and constants. Variables are symbols, usually letters like x or y, that represent unknown or changing values. Constants, on the other hand, are fixed values that do not change. \n\nFor example, in the expression 2x + 5, the 2 and the 5 are constants, while the x is a variable. The variable can take on different values, but the 2 and the 5 will always stay the same. \n\nAlgebraic expressions are made up of variables, constants, and operations like addition, subtraction, multiplication, and division. They allow us to represent mathematical relationships in a concise and flexible way. By using variables, we can create general formulas that work for many different situations, rather than having to write out specific numbers every time.\n\nUnderstanding the difference between variables and constants, and how to work with algebraic expressions, is crucial for success in algebra. These fundamental concepts will be the building blocks for more advanced mathematical ideas down the line.\n\n**Key Points:**\n- Variables are symbols that represent unknown or changing values\n- Constants are fixed values that do not change\n- Algebraic expressions combine variables, constants, and operations\n- Variables allow us to create general formulas and relationships\n- Mastering variables, constants, and expressions is essential for algebra\n\n**Real-World Examples:**\n1. The formula for the area of a rectangle is A = lw, where A is the area, l is the length, and w is the width. The length and width are variables that can change, while the formula itself is a constant.\n2. In a cell phone plan, the monthly cost might be represented as C = 20 + 0.10x, where C is the total cost, 20 is the base fee (a constant), and x is the number of minutes used (a variable).\n3. Baking recipes often use constants like the number of cups of flour or eggs required, while the amount of an ingredient like chocolate chips could be represented by a variable.\n\n**Common Mistakes:**\n1. Confusing variables and constants - students may accidentally treat a constant as a variable or vice versa.\n2. Struggling to translate real-world situations into algebraic expressions - it can be challenging to identify the variables and constants in a word problem.\n3. Making arithmetic errors when evaluating expressions with multiple operations and variables.\n\nRemember, the key to mastering variables, constants, and algebraic expressions is practice, practice, practice! Let me know if you have any other questions.",
+    "videos": [
+      {
+        "title": "Algebraic Expressions (Basics)",
+        "channel": "Anywhere Math",
+        "description": "CHECK YOUR ANSWERS✓ ON YOUR OWN ANSWERS 1) terms: 12, 10c coefficient: 10 constant: 12 2) terms: 15, 3w, ...",
+        "url": "https://www.youtube.com/watch?v=OF2GtIinL_s",
+        "video_id": "OF2GtIinL_s",
+        "thumbnail": "https://i.ytimg.com/vi/OF2GtIinL_s/mqdefault.jpg",
+        "published": "2014-09-24",
+        "duration": "9 min",
+        "view_count": 1021551,
+        "relevance_score": 7.5
+      },
+      {
+        "title": "Variables, Expressions, and Equations | Math with Mr. J",
+        "channel": "Math with Mr. J",
+        "description": "Welcome to Variables, Expressions, and Equations with Mr. J! Need help with what variables, expressions, and equations are?",
+        "url": "https://www.youtube.com/watch?v=Qa-MCLDrSlI",
+        "video_id": "Qa-MCLDrSlI",
+        "thumbnail": "https://i.ytimg.com/vi/Qa-MCLDrSlI/mqdefault.jpg",
+        "published": "2020-06-10",
+        "duration": "4 min",
+        "view_count": 381800,
+        "relevance_score": 6.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T20:46:14.728706",
+    "last_accessed": "2025-09-08T20:46:14.728723",
+    "cache_key": "_beginner_Week_1__Algebra_Foundations_Understanding_variables__constants__and_algebraic_expressions"
+  },
+  "_beginner_Week_1__Algebra_Foundations_Performing_basic_algebraic_operations__addition__subtraction__multiplication__and_division_": {
+    "title": "Performing basic algebraic operations (addition, subtraction, multiplication, and division)",
+    "content": "Hello, I am Sandwich, an expert AI tutor in algebra. In this lesson, we will cover the fundamental algebraic operations of addition, subtraction, multiplication, and division.\n\n**Detailed Explanation:**\nAlgebra is a branch of mathematics that deals with the manipulation of variables, or unknown quantities, using various operations. The basic algebraic operations are addition, subtraction, multiplication, and division. These operations allow us to solve for the unknown values in algebraic expressions and equations.\n\nAddition in algebra is similar to adding numbers, but instead of working with just numbers, we work with variables and expressions. For example, if we have the expression 3x + 2y, we can add another expression like 5x - y to get 8x + y. Subtraction works in a similar way, where we subtract one expression from another to isolate the unknown variable.\n\nMultiplication in algebra involves combining variables and constants. For instance, if we have 2x and 3y, we can multiply them to get 6xy. Division is the inverse of multiplication, where we divide one expression by another to find the unknown value. For example, if we have 12x and 4x, we can divide to find that the result is 3.\n\nUnderstanding these basic operations is crucial for solving more complex algebraic problems, such as equations and word problems. As we progress through the course, we will apply these skills to tackle increasingly challenging algebraic concepts.\n\n**Key Points:**\n- Algebraic operations involve working with variables and expressions, not just numbers.\n- Addition combines like terms, while subtraction separates them.\n- Multiplication combines variables and constants, and division is the inverse of multiplication.\n- Mastering these basic operations is essential for success in algebra.\n- Applying these skills will help you solve more advanced algebraic problems.\n\n**Real-World Examples:**\n1. Calculating the total cost of items in a shopping cart: If you have 2 shirts at $15 each and 3 pairs of pants at $20 each, you can use addition to find the total cost: (2 x $15) + (3 x $20) = $30 + $60 = $90.\n2. Determining the distance traveled: If a car travels 50 miles per hour for 2 hours, you can use multiplication to find the total distance traveled: 50 miles per hour x 2 hours = 100 miles.\n3. Splitting the cost of a bill: If a group of friends goes out for dinner and the total bill is $80, you can use division to find each person's share if there are 4 people: $80 ÷ 4 = $20 per person.\n\n**Common Mistakes:**\n1. Forgetting to distribute variables correctly during multiplication and division.\n2. Mixing up the order of operations, such as adding before multiplying.\n3. Incorrectly combining like terms during addition and subtraction.\n\nRemember, practice is key to mastering these basic algebraic operations. As you work through more examples and exercises, you'll become more comfortable with manipulating variables and expressions. If you ever feel stuck, don't hesitate to reach out for additional support. Good luck!",
+    "videos": [
+      {
+        "title": "Algebra Basics: What Is Algebra? - Math Antics",
+        "channel": "mathantics",
+        "description": "This video gives an overview of Algebra and introduces the concepts of unknown values and variables. It also explains that ...",
+        "url": "https://www.youtube.com/watch?v=NybHckSEQBI",
+        "video_id": "NybHckSEQBI",
+        "thumbnail": "https://i.ytimg.com/vi/NybHckSEQBI/mqdefault.jpg",
+        "published": "2015-05-22",
+        "duration": "12 min",
+        "view_count": 9718319,
+        "relevance_score": 4.5
+      },
+      {
+        "title": "Algebra Basics: Solving 2-Step Equations - Math Antics",
+        "channel": "mathantics",
+        "description": "There was a confusing example in the original video. This is the updated version. This video shows students how to solve 2-step ...",
+        "url": "https://www.youtube.com/watch?v=LDIiYKYvvdA",
+        "video_id": "LDIiYKYvvdA",
+        "thumbnail": "https://i.ytimg.com/vi/LDIiYKYvvdA/mqdefault.jpg",
+        "published": "2015-10-23",
+        "duration": "10 min",
+        "view_count": 6021247,
+        "relevance_score": 4.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T20:46:33.381898",
+    "last_accessed": "2025-09-08T20:47:09.604527",
+    "cache_key": "_beginner_Week_1__Algebra_Foundations_Performing_basic_algebraic_operations__addition__subtraction__multiplication__and_division_"
+  },
+  "_beginner_Week_1__Algebra_Foundations_Solving_linear_equations_with_one_variable": {
+    "title": "Solving linear equations with one variable",
+    "content": "Hello! I'm Sandwich, an expert AI tutor in algebra. Let's dive into solving linear equations with one variable.\n\n**Detailed Explanation:**\nSolving linear equations with one variable is a fundamental skill in algebra. A linear equation is an equation that can be expressed in the form of ax + b = c, where a, b, and c are constants, and x is the variable. The goal is to isolate the variable on one side of the equation and find its value.\n\nTo solve a linear equation, we use the principle of equality. This means that we can perform the same operation on both sides of the equation without changing the solution. The most common operations used are addition, subtraction, multiplication, and division. The goal is to get the variable by itself on one side of the equation, while the other side becomes the solution.\n\nFor example, let's solve the equation 3x + 5 = 14. First, we subtract 5 from both sides to isolate the variable: 3x + 5 - 5 = 14 - 5, which simplifies to 3x = 9. Then, we divide both sides by 3 to find the value of x: 3x/3 = 9/3, so x = 3.\n\nSolving linear equations is a step-by-step process that requires careful attention to detail and a good understanding of the properties of equality.\n\n**Key Points:**\n- A linear equation is an equation that can be expressed in the form of ax + b = c.\n- The goal is to isolate the variable on one side of the equation.\n- Use the principle of equality to perform the same operations on both sides of the equation.\n- Common operations used are addition, subtraction, multiplication, and division.\n- The solution is the value of the variable that makes the equation true.\n\n**Real-World Examples:**\n1. Calculating the cost of a purchase: If a shirt costs $20 and you have $30, how much change will you receive? This can be solved as an equation: x + 20 = 30, where x represents the change.\n2. Determining the age of a person: If a person is 5 years older than their sibling, and the sibling is 12 years old, how old is the person? This can be solved as an equation: x = 12 + 5, where x represents the person's age.\n3. Calculating the distance traveled: If a car travels 50 miles per hour and you need to travel 200 miles, how long will the trip take? This can be solved as an equation: 50x = 200, where x represents the time in hours.\n\n**Common Mistakes:**\n1. Forgetting to perform the same operation on both sides of the equation.\n2. Incorrectly combining like terms or simplifying expressions.\n3. Mixing up the order of operations when solving the equation.\n\nRemember, solving linear equations with one variable is a fundamental skill in algebra, and with practice, you'll become a pro at it. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "An Intro to Solving Equations with Variables on Both Sides | Multi-Step Equations | Math with Mr. J",
+        "channel": "Math with Mr. J",
+        "description": "Welcome to An Intro to Solving Equations with Variables on Both Sides with Mr. J! Need help with how to solve equations with ...",
+        "url": "https://www.youtube.com/watch?v=eZsyV0ISzV8",
+        "video_id": "eZsyV0ISzV8",
+        "thumbnail": "https://i.ytimg.com/vi/eZsyV0ISzV8/mqdefault.jpg",
+        "published": "2024-03-14",
+        "duration": "8 min",
+        "view_count": 340785,
+        "relevance_score": 12.0
+      },
+      {
+        "title": "Algebra Basics: Solving Basic Equations Part 1 - Math Antics",
+        "channel": "mathantics",
+        "description": "This video shows students how to solve simple 1-step Algebra equations involving only addition or subtraction. Part of the Algebra ...",
+        "url": "https://www.youtube.com/watch?v=l3XzepN03KQ",
+        "video_id": "l3XzepN03KQ",
+        "thumbnail": "https://i.ytimg.com/vi/l3XzepN03KQ/mqdefault.jpg",
+        "published": "2015-05-22",
+        "duration": "11 min",
+        "view_count": 5752829,
+        "relevance_score": 7.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T20:46:45.614424",
+    "last_accessed": "2025-09-08T20:46:45.614436",
+    "cache_key": "_beginner_Week_1__Algebra_Foundations_Solving_linear_equations_with_one_variable"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Introduction_to_the_language_of_geometry": {
+    "title": "Introduction to the language of geometry",
+    "content": "Hello! I'm Sandwich, an expert AI tutor in the subject of geometry. Let's dive into the introduction to the language of geometry.\n\n**Detailed Explanation:**\nGeometry is the branch of mathematics that deals with the study of shapes, sizes, and spatial relationships. To effectively navigate and understand the world of geometry, we need to familiarize ourselves with the language and terminology used in this field. The language of geometry is a set of specialized terms and concepts that allow us to describe, analyze, and communicate geometric ideas.\n\nAt the core of this language are basic geometric shapes, such as points, lines, angles, and polygons. A point is a location in space, represented by a single dot. A line is a one-dimensional path that extends infinitely in both directions. An angle is the measure of the space between two intersecting lines or the rotation of a line around a fixed point. Polygons are closed shapes formed by connecting multiple line segments, such as triangles, rectangles, and hexagons.\n\nBeyond these fundamental shapes, the language of geometry also includes terms that describe the relationships between these elements. For example, we can talk about the parallel or perpendicular nature of lines, the congruence or similarity of shapes, and the properties of various geometric transformations, such as reflections, rotations, and translations.\n\nUnderstanding the language of geometry is crucial for effectively communicating and solving geometric problems. It provides a common vocabulary and set of concepts that allow us to precisely describe and analyze the spatial world around us, from the design of buildings and the layout of cities to the intricate patterns found in nature.\n\n**Key Points:**\n- Geometry is the study of shapes, sizes, and spatial relationships.\n- The language of geometry includes terms like points, lines, angles, and polygons.\n- Geometric relationships, such as parallel, perpendicular, congruent, and similar, are also part of the language.\n- Geometric transformations, like reflections, rotations, and translations, are described using the language of geometry.\n- Mastering the language of geometry is essential for effectively communicating and solving geometric problems.\n\n**Real-World Examples:**\n1. In architecture, the language of geometry is used to describe the design of buildings, from the shape of the roof to the placement of windows and doors.\n2. In art, artists often use geometric principles and terminology to create intricate patterns and designs, such as those found in Islamic art or traditional quilting.\n3. In navigation, the language of geometry is used to describe the position and movement of objects in space, such as the course of a ship or the trajectory of a rocket.\n\n**Common Mistakes:**\n1. Confusing the terms \"parallel\" and \"perpendicular\" when describing the relationship between lines.\n2. Incorrectly identifying the properties of various geometric shapes, such as the number of sides or the measure of angles.\n3. Struggling to visualize and describe the effects of geometric transformations, such as reflections or rotations.\n\nRemember, the language of geometry is a powerful tool for understanding and communicating about the spatial world around us. By mastering these concepts, you'll be well on your way to becoming a confident and proficient geometry student.",
+    "videos": [
+      {
+        "title": "Basic geometry: language and labels | Introduction to Euclidean geometry | Geometry | Khan Academy",
+        "channel": "Khan Academy",
+        "description": "Courses on Khan Academy are always 100% free. Start practicing—and saving your progress—now: ...",
+        "url": "https://www.youtube.com/watch?v=il0EJrY64qE",
+        "video_id": "il0EJrY64qE",
+        "thumbnail": "https://i.ytimg.com/vi/il0EJrY64qE/mqdefault.jpg",
+        "published": "2012-02-28",
+        "duration": "12 min",
+        "view_count": 1818890,
+        "relevance_score": 12.5
+      },
+      {
+        "title": "Intro to Geometry",
+        "channel": "Miacademy & MiaPrep Learning Channel",
+        "description": "Are you a classroom teacher who loves using our videos with your students? Check out our Classroom Licensing page to learn ...",
+        "url": "https://www.youtube.com/watch?v=EiB2JI7ghHg",
+        "video_id": "EiB2JI7ghHg",
+        "thumbnail": "https://i.ytimg.com/vi/EiB2JI7ghHg/mqdefault.jpg",
+        "published": "2020-04-29",
+        "duration": "4 min",
+        "view_count": 99510,
+        "relevance_score": 5.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:09:19.008968",
+    "last_accessed": "2025-09-08T21:45:50.814228",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Introduction_to_the_language_of_geometry"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Exploring_basic_shapes__triangles__rectangles__circles__and_more": {
+    "title": "Exploring basic shapes: triangles, rectangles, circles, and more",
+    "content": "Hello! I'm Sandwich, an expert AI tutor in geometry. Let's explore the basics of shapes - triangles, rectangles, circles, and more.\n\n**Detailed Explanation:**\nIn the foundations of geometry, we'll start by understanding the most fundamental shapes. These basic shapes form the building blocks for more complex geometric concepts. \n\nLet's begin with the triangle. A triangle is a closed shape with three straight sides and three angles. Triangles can come in different sizes and orientations, but they always have those three defining features. Rectangles are another important shape - they have four straight sides, with two pairs of parallel sides that are equal in length. The four angles in a rectangle are all right angles, measuring 90 degrees each.\n\nNext, we have circles. A circle is a closed curved shape where every point on the edge is equidistant from the center. Circles are unique in that they don't have any straight sides or distinct corners or angles. Other basic shapes include squares (a special type of rectangle with four equal sides) and hexagons (six-sided shapes).\n\nUnderstanding these fundamental shapes is crucial, as they form the foundation for more advanced geometric concepts like polygons, 3D shapes, and even higher-level mathematics. Mastering the properties and characteristics of these basic shapes will set you up for success as we dive deeper into the world of geometry.\n\n**Key Points:**\n- Triangles have 3 straight sides and 3 angles\n- Rectangles have 4 straight sides, 2 pairs of parallel sides, and 4 right angles\n- Circles are closed curved shapes where every point on the edge is equidistant from the center\n- Squares are a special type of rectangle with 4 equal sides\n- Hexagons are 6-sided shapes\n\n**Real-World Examples:**\n1. Triangles can be seen in the design of roofs, tents, and even the Eiffel Tower.\n2. Rectangles are common in windows, doors, books, and even the screens of our electronic devices.\n3. Circles are all around us, from wheels and clocks to the shape of the moon and the sun.\n\n**Common Mistakes:**\n1. Confusing the properties of different shapes, such as thinking a square has 3 sides or a circle has corners.\n2. Assuming all triangles are equilateral (with 3 equal sides) or isosceles (with 2 equal sides).\n3. Thinking that all rectangles must be \"tall and skinny\" or \"short and wide\" - rectangles can come in a variety of proportions.\n\nRemember, these basic shapes are the foundation for everything we'll explore in geometry. Take the time to really understand their unique characteristics, and you'll be well on your way to mastering this subject. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "Learn Shapes Circle, Square, Triangle, Rectangle &amp; more | Educational Videos For Toddlers &amp; Babies",
+        "channel": "Toddler Learning Videos For Kids - Lucas & Friends",
+        "description": "Help your kids learn shapes the fun way with this fun and educational sing-along nursery rhyme! It's easy for toddlers, ...",
+        "url": "https://www.youtube.com/watch?v=jlzX8jt0Now",
+        "video_id": "jlzX8jt0Now",
+        "thumbnail": "https://i.ytimg.com/vi/jlzX8jt0Now/mqdefault.jpg",
+        "published": "2022-06-16",
+        "duration": "9 min",
+        "view_count": 23466430,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "Math Antics - Area",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=xCdxURXMdFY",
+        "video_id": "xCdxURXMdFY",
+        "thumbnail": "https://i.ytimg.com/vi/xCdxURXMdFY/mqdefault.jpg",
+        "published": "2014-05-13",
+        "duration": "10 min",
+        "view_count": 7541338,
+        "relevance_score": 1.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:09:32.783737",
+    "last_accessed": "2025-09-08T21:21:59.025876",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Exploring_basic_shapes__triangles__rectangles__circles__and_more"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Measuring_and_classifying_angles": {
+    "title": "Measuring and classifying angles",
+    "content": "Hello, I'm Sandwich, an expert AI tutor for this subject. Let's dive into the lesson on measuring and classifying angles.\n\n**Detailed Explanation:**\nAngles are an essential concept in geometry, and understanding how to measure and classify them is crucial. An angle is the space between two intersecting lines or rays. The measure of an angle is the amount of rotation between the two lines or rays. Angles are typically measured in degrees, with a full rotation being 360 degrees.\n\nThere are several types of angles that you should be familiar with. Acute angles are less than 90 degrees, right angles are exactly 90 degrees, and obtuse angles are greater than 90 degrees but less than 180 degrees. Straight angles are exactly 180 degrees, and reflex angles are greater than 180 degrees but less than 360 degrees.\n\nTo measure an angle, you can use a protractor, which is a tool with a semicircular scale marked in degrees. By aligning the center of the protractor with the vertex of the angle and lining up one side of the angle with the 0-degree mark, you can read the angle's measure directly from the protractor.\n\n**Key Points:**\n- Angles are the space between two intersecting lines or rays.\n- Angles are measured in degrees, with a full rotation being 360 degrees.\n- There are several types of angles: acute, right, obtuse, straight, and reflex.\n- A protractor is a tool used to measure the size of an angle.\n- Aligning the protractor's center with the angle's vertex and one side with the 0-degree mark allows you to read the angle's measure.\n\n**Real-World Examples:**\n1. The opening of a door is a right angle (90 degrees).\n2. The angle between the hands of a clock at 3:00 is an obtuse angle (approximately 150 degrees).\n3. The angle between the two sides of a triangle is an acute angle (less than 90 degrees).\n\n**Common Mistakes:**\n1. Confusing the different types of angles and their definitions.\n2. Incorrectly using a protractor to measure an angle.\n3. Forgetting that angles are measured in degrees, not other units of measurement.\n\nRemember, understanding angles is crucial in geometry, as they are the building blocks of many shapes and figures. By mastering the concepts of measuring and classifying angles, you'll be well on your way to becoming a geometry pro. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "Angles: measuring angles and their names! | Educational Videos for Kids",
+        "channel": "Happy Learning English",
+        "description": "PREMIERES! 👉 https://www.youtube.com/playlist?list=PLLF_mZmNqOn16t8p0aOm-dKZSrCn_9o9E MATH FOR SCHOOL KIDS ...",
+        "url": "https://www.youtube.com/watch?v=9RTM418qfdI",
+        "video_id": "9RTM418qfdI",
+        "thumbnail": "https://i.ytimg.com/vi/9RTM418qfdI/mqdefault.jpg",
+        "published": "2019-05-14",
+        "duration": "4 min",
+        "view_count": 1561333,
+        "relevance_score": 6.0
+      },
+      {
+        "title": "Measuring angles | MightyOwl Math | 4th Grade",
+        "channel": "MightyOwl",
+        "description": "For the full MightyOwl learning experience, check out our website: 👉 https://MIGHTYOWL.COM/ Now that you know what angles ...",
+        "url": "https://www.youtube.com/watch?v=Q1ZkRt1yGd8",
+        "video_id": "Q1ZkRt1yGd8",
+        "thumbnail": "https://i.ytimg.com/vi/Q1ZkRt1yGd8/mqdefault.jpg",
+        "published": "2021-10-08",
+        "duration": "5 min",
+        "view_count": 204043,
+        "relevance_score": 6.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:09:45.763277",
+    "last_accessed": "2025-09-08T21:47:32.293659",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Measuring_and_classifying_angles"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Perimeter__area__and_volume_calculations": {
+    "title": "Perimeter, area, and volume calculations",
+    "content": "*clears throat* Greetings, students! I am Sandwich, your expert AI tutor for this lesson on perimeter, area, and volume calculations. As we dive into the foundations of geometry, understanding these fundamental concepts will be crucial for your success.\n\n**Detailed Explanation:**\nPerimeter, area, and volume are three essential measurements in geometry. Perimeter is the distance around the outside of a two-dimensional shape, such as a square or a circle. It's like measuring the length of the fence around your backyard. Area, on the other hand, refers to the amount of space inside a two-dimensional shape. Imagine the floor space of a room - that's the area. Finally, volume is the three-dimensional equivalent of area, representing the amount of space occupied by a three-dimensional object, like a box or a sphere.\n\nTo calculate perimeter, you simply add up the lengths of all the sides of a shape. For a rectangle, you'd add the length and width twice. For a circle, you'd multiply the diameter by pi (3.14). Area is calculated differently for different shapes. For a rectangle, you multiply the length and width. For a circle, you use the formula: pi times the radius squared. Volume is calculated by multiplying the length, width, and height of a three-dimensional object, like a cube or a cylinder.\n\nUnderstanding these concepts is crucial because they are the building blocks of many geometric calculations and applications. Knowing how to find the perimeter of a shape can help you determine the amount of fencing needed, while knowing the area can help you figure out how much carpet or tile you need to cover a floor. Volume calculations are essential for things like determining the capacity of a container or the amount of material needed to build a structure.\n\n**Key Points:**\n- Perimeter is the distance around the outside of a 2D shape\n- Area is the amount of space inside a 2D shape\n- Volume is the amount of space occupied by a 3D object\n- Formulas for calculating perimeter, area, and volume vary depending on the shape\n- These measurements are essential for many real-world applications\n\n**Real-World Examples:**\n1. Perimeter: Calculating the length of fencing needed to enclose a rectangular garden plot.\n2. Area: Determining the amount of carpet needed to cover the floor of a rectangular room.\n3. Volume: Estimating the capacity of a cylindrical water tank to ensure it can hold the required amount of water.\n\n**Common Mistakes:**\n1. Confusing perimeter and area, or area and volume, and using the wrong formula.\n2. Forgetting to include all sides when calculating perimeter, or not properly identifying the shape to use the correct area or volume formula.\n3. Incorrectly measuring the dimensions of the shape or object, leading to inaccurate calculations.\n\nRemember, practice makes perfect! The more you work through examples and apply these concepts, the more comfortable you'll become with perimeter, area, and volume calculations. If you have any questions or need further assistance, don't hesitate to ask. I'm here to help you succeed in your geometry studies.",
+    "videos": [
+      {
+        "title": "Perimeter, Area, and Volume Explained | Math with Mr. J",
+        "channel": "Math with Mr. J",
+        "description": "Welcome to Perimeter, Area, and Volume Explained with Mr. J! Need help with perimeter, area, and volume? You're in the right ...",
+        "url": "https://www.youtube.com/watch?v=2UEUWC313QY",
+        "video_id": "2UEUWC313QY",
+        "thumbnail": "https://i.ytimg.com/vi/2UEUWC313QY/mqdefault.jpg",
+        "published": "2023-09-08",
+        "duration": "10 min",
+        "view_count": 360230,
+        "relevance_score": 10.5
+      },
+      {
+        "title": "Math Antics - Circles, Circumference And Area",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=O-cawByg2aA",
+        "video_id": "O-cawByg2aA",
+        "thumbnail": "https://i.ytimg.com/vi/O-cawByg2aA/mqdefault.jpg",
+        "published": "2014-07-26",
+        "duration": "7 min",
+        "view_count": 6538958,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:10:00.975130",
+    "last_accessed": "2025-09-08T21:29:33.955908",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Perimeter__area__and_volume_calculations"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Exploring_basic_shapes__squares__rectangles__triangles__and_circles": {
+    "title": "Exploring basic shapes: squares, rectangles, triangles, and circles",
+    "content": "Hello, I'm Sandwich, an expert AI tutor for this subject. Let's explore the basics of shapes - squares, rectangles, triangles, and circles.\n\n**Detailed Explanation:**\nIn the foundations of geometry, understanding the properties and characteristics of basic shapes is crucial. Shapes are the building blocks of the visual world around us, and by learning about them, we can better comprehend and interact with our environment.\n\nLet's start with squares and rectangles. These are both quadrilaterals, meaning they have four sides. The defining feature of a square is that all four sides are equal in length, and all four angles are right angles (90 degrees). A rectangle, on the other hand, has four right angles, but the opposite sides are equal in length, while the adjacent sides can be of different lengths.\n\nTriangles are another fundamental shape, consisting of three sides and three angles. There are several types of triangles, including equilateral (all sides and angles are equal), isosceles (two sides and angles are equal), and scalene (no equal sides or angles). Regardless of the type, the sum of the three angles in a triangle is always 180 degrees.\n\nFinally, circles are the most basic of all the shapes, defined by a single curved line that is equidistant from a central point, called the center. Circles have no corners or angles, and their key properties include the diameter (the longest distance across the circle), radius (the distance from the center to the edge), and circumference (the distance around the circle).\n\n**Key Points:**\n- Squares have four equal sides and four right angles (90 degrees).\n- Rectangles have four right angles, with opposite sides equal in length.\n- Triangles have three sides and three angles, with the sum of the angles always 180 degrees.\n- Circles are defined by a curved line that is equidistant from a central point.\n- Circles have no corners or angles, and their key properties are diameter, radius, and circumference.\n\n**Real-World Examples:**\n- Squares can be seen in the design of many buildings, windows, and floor tiles.\n- Rectangles are common in the shape of doors, books, playing cards, and television screens.\n- Triangles are found in the structure of roofs, the shape of road signs, and the design of suspension bridges.\n- Circles are ubiquitous in our daily lives, from the shape of wheels and clocks to the design of coins and plates.\n\n**Common Mistakes:**\n- Confusing the properties of squares and rectangles, such as thinking that all four sides must be equal in a rectangle.\n- Assuming that all triangles are equilateral (with all sides and angles equal).\n- Thinking that circles have a fixed size or that they must be perfect circles.\n- Forgetting that the sum of the angles in a triangle is always 180 degrees.\n\nRemember, the key to understanding these basic shapes is to focus on their defining characteristics and properties. With practice and observation, you'll be able to recognize and differentiate between these fundamental geometric forms in the world around you.",
+    "videos": [
+      {
+        "title": "Math Antics - Area",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=xCdxURXMdFY",
+        "video_id": "xCdxURXMdFY",
+        "thumbnail": "https://i.ytimg.com/vi/xCdxURXMdFY/mqdefault.jpg",
+        "published": "2014-05-13",
+        "duration": "10 min",
+        "view_count": 7541385,
+        "relevance_score": 0.0
+      },
+      {
+        "title": "Shapes! | Mini Math Movies | Scratch Garden",
+        "channel": "Scratch Garden",
+        "description": "This math video is about shapes, but more specifically it is about sorting shapes by attributes! If you need help sorting shapes by ...",
+        "url": "https://www.youtube.com/watch?v=Ux_kLd7qAcY",
+        "video_id": "Ux_kLd7qAcY",
+        "thumbnail": "https://i.ytimg.com/vi/Ux_kLd7qAcY/mqdefault.jpg",
+        "published": "2021-01-18",
+        "duration": "7 min",
+        "view_count": 4199053,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:47:24.802607",
+    "last_accessed": "2025-09-08T21:47:24.802619",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Exploring_basic_shapes__squares__rectangles__triangles__and_circles"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Discovering_the_relationships_between_angles": {
+    "title": "Discovering the relationships between angles",
+    "content": "Hello there! I'm Sandwich, an expert AI tutor in geometry. Let's dive into the lesson on discovering the relationships between angles.\n\n**Detailed Explanation:**\nAngles are an essential part of geometry, and understanding the relationships between them is crucial. An angle is the measure of the space between two intersecting lines or rays. The angle is typically measured in degrees, with a full circle equaling 360 degrees. \n\nOne of the fundamental relationships between angles is the concept of supplementary angles. Supplementary angles are two angles that add up to 180 degrees. This means that if you have two angles that are next to each other and form a straight line, they are supplementary angles. For example, if one angle is 60 degrees, the other angle must be 120 degrees to make a straight line.\n\nAnother important relationship is that of vertical angles. Vertical angles are the angles that are opposite each other when two lines intersect. These angles are always congruent, meaning they are equal in measure. This is because the lines that form the angles are straight, and the angles on the opposite sides of the intersection are equal.\n\nUnderstanding these relationships between angles can help you solve a variety of geometric problems, from finding the missing angle in a triangle to determining the angles in a parallelogram.\n\n**Key Points:**\n- Angles are measured in degrees, with a full circle equaling 360 degrees.\n- Supplementary angles add up to 180 degrees.\n- Vertical angles are always congruent (equal in measure).\n- Knowing the relationships between angles can help solve geometric problems.\n- Angles are essential in the study of geometry.\n\n**Real-World Examples:**\n1. When you're standing at a crossroad, the angles between the intersecting streets are supplementary angles. If one street is at a 45-degree angle, the other street must be at a 135-degree angle.\n\n2. In a square, all the angles are right angles, meaning they are 90 degrees. This is because the sides of a square are perpendicular to each other, creating four congruent angles.\n\n3. When you're playing a sport like basketball or soccer, the angles of the court or field are important for determining the best shots or passes. Understanding the relationships between these angles can help players strategize and make better decisions.\n\n**Common Mistakes:**\n1. Confusing supplementary angles with complementary angles. Complementary angles add up to 90 degrees, while supplementary angles add up to 180 degrees.\n\n2. Assuming that all angles in a polygon are equal. While this is true for regular polygons, such as squares and equilateral triangles, it's not the case for irregular polygons.\n\n3. Forgetting to consider the relationships between angles when solving geometric problems. Students may try to solve these problems without recognizing the important connections between the angles.\n\nRemember, understanding the relationships between angles is a fundamental skill in geometry. Keep practicing, and don't hesitate to reach out if you have any questions!",
+    "videos": [
+      {
+        "title": "Angles: measuring angles and their names! | Educational Videos for Kids",
+        "channel": "Happy Learning English",
+        "description": "PREMIERES! https://www.youtube.com/playlist?list=PLLF_mZmNqOn16t8p0aOm-dKZSrCn_9o9E MATH FOR SCHOOL KIDS ...",
+        "url": "https://www.youtube.com/watch?v=9RTM418qfdI",
+        "video_id": "9RTM418qfdI",
+        "thumbnail": "https://i.ytimg.com/vi/9RTM418qfdI/mqdefault.jpg",
+        "published": "2019-05-14",
+        "duration": "4 min",
+        "view_count": 1561405,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "Math Antics - Angle Basics",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=DGKwdHMiqCg",
+        "video_id": "DGKwdHMiqCg",
+        "thumbnail": "https://i.ytimg.com/vi/DGKwdHMiqCg/mqdefault.jpg",
+        "published": "2013-09-10",
+        "duration": "7 min",
+        "view_count": 5978098,
+        "relevance_score": 1.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:47:45.389182",
+    "last_accessed": "2025-09-08T21:48:27.103907",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Discovering_the_relationships_between_angles"
+  },
+  "_beginner_Week_2__Practical_Applications_of_Geometry_Applying_geometric_concepts_to_problem-solving": {
+    "title": "Applying geometric concepts to problem-solving",
+    "content": "Hello! I am Sandwich, an expert AI tutor in this subject. Let's dive into applying geometric concepts to problem-solving.\n\n**Detailed Explanation:**\nGeometry is not just a theoretical field of mathematics - it has numerous practical applications that can help us solve real-world problems. By understanding and applying geometric principles, we can tackle a wide range of challenges, from designing efficient buildings to optimizing the layout of a garden. \n\nThe key is to identify the geometric elements present in a given scenario and then use the appropriate theorems, formulas, and techniques to find solutions. For example, if you need to calculate the area of an irregularly shaped plot of land, you can break it down into simpler geometric shapes like triangles and rectangles, apply the relevant area formulas, and add them up to get the total area. \n\nSimilarly, when planning the floor plan of a house, you can use your knowledge of angles, parallel lines, and symmetry to ensure the layout is both functional and aesthetically pleasing. Geometric principles can also help you optimize the placement of furniture, determine the optimal size and shape of windows, and even calculate the load-bearing capacity of structural elements.\n\n**Key Points:**\n- Geometry is not just a theoretical subject, but has numerous practical applications\n- Identifying the geometric elements in a problem is the first step to solving it\n- Applying relevant theorems, formulas, and techniques can help you find solutions\n- Geometric principles can be used to optimize the design and layout of various structures and objects\n- Mastering geometric problem-solving skills can be beneficial in a wide range of real-world scenarios\n\n**Real-World Examples:**\n1. **Landscape Design:** When planning a garden or park, you can use geometric concepts to determine the optimal placement of paths, flower beds, and other landscaping elements. For instance, you might use the principles of symmetry to create a visually appealing layout, or apply the Pythagorean theorem to calculate the dimensions of a rectangular pond.\n\n2. **Construction Planning:** In the construction industry, architects and engineers rely heavily on geometric principles to design efficient and safe buildings. They might use the properties of triangles to ensure the stability of a roof structure, or apply the concept of parallel lines to ensure the walls are perfectly aligned.\n\n3. **Packaging and Container Design:** Geometric shapes and patterns are often used in the design of packaging and containers to optimize space, balance, and visual appeal. For example, a hexagonal honey jar might be chosen over a square one because it can hold more volume while using less material.\n\n**Common Mistakes:**\n1. **Failing to Identify Geometric Elements:** Students sometimes struggle to recognize the geometric shapes and patterns present in a problem, which can make it difficult to apply the appropriate solutions.\n\n2. **Incorrect Formula Application:** Even if students can identify the relevant geometric concepts, they might make mistakes in applying the correct formulas or theorems, leading to inaccurate results.\n\n3. **Overlooking Contextual Information:** In real-world problem-solving, it's important to consider the specific context and constraints of the situation, which students sometimes fail to do when focusing solely on the geometric aspects.\n\nRemember, the key to success in applying geometric concepts to problem-solving is to develop a strong understanding of the underlying principles, practice regularly, and always consider the practical implications of your solutions. With time and dedication, you'll become a pro at using geometry to tackle a wide range of real-world challenges.",
+    "videos": [
+      {
+        "title": "Math Antics - Angle Basics",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=DGKwdHMiqCg",
+        "video_id": "DGKwdHMiqCg",
+        "thumbnail": "https://i.ytimg.com/vi/DGKwdHMiqCg/mqdefault.jpg",
+        "published": "2013-09-10",
+        "duration": "7 min",
+        "view_count": 5978108,
+        "relevance_score": 1.5
+      },
+      {
+        "title": "Math Antics - Circles, Circumference And Area",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=O-cawByg2aA",
+        "video_id": "O-cawByg2aA",
+        "thumbnail": "https://i.ytimg.com/vi/O-cawByg2aA/mqdefault.jpg",
+        "published": "2014-07-26",
+        "duration": "7 min",
+        "view_count": 6539028,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:52:26.426934",
+    "last_accessed": "2025-09-08T21:52:26.473688",
+    "cache_key": "_beginner_Week_2__Practical_Applications_of_Geometry_Applying_geometric_concepts_to_problem-solving"
+  },
+  "_beginner_Week_2__Practical_Applications_of_Geometry_Exploring_the_role_of_geometry_in_design__architecture__and_the_natural_world": {
+    "title": "Exploring the role of geometry in design, architecture, and the natural world",
+    "content": "Hello, I am Sandwich, an expert AI tutor in this subject. Let's explore the role of geometry in design, architecture, and the natural world.\n\n**Detailed Explanation:**\nGeometry is the foundation of many aspects of our built and natural environments. From the intricate patterns found in flower petals to the towering spires of cathedrals, geometric principles are woven throughout the world around us. In design and architecture, geometry provides the underlying structure and form that enables the creation of visually stunning and functionally efficient spaces and structures.\n\nAt its core, geometry is the study of shapes, sizes, and spatial relationships. By understanding the properties and behaviors of different geometric shapes, designers and architects can harness the power of geometry to create buildings, products, and environments that are not only aesthetically pleasing but also highly practical and functional. For example, the use of triangles in structures provides exceptional stability and load-bearing capabilities, while the incorporation of circles and curves can create a sense of fluidity and movement.\n\nBeyond the built environment, geometry is also deeply rooted in the natural world. The intricate patterns and symmetries found in nature, such as the hexagonal structure of honeycomb or the spiraling arrangement of sunflower seeds, are often the result of underlying geometric principles. By studying these natural phenomena, designers and architects can draw inspiration and gain insights that inform their own creative processes, leading to innovative and sustainable solutions.\n\n**Key Points:**\n- Geometry provides the fundamental structure and form for design, architecture, and the natural world.\n- Understanding the properties and behaviors of geometric shapes is crucial for creating visually appealing and functionally efficient spaces and structures.\n- Geometric principles, such as the use of triangles, circles, and curves, can be leveraged to enhance stability, functionality, and aesthetic appeal.\n- Observing and studying the geometric patterns and symmetries found in nature can inspire innovative design solutions.\n- The integration of geometry in design and architecture can lead to sustainable and environmentally-conscious solutions.\n\n**Real-World Examples:**\n1. The Pantheon in Rome, Italy: This iconic architectural masterpiece features a stunning domed ceiling that is a perfect hemisphere, demonstrating the power of geometric principles in creating awe-inspiring structures.\n2. The Fibonacci spiral in nature: The spiraling pattern found in seashells, pinecones, and even the arrangement of leaves on a stem is a manifestation of the Fibonacci sequence, a mathematical pattern with deep geometric underpinnings.\n3. The Sydney Opera House: Designed by architect Jørn Utzon, the iconic sails of the Sydney Opera House are a testament to the use of geometry in creating visually striking and functionally innovative architecture.\n\n**Common Mistakes:**\n1. Overlooking the importance of geometry in design and architecture: Some students may fail to recognize the fundamental role that geometry plays in shaping the built environment and may underestimate its significance.\n2. Misunderstanding the relationship between geometry and functionality: Students may sometimes focus solely on the aesthetic aspects of geometry, without fully grasping how geometric principles can enhance the functionality and efficiency of a design or structure.\n3. Neglecting the influence of geometry in the natural world: Students may not always make the connection between the geometric patterns and symmetries observed in nature and their potential applications in design and architecture.\n\nRemember, by embracing the principles of geometry and understanding its profound influence on the world around us, you can unlock new possibilities in design, architecture, and the exploration of the natural environment.",
+    "videos": [
+      {
+        "title": "PART 1: PATTERNS AND NUMBERS IN NATURE AND THE WORLD || MATHEMATICS IN THE MODERN WORLD",
+        "channel": "WOW MATH",
+        "description": "MATH 101: MATHEMATICS IN THE MODERN WORLD‼️ 🟣PART 1: PATTERNS AND NUMBERS IN NATURE AND THE ...",
+        "url": "https://www.youtube.com/watch?v=J7An1mcFHBU",
+        "video_id": "J7An1mcFHBU",
+        "thumbnail": "https://i.ytimg.com/vi/J7An1mcFHBU/mqdefault.jpg",
+        "published": "2020-08-09",
+        "duration": "5 min",
+        "view_count": 748212,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "What is the Fibonacci Sequence &amp; the Golden Ratio? Simple Explanation and Examples in Everyday Life",
+        "channel": "Science ABC",
+        "description": "The Fibonacci sequence is a series of numbers in which a given number is the addition of the two numbers before it. So, if you ...",
+        "url": "https://www.youtube.com/watch?v=2tv6Ej6JVho",
+        "video_id": "2tv6Ej6JVho",
+        "thumbnail": "https://i.ytimg.com/vi/2tv6Ej6JVho/mqdefault.jpg",
+        "published": "2021-04-23",
+        "duration": "5 min",
+        "view_count": 1243696,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:52:40.704625",
+    "last_accessed": "2025-09-08T21:52:40.704641",
+    "cache_key": "_beginner_Week_2__Practical_Applications_of_Geometry_Exploring_the_role_of_geometry_in_design__architecture__and_the_natural_world"
+  },
+  "_beginner_Week_2__Practical_Applications_of_Geometry_Hands-on_activities_and_projects_to_reinforce_learning": {
+    "title": "Hands-on activities and projects to reinforce learning",
+    "content": "*clears throat* Greetings, students! I am Sandwich, your friendly AI tutor, here to guide you through the exciting world of hands-on activities and projects to reinforce your learning in geometry.\n\n**Detailed Explanation:**\nIn the study of geometry, it's essential to not only understand the theoretical concepts but also apply them in practical, real-world situations. Hands-on activities and projects provide an invaluable opportunity to do just that. By engaging in these interactive learning experiences, you'll deepen your understanding of geometric principles and develop essential problem-solving skills.\n\nHands-on activities can take many forms, from constructing 3D shapes using everyday materials to designing and building scale models of architectural structures. These activities allow you to physically manipulate geometric shapes, explore their properties, and gain a more intuitive grasp of the subject matter. Projects, on the other hand, often involve applying your geometric knowledge to solve complex, open-ended problems. This could involve designing a sustainable building, creating a map of your local area, or even developing a game that incorporates geometric concepts.\n\nThe key to success in these hands-on endeavors is to approach them with curiosity, creativity, and a willingness to experiment. Don't be afraid to make mistakes – that's all part of the learning process! By actively engaging with the material, you'll not only solidify your understanding of geometry but also develop critical thinking, collaboration, and communication skills that will serve you well in all areas of your life.\n\n**Key Points:**\n- Hands-on activities and projects reinforce your understanding of geometric principles\n- Engaging in these interactive learning experiences helps develop problem-solving skills\n- Hands-on activities allow you to physically manipulate geometric shapes and explore their properties\n- Projects involve applying your geometric knowledge to solve complex, real-world problems\n- Approach these activities with curiosity, creativity, and a willingness to learn from mistakes\n\n**Real-World Examples:**\n1. **Designing a Sustainable Building:** Using your knowledge of geometric shapes, proportions, and spatial relationships, design a sustainable building that incorporates features like efficient floor plans, optimal window placement, and renewable energy sources.\n2. **Creating a Map of Your Local Area:** Collect data on the shapes and dimensions of buildings, roads, and other features in your neighborhood. Use this information to create an accurate, scale map of your local area, incorporating geometric principles like scale, distance, and orientation.\n3. **Developing a Geometric Game:** Design a game that challenges players to apply their geometric knowledge, such as a puzzle that requires them to arrange various shapes to create a specific pattern or a strategy game that involves manipulating geometric objects on a game board.\n\n**Common Mistakes:**\n1. **Overlooking the Practical Applications:** Some students may focus too much on the theoretical aspects of geometry and fail to see the real-world relevance of the concepts they're learning. It's important to actively seek out opportunities to apply your knowledge in hands-on activities and projects.\n2. **Rushing Through the Process:** Hands-on activities and projects often require patience, attention to detail, and a willingness to experiment and learn from mistakes. Students who try to rush through these experiences may miss out on valuable learning opportunities.\n3. **Lack of Collaboration:** Many hands-on activities and projects benefit from teamwork and collaboration. Students who work in isolation may miss out on the chance to learn from their peers and develop important communication and problem-solving skills.\n\nRemember, the key to success in geometry is to embrace the hands-on, practical aspects of the subject. By engaging in these engaging learning experiences, you'll not only deepen your understanding of geometric principles but also develop a versatile set of skills that will serve you well in all areas of your life. Happy learning, my friends!",
+    "videos": [
+      {
+        "title": "Supervised vs Unsupervised vs Reinforcement Learning | Machine Learning Tutorial | Simplilearn",
+        "channel": "Simplilearn",
+        "description": "\"️  Purdue - Professional Certificate in AI and Machine Learning ...",
+        "url": "https://www.youtube.com/watch?v=1FZ0A1QCMWc",
+        "video_id": "1FZ0A1QCMWc",
+        "thumbnail": "https://i.ytimg.com/vi/1FZ0A1QCMWc/mqdefault.jpg",
+        "published": "2020-11-20",
+        "duration": "6 min",
+        "view_count": 406540,
+        "relevance_score": 7.5
+      },
+      {
+        "title": "AI Learns to Walk (deep reinforcement learning)",
+        "channel": "AI Warehouse",
+        "description": "AI Teaches Itself to Walk! In this video an AI Warehouse agent named Albert learns how to walk to escape 5 rooms I created.",
+        "url": "https://www.youtube.com/watch?v=L_4BPjLBF4E",
+        "video_id": "L_4BPjLBF4E",
+        "thumbnail": "https://i.ytimg.com/vi/L_4BPjLBF4E/mqdefault.jpg",
+        "published": "2023-04-23",
+        "duration": "8 min",
+        "view_count": 11908411,
+        "relevance_score": 6.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:54:04.755754",
+    "last_accessed": "2025-09-08T21:54:04.755768",
+    "cache_key": "_beginner_Week_2__Practical_Applications_of_Geometry_Hands-on_activities_and_projects_to_reinforce_learning"
+  },
+  "_beginner_Week_2__Practical_Applications_of_Geometry_Course_Review___Summary": {
+    "title": "Course Review & Summary",
+    "content": "*Hello, I am Sandwich, an expert AI tutor. Let's dive into the Course Review & Summary for Week 2: Practical Applications of Geometry.*\n\n**Detailed Explanation:**\nThis week, we've explored various practical applications of geometry in our everyday lives. Geometry is the branch of mathematics that deals with the study of shapes, sizes, and spatial relationships. It's not just a theoretical subject, but one that has a wide range of real-world applications that can help us better understand and navigate the world around us.\n\nOne of the key practical applications of geometry we've covered is in the field of architecture and construction. Architects and engineers use geometric principles to design and build structures that are not only aesthetically pleasing but also structurally sound. From the symmetry of a building's facade to the load-bearing capacity of its foundation, geometry plays a crucial role in ensuring the safety and stability of our built environment.\n\nAnother area where geometry is essential is in the design and manufacturing of everyday objects. From the ergonomic shape of a computer mouse to the aerodynamic curves of a sports car, the principles of geometry are used to create products that are both functional and visually appealing. By understanding the relationships between different shapes and their properties, designers can optimize the performance and aesthetics of their creations.\n\nAdditionally, we've explored the role of geometry in fields such as art, navigation, and even the natural world. Geometric patterns and shapes are found in everything from the intricate designs of Islamic architecture to the spiral patterns of seashells. Understanding these geometric principles can not only enhance our appreciation of the world around us but also help us better understand the underlying structures and processes that shape our universe.\n\n**Key Points:**\n- Geometry is the study of shapes, sizes, and spatial relationships, with a wide range of practical applications.\n- Architects and engineers use geometric principles to design and build structurally sound and aesthetically pleasing structures.\n- Geometry is essential in the design and manufacturing of everyday objects, optimizing their performance and aesthetics.\n- Geometric patterns and shapes are found in art, navigation, and the natural world, enhancing our understanding of the world around us.\n- Geometry is not just a theoretical subject, but one that has a significant impact on our daily lives.\n\n**Real-World Examples:**\n1. The Eiffel Tower in Paris, France: This iconic landmark is a prime example of the practical application of geometry in architecture. The tower's intricate lattice-like structure, made up of triangular shapes, provides both stability and visual appeal.\n2. The design of a bicycle: The frame of a bicycle is designed using geometric principles to ensure optimal weight distribution, balance, and aerodynamics, making it an efficient and comfortable mode of transportation.\n3. The navigation system in a smartphone: Geometry plays a crucial role in the GPS and mapping features of smartphones, allowing users to accurately determine their location and plan the most efficient routes.\n\n**Common Mistakes:**\n1. Assuming that geometry is only relevant in theoretical or academic settings: Geometry has a wide range of practical applications that impact our daily lives, and it's important for students to understand its real-world relevance.\n2. Overlooking the connection between geometry and other fields: Geometry is not isolated but rather interconnected with disciplines such as art, architecture, and engineering. Recognizing these connections can deepen one's understanding of the subject.\n3. Failing to appreciate the beauty and elegance of geometric patterns and shapes: Geometry is not just a practical tool but also a means of appreciating the inherent beauty and underlying structures of the world around us.\n\nRemember, geometry is a powerful tool that can help us better understand and navigate our world. By mastering the concepts and principles covered in this course, you'll be well on your way to applying geometry in your daily life and unlocking new perspectives on the world around you.",
+    "videos": [
+      {
+        "title": "DevOps In 5 Minutes | What Is DevOps?| DevOps Explained | DevOps Tutorial For Beginners |Simplilearn",
+        "channel": "Simplilearn",
+        "description": "Professional Certificate Program in Cloud Computing and DevOps (India Only) ...",
+        "url": "https://www.youtube.com/watch?v=Xrgk023l4lI",
+        "video_id": "Xrgk023l4lI",
+        "thumbnail": "https://i.ytimg.com/vi/Xrgk023l4lI/mqdefault.jpg",
+        "published": "2021-02-16",
+        "duration": "4 min",
+        "view_count": 2082288,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "How to use QuickBooks Online - Beginner Walkthrough &amp; Tutorial",
+        "channel": "Kevin Stratvert",
+        "description": "GET 90% OFF QuickBooks Online (Limited Time): https://tinyurl.com/kevinstratvertqbo This video is your go-to guide for ...",
+        "url": "https://www.youtube.com/watch?v=2epZ-nvu5s4",
+        "video_id": "2epZ-nvu5s4",
+        "thumbnail": "https://i.ytimg.com/vi/2epZ-nvu5s4/mqdefault.jpg",
+        "published": "2024-02-27",
+        "duration": "16 min",
+        "view_count": 607069,
+        "relevance_score": 3.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T21:54:21.435530",
+    "last_accessed": "2025-09-08T21:54:21.435543",
+    "cache_key": "_beginner_Week_2__Practical_Applications_of_Geometry_Course_Review___Summary"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Introduction_to_basic_geometric_shapes_and_their_characteristics": {
+    "title": "Introduction to basic geometric shapes and their characteristics",
+    "content": "Hello there! I'm Sandwich, an expert AI tutor in the field of geometry. I'm excited to dive into the introduction of basic geometric shapes and their characteristics with you today.\n\n**Detailed Explanation:**\nGeometry is the study of shapes, their properties, and the relationships between them. At the most fundamental level, we can explore the basic geometric shapes that form the building blocks of the world around us. These include shapes like circles, squares, triangles, rectangles, and more.\n\nA circle is a closed curve where every point on the curve is equidistant from the center. Circles are often seen in everyday objects like wheels, plates, and clocks. Squares and rectangles are four-sided shapes with straight edges and right angles. They are commonly found in windows, doors, and the faces of buildings. Triangles are three-sided shapes that can come in various forms, such as equilateral (all sides equal), isosceles (two sides equal), and scalene (no sides equal). Triangles are the fundamental building blocks of many structures, from the frames of tents to the roofs of houses.\n\nUnderstanding the basic characteristics of these shapes is crucial, as they form the foundation for more complex geometric concepts. Mastering the properties of these simple shapes will empower you to tackle increasingly intricate geometric problems and unlock a deeper appreciation for the mathematical patterns that permeate the world around us.\n\n**Key Points:**\n- Circles are closed curves where every point is equidistant from the center.\n- Squares and rectangles are four-sided shapes with straight edges and right angles.\n- Triangles are three-sided shapes that can be classified as equilateral, isosceles, or scalene.\n- Geometric shapes are the building blocks of the physical world, from everyday objects to complex structures.\n- Mastering the characteristics of basic shapes is essential for understanding more advanced geometric concepts.\n\n**Real-World Examples:**\n1. Circles can be seen in the shape of a pizza, a clock face, or the wheels of a car.\n2. Squares and rectangles are prevalent in the design of windows, doors, and the faces of buildings.\n3. Triangles can be observed in the frames of tents, the roofs of houses, and the structure of suspension bridges.\n\n**Common Mistakes:**\n1. Confusing the properties of different shapes, such as thinking a rectangle is a square or vice versa.\n2. Failing to recognize the various types of triangles and their unique characteristics.\n3. Overlooking the importance of understanding basic geometric shapes and their role in more complex geometric principles.\n\nRemember, the journey of learning geometry begins with a solid foundation in these fundamental shapes. By mastering their properties and characteristics, you'll be well on your way to unlocking the fascinating world of geometry. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "Learn About Faces, Edges and Vertices - 3D Shapes | Basic Geometry for Kids | Noodle Kidz",
+        "channel": "Noodle Kidz",
+        "description": "Let's learn about faces, edges and vertices in this video of properties of 3D Shapes. Teachers can use this video to teach young ...",
+        "url": "https://www.youtube.com/watch?v=CYVmmTaqIPU",
+        "video_id": "CYVmmTaqIPU",
+        "thumbnail": "https://i.ytimg.com/vi/CYVmmTaqIPU/mqdefault.jpg",
+        "published": "2020-10-30",
+        "duration": "9 min",
+        "view_count": 1976965,
+        "relevance_score": 6.0
+      },
+      {
+        "title": "Shapes! | Mini Math Movies | Scratch Garden",
+        "channel": "Scratch Garden",
+        "description": "This math video is about shapes, but more specifically it is about sorting shapes by attributes! If you need help sorting shapes by ...",
+        "url": "https://www.youtube.com/watch?v=Ux_kLd7qAcY",
+        "video_id": "Ux_kLd7qAcY",
+        "thumbnail": "https://i.ytimg.com/vi/Ux_kLd7qAcY/mqdefault.jpg",
+        "published": "2021-01-18",
+        "duration": "7 min",
+        "view_count": 4199094,
+        "relevance_score": 3.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:23:42.208816",
+    "last_accessed": "2025-09-08T22:23:42.288770",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Introduction_to_basic_geometric_shapes_and_their_characteristics"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Exploring_lines__angles__and_their_relationships": {
+    "title": "Exploring lines, angles, and their relationships",
+    "content": "Hello, I am Sandwich, an expert AI tutor for this subject. Let's explore the concept of lines, angles, and their relationships.\n\n**Detailed Explanation:**\nIn geometry, a line is a one-dimensional figure that extends infinitely in two opposite directions. Lines are the building blocks of many geometric shapes and are essential for understanding the relationships between different elements in a figure. An angle, on the other hand, is the space between two intersecting lines or the change in direction between two lines. Angles are measured in degrees, with a full rotation being 360 degrees.\n\nThe relationship between lines and angles is crucial in geometry. For example, when two lines intersect, they form four angles. These angles can be classified as acute (less than 90 degrees), obtuse (greater than 90 degrees), or right (exactly 90 degrees). Additionally, when two lines are parallel, the angles formed by a third line intersecting them are called alternate interior angles, alternate exterior angles, or corresponding angles, and these angles have specific relationships that are important to understand.\n\nUnderstanding the properties of lines and angles, as well as their relationships, is the foundation for exploring more complex geometric concepts, such as triangles, quadrilaterals, and other polygons. By mastering the basics of lines and angles, students will be better equipped to tackle more advanced geometry problems and apply these principles to real-world situations.\n\n**Key Points:**\n- A line is a one-dimensional figure that extends infinitely in two opposite directions.\n- An angle is the space between two intersecting lines or the change in direction between two lines.\n- Angles are measured in degrees, with a full rotation being 360 degrees.\n- When two lines intersect, they form four angles that can be classified as acute, obtuse, or right.\n- Parallel lines have specific relationships between the angles formed by a third line intersecting them.\n\n**Real-World Examples:**\n1. The edges of a door frame form two intersecting lines, and the angles between them are typically right angles (90 degrees).\n2. The lines of a railroad track are parallel, and the angles formed by the cross-ties are always the same, demonstrating the properties of parallel lines.\n3. When you look at the corner of a building, you can see the angles formed by the intersecting walls, which are typically right angles.\n\n**Common Mistakes:**\n1. Confusing the terms \"line\" and \"angle\" and not understanding the distinction between them.\n2. Incorrectly identifying the types of angles (acute, obtuse, or right) formed by intersecting lines.\n3. Failing to recognize the relationships between angles when dealing with parallel lines, such as the alternate interior, alternate exterior, and corresponding angles.\n\nRemember, the understanding of lines, angles, and their relationships is the foundation for more advanced geometry concepts. By mastering these basics, you will be well on your way to becoming proficient in the subject. Let me know if you have any further questions!",
+    "videos": [
+      {
+        "title": "Types of Angles and Angle Relationships",
+        "channel": "Professor Dave Explains",
+        "description": "What are angles? What kinds of angles are there and how do they relate? Vertical angles, supplementary angles, complementary ...",
+        "url": "https://www.youtube.com/watch?v=dA94zyaLuhk",
+        "video_id": "dA94zyaLuhk",
+        "thumbnail": "https://i.ytimg.com/vi/dA94zyaLuhk/mqdefault.jpg",
+        "published": "2017-10-16",
+        "duration": "7 min",
+        "view_count": 432517,
+        "relevance_score": 6.0
+      },
+      {
+        "title": "Angles: measuring angles and their names! | Educational Videos for Kids",
+        "channel": "Happy Learning English",
+        "description": "PREMIERES! 👉 https://www.youtube.com/playlist?list=PLLF_mZmNqOn16t8p0aOm-dKZSrCn_9o9E MATH FOR SCHOOL KIDS ...",
+        "url": "https://www.youtube.com/watch?v=9RTM418qfdI",
+        "video_id": "9RTM418qfdI",
+        "thumbnail": "https://i.ytimg.com/vi/9RTM418qfdI/mqdefault.jpg",
+        "published": "2019-05-14",
+        "duration": "4 min",
+        "view_count": 1561425,
+        "relevance_score": 3.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:24:28.150548",
+    "last_accessed": "2025-09-08T22:24:28.150565",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Exploring_lines__angles__and_their_relationships"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Triangles_and_their_classification__equilateral__isosceles__and_scalene": {
+    "title": "Triangles and their classification: equilateral, isosceles, and scalene",
+    "content": "Hello, I am Sandwich, an expert AI tutor in geometry. Let's dive into the lesson on triangles and their classification.\n\n**Detailed Explanation:**\nTriangles are one of the fundamental shapes in geometry, and they are classified based on the lengths of their sides. The three main types of triangles are equilateral, isosceles, and scalene.\n\nAn equilateral triangle is a triangle with all three sides of equal length. This means that all three angles in the triangle are also equal, measuring 60 degrees each. Equilateral triangles are considered the most symmetrical of the three types, and they have a very distinctive and recognizable shape.\n\nAn isosceles triangle is a triangle with at least two sides of equal length. This means that the two angles opposite the equal sides are also equal. The third angle, which is opposite the side of different length, is different from the other two.\n\nA scalene triangle is a triangle with all three sides of different lengths. This means that all three angles in the triangle are also different from each other. Scalene triangles are the most asymmetrical of the three types.\n\n**Key Points:**\n- Equilateral triangles have all three sides and angles equal.\n- Isosceles triangles have at least two equal sides and two equal angles.\n- Scalene triangles have all three sides and angles of different lengths and measures.\n- The sum of the angles in any triangle is always 180 degrees.\n- Triangles are the most stable geometric shape, making them useful in construction and engineering.\n\n**Real-World Examples:**\n1. Equilateral triangles can be seen in the design of many architectural structures, such as the roof of the Sydney Opera House or the Pyramids of Giza.\n2. Isosceles triangles can be found in the shape of many road signs, such as yield signs or stop signs.\n3. Scalene triangles can be observed in the shape of many natural formations, such as the peaks of mountains or the wings of certain birds.\n\n**Common Mistakes:**\n1. Confusing the properties of the different triangle types, such as thinking that all triangles have equal sides or angles.\n2. Forgetting that the sum of the angles in a triangle is always 180 degrees.\n3. Assuming that a triangle with two equal sides is automatically an isosceles triangle, when it could also be an equilateral triangle.\n\nRemember, the key to understanding triangles and their classification is to focus on the relationships between the sides and angles. With practice and a solid understanding of the concepts, you'll be able to identify and classify triangles with ease.",
+    "videos": [
+      {
+        "title": "Classifying Triangles by their SIDES | Equilateral, Isosceles and Scalene Triangle",
+        "channel": "Mathematics with Marlien",
+        "description": "In this video we compare and differentiate between three different types of triangles based on their sides. By looking at the sides of ...",
+        "url": "https://www.youtube.com/watch?v=w9x6teB3NWw",
+        "video_id": "w9x6teB3NWw",
+        "thumbnail": "https://i.ytimg.com/vi/w9x6teB3NWw/mqdefault.jpg",
+        "published": "2023-04-13",
+        "duration": "5 min",
+        "view_count": 3106,
+        "relevance_score": 12.0
+      },
+      {
+        "title": "Triangles - Equilateral, Isosceles and Scalene",
+        "channel": "Mathematics is Fun",
+        "description": "There are three special names given to triangles that tell how many sides (or angles) are equal.",
+        "url": "https://www.youtube.com/watch?v=c2ZWPA3kduw",
+        "video_id": "c2ZWPA3kduw",
+        "thumbnail": "https://i.ytimg.com/vi/c2ZWPA3kduw/mqdefault.jpg",
+        "published": "2013-10-24",
+        "duration": "4 min",
+        "view_count": 208961,
+        "relevance_score": 9.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:25:20.636643",
+    "last_accessed": "2025-09-08T22:25:20.636653",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Triangles_and_their_classification__equilateral__isosceles__and_scalene"
+  },
+  "_beginner_Week_1__Foundations_of_Geometry_Hands-on_activity__Constructing_various_triangles_and_measuring_their_angles": {
+    "title": "Hands-on activity: Constructing various triangles and measuring their angles",
+    "content": "Hello! I'm Sandwich, an expert AI tutor in geometry. Let's dive into the hands-on activity of constructing various triangles and measuring their angles.\n\n**Detailed Explanation:**\nIn this activity, we'll explore the fundamental properties of triangles by creating different types of triangles and measuring their angles. Triangles are the simplest and most basic closed shapes in geometry, and understanding their characteristics is crucial for building a strong foundation in the subject.\n\nTo begin, we'll use a straightedge (such as a ruler) and a protractor to construct various triangles. We'll start with the most basic type, the equilateral triangle, which has all three sides of equal length and all three angles measuring 60 degrees. Next, we'll move on to isosceles triangles, where two sides are equal, and the third side is different. Isosceles triangles can have angles that vary, but the two equal angles will always add up to 120 degrees. Finally, we'll explore scalene triangles, where all three sides are of different lengths, and the angles can take on any value as long as they add up to 180 degrees.\n\nAs we construct each type of triangle, we'll use the protractor to measure the angles and observe how they relate to the side lengths. This hands-on experience will help you develop an intuitive understanding of the properties of triangles and how they can be classified based on their sides and angles.\n\n**Key Points:**\n- Triangles are the simplest closed shapes in geometry, with three sides and three angles.\n- The three main types of triangles are equilateral, isosceles, and scalene.\n- Equilateral triangles have all three sides of equal length and all three angles measuring 60 degrees.\n- Isosceles triangles have two sides of equal length, and the two equal angles add up to 120 degrees.\n- Scalene triangles have all three sides of different lengths, and the three angles can take on any value as long as they add up to 180 degrees.\n- The sum of the three angles in any triangle is always 180 degrees.\n\n**Real-World Examples:**\n1. Equilateral triangles can be seen in the design of many roofs, tents, and some architectural structures, as they provide a stable and visually appealing shape.\n2. Isosceles triangles are commonly found in the design of road signs, where the two equal sides create a symmetrical shape that is easily recognizable.\n3. Scalene triangles can be observed in the shapes of many natural formations, such as the wings of certain insects or the patterns on the shells of some animals.\n\n**Common Mistakes:**\n1. Confusing the properties of different triangle types, such as assuming that all triangles have equal sides or angles.\n2. Incorrectly measuring the angles of a triangle, either due to inaccurate use of the protractor or misreading the measurements.\n3. Forgetting that the sum of the three angles in any triangle must always add up to 180 degrees.\n\nRemember, the key to mastering the properties of triangles is hands-on practice and a deep understanding of the relationships between the sides and angles. Keep exploring, measuring, and discovering the fascinating world of geometry!",
+    "videos": [
+      {
+        "title": "Angles: measuring angles and their names! | Educational Videos for Kids",
+        "channel": "Happy Learning English",
+        "description": "PREMIERES! 👉 https://www.youtube.com/playlist?list=PLLF_mZmNqOn16t8p0aOm-dKZSrCn_9o9E MATH FOR SCHOOL KIDS ...",
+        "url": "https://www.youtube.com/watch?v=9RTM418qfdI",
+        "video_id": "9RTM418qfdI",
+        "thumbnail": "https://i.ytimg.com/vi/9RTM418qfdI/mqdefault.jpg",
+        "published": "2019-05-14",
+        "duration": "4 min",
+        "view_count": 1561425,
+        "relevance_score": 9.0
+      },
+      {
+        "title": "Angles for Kids!",
+        "channel": "Learn and Play Online!",
+        "description": "Angles can be a tricky topic for children to grasp. That is why in this video, we use real life examples of different types of angles ...",
+        "url": "https://www.youtube.com/watch?v=O8WuEOWRO2o",
+        "video_id": "O8WuEOWRO2o",
+        "thumbnail": "https://i.ytimg.com/vi/O8WuEOWRO2o/mqdefault.jpg",
+        "published": "2023-03-18",
+        "duration": "10 min",
+        "view_count": 233681,
+        "relevance_score": 3.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:25:42.355524",
+    "last_accessed": "2025-09-08T22:25:42.355537",
+    "cache_key": "_beginner_Week_1__Foundations_of_Geometry_Hands-on_activity__Constructing_various_triangles_and_measuring_their_angles"
+  },
+  "_beginner_Week_2__Diving_Deeper_into_Geometry_Quadrilaterals_and_their_properties__squares__rectangles__rhombi__and_trapezoids": {
+    "title": "Quadrilaterals and their properties: squares, rectangles, rhombi, and trapezoids",
+    "content": "Hello, I am Sandwich, an expert AI tutor in this subject. Let's dive into the lesson on quadrilaterals and their properties!\n\n**Detailed Explanation:**\nQuadrilaterals are four-sided polygons, and they come in various shapes and sizes, each with its own unique properties. In this lesson, we'll explore the four main types of quadrilaterals: squares, rectangles, rhombi, and trapezoids.\n\nSquares are a special type of quadrilateral where all four sides are equal in length, and all four angles are right angles (90 degrees). This makes squares very symmetrical and easy to recognize. Rectangles are also four-sided polygons with right angles, but the opposite sides are equal in length, while the adjacent sides can be different lengths.\n\nRhombi, on the other hand, have all four sides equal in length, but the angles can vary. A rhombus is a special type of parallelogram, where the opposite sides are parallel and equal in length. Trapezoids are unique in that they have one pair of parallel sides, while the other two sides can be of different lengths.\n\nUnderstanding the properties of these quadrilaterals is essential for solving geometry problems, as well as for recognizing and applying these shapes in real-world situations.\n\n**Key Points:**\n- Squares have four equal sides and four right angles (90 degrees).\n- Rectangles have four right angles and opposite sides are equal in length.\n- Rhombi have four equal sides, but the angles can vary.\n- Trapezoids have one pair of parallel sides, and the other two sides can be of different lengths.\n- Quadrilaterals can be classified based on their side lengths and angle measures.\n\n**Real-World Examples:**\n1. Squares: A chessboard, a tile in a bathroom, the face of a dice.\n2. Rectangles: A playing card, a window frame, the top of a table.\n3. Rhombi: A kite, a diamond shape in a quilt pattern, the shape of a car's front grille.\n4. Trapezoids: The shape of a street sign, the shape of a slice of pizza, the shape of a roof.\n\n**Common Mistakes:**\n1. Confusing squares and rectangles: Students sometimes struggle to distinguish between squares and rectangles, as they both have four right angles.\n2. Assuming all quadrilaterals are parallelograms: Not all quadrilaterals are parallelograms, and students may incorrectly assume that all four-sided shapes have parallel sides.\n3. Overlooking the properties of rhombi: Students may not fully understand the unique properties of rhombi, such as the fact that the diagonals are perpendicular and bisect each other.\n\nRemember, understanding the properties of these quadrilaterals is crucial for success in geometry. If you have any questions or need further clarification, feel free to ask!",
+    "videos": [
+      {
+        "title": "Math Antics - Quadrilaterals",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=yiREqzDsMP8",
+        "video_id": "yiREqzDsMP8",
+        "thumbnail": "https://i.ytimg.com/vi/yiREqzDsMP8/mqdefault.jpg",
+        "published": "2013-12-18",
+        "duration": "9 min",
+        "view_count": 2655047,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "QUADRILATERALS | GRADE 4",
+        "channel": "Sheena Doria",
+        "description": "Objective: This video aims to identify and describe the different kinds of quadrilaterals: square, rectangle, parallelogram, trapezoid ...",
+        "url": "https://www.youtube.com/watch?v=Nq1WsZo5BUc",
+        "video_id": "Nq1WsZo5BUc",
+        "thumbnail": "https://i.ytimg.com/vi/Nq1WsZo5BUc/mqdefault.jpg",
+        "published": "2022-03-17",
+        "duration": "6 min",
+        "view_count": 209583,
+        "relevance_score": 3.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:27:58.952783",
+    "last_accessed": "2025-09-08T22:27:59.002763",
+    "cache_key": "_beginner_Week_2__Diving_Deeper_into_Geometry_Quadrilaterals_and_their_properties__squares__rectangles__rhombi__and_trapezoids"
+  },
+  "_beginner_Week_2__Diving_Deeper_into_Geometry_Circles_and_their_key_elements__radius__diameter__circumference__and_area": {
+    "title": "Circles and their key elements: radius, diameter, circumference, and area",
+    "content": "Hello, I'm Sandwich, an expert AI tutor in geometry. Let's dive into the key elements of circles!\n\n**Detailed Explanation:**\nCircles are fundamental shapes in geometry, and understanding their key elements is crucial. The radius of a circle is the distance from the center to the edge, while the diameter is the distance across the circle, passing through the center. The circumference is the distance around the circle, and the area is the space enclosed within the circle.\n\nThe radius and diameter are closely related - the diameter is always twice the radius. The circumference of a circle can be calculated by multiplying the diameter by the constant pi (π), which is approximately 3.14. The area of a circle is determined by squaring the radius and multiplying it by pi.\n\nVisualizing these elements can help solidify the concepts. Imagine a wheel - the radius would be the distance from the center to the outer edge, the diameter would be the width of the wheel, the circumference would be the distance around the outer edge, and the area would be the space enclosed within the wheel.\n\n**Key Points:**\n- Radius: The distance from the center to the edge of the circle\n- Diameter: The distance across the circle, passing through the center (equal to 2 times the radius)\n- Circumference: The distance around the circle (equal to π times the diameter)\n- Area: The space enclosed within the circle (equal to π times the radius squared)\n\n**Real-World Examples:**\n1. A pizza: The radius would be the distance from the center to the edge, the diameter would be the width of the pizza, the circumference would be the distance around the edge, and the area would be the space covered by the pizza.\n2. A circular table: The radius would be the distance from the center to the edge, the diameter would be the width of the table, the circumference would be the distance around the table, and the area would be the surface area of the table.\n3. A circular swimming pool: The radius would be the distance from the center to the edge, the diameter would be the width of the pool, the circumference would be the distance around the edge, and the area would be the total space of the pool.\n\n**Common Mistakes:**\n1. Confusing the radius and diameter: Students may mix up the definitions or calculations for these two elements.\n2. Incorrectly calculating the circumference: Forgetting to multiply the diameter by pi or using the wrong value for pi can lead to mistakes.\n3. Misunderstanding the relationship between radius and area: Some students may struggle to remember that the area is determined by the radius squared, not just the radius.\n\nRemember, practice and visualization are key to mastering these circle concepts. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "Circles: radius, diameter, circumference and Pi | Geometry | Khan Academy",
+        "channel": "Khan Academy",
+        "description": "Courses on Khan Academy are always 100% free. Start practicing—and saving your progress—now: ...",
+        "url": "https://www.youtube.com/watch?v=jyLRpr2P0MQ",
+        "video_id": "jyLRpr2P0MQ",
+        "thumbnail": "https://i.ytimg.com/vi/jyLRpr2P0MQ/mqdefault.jpg",
+        "published": "2009-11-08",
+        "duration": "11 min",
+        "view_count": 2569744,
+        "relevance_score": 11.0
+      },
+      {
+        "title": "Circles - Area, Circumference, Radius &amp; Diameter Explained!",
+        "channel": "The Organic Chemistry Tutor",
+        "description": "This basic geometry video tutorial explains how to calculate the area and circumference of a circle given it's radius and diameter.",
+        "url": "https://www.youtube.com/watch?v=D4nGkWOPb6M",
+        "video_id": "D4nGkWOPb6M",
+        "thumbnail": "https://i.ytimg.com/vi/D4nGkWOPb6M/mqdefault.jpg",
+        "published": "2021-04-02",
+        "duration": "17 min",
+        "view_count": 770727,
+        "relevance_score": 10.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:28:34.551681",
+    "last_accessed": "2025-09-08T22:28:34.551700",
+    "cache_key": "_beginner_Week_2__Diving_Deeper_into_Geometry_Circles_and_their_key_elements__radius__diameter__circumference__and_area"
+  },
+  "_beginner_Week_2__Diving_Deeper_into_Geometry_Spatial_reasoning_and_3D_shapes__cubes__pyramids__and_cylinders": {
+    "title": "Spatial reasoning and 3D shapes: cubes, pyramids, and cylinders",
+    "content": "Hello, I'm Sandwich, an expert AI tutor in spatial reasoning and 3D shapes. Let's dive into this lesson on cubes, pyramids, and cylinders!\n\n**Detailed Explanation:**\nIn the world of geometry, understanding 3D shapes is crucial. Today, we'll focus on three fundamental 3D shapes: cubes, pyramids, and cylinders. A cube is a 3D shape with six square faces, twelve edges, and eight vertices. It's a regular polyhedron, meaning all its faces are congruent regular polygons. Pyramids, on the other hand, have a base (usually a polygon) and triangular faces that meet at a single point called the apex. Cylinders are 3D shapes with two circular bases and a curved surface connecting them.\n\nSpatial reasoning, the ability to visualize and manipulate 3D objects, is an essential skill for understanding these shapes. By picturing the shapes in our minds and exploring their properties, we can better understand their real-world applications. For example, cubes are commonly seen in packaging, building construction, and even in the design of everyday objects like dice. Pyramids are found in ancient architectural wonders, such as the Great Pyramids of Giza, as well as in modern structures like the Louvre Pyramid in Paris. Cylinders are ubiquitous, from cans and bottles to columns and pipes.\n\nUnderstanding the properties of these 3D shapes, such as the number of faces, edges, and vertices, can help us visualize and manipulate them more effectively. This knowledge is crucial in fields like engineering, architecture, and even art, where the ability to work with 3D shapes is essential.\n\n**Key Points:**\n- Cubes are regular polyhedra with six square faces, twelve edges, and eight vertices.\n- Pyramids have a base (usually a polygon) and triangular faces that meet at a single point called the apex.\n- Cylinders have two circular bases and a curved surface connecting them.\n- Spatial reasoning is the ability to visualize and manipulate 3D objects in our minds.\n- Understanding the properties of these 3D shapes is essential in various fields, from engineering to art.\n\n**Real-World Examples:**\n1. Cubes: Ice cubes, dice, sugar cubes, and the design of modern buildings and furniture.\n2. Pyramids: The Great Pyramids of Giza, the Louvre Pyramid in Paris, and the design of some modern skyscrapers.\n3. Cylinders: Cans, bottles, columns, and pipes used in construction and plumbing.\n\n**Common Mistakes:**\n1. Confusing the properties of different 3D shapes, such as the number of faces, edges, and vertices.\n2. Struggling to visualize and manipulate 3D shapes in the mind, especially when dealing with more complex shapes.\n3. Failing to recognize the real-world applications of these 3D shapes and how understanding their properties can be useful.\n\nRemember, spatial reasoning and understanding 3D shapes is a skill that can be developed with practice. Keep exploring, visualizing, and applying these concepts, and you'll be a 3D shape master in no time!",
+    "videos": [
+      {
+        "title": "Shapes! | Mini Math Movies | Scratch Garden",
+        "channel": "Scratch Garden",
+        "description": "This math video is about shapes, but more specifically it is about sorting shapes by attributes! If you need help sorting shapes by ...",
+        "url": "https://www.youtube.com/watch?v=Ux_kLd7qAcY",
+        "video_id": "Ux_kLd7qAcY",
+        "thumbnail": "https://i.ytimg.com/vi/Ux_kLd7qAcY/mqdefault.jpg",
+        "published": "2021-01-18",
+        "duration": "7 min",
+        "view_count": 4199102,
+        "relevance_score": 0.0
+      },
+      {
+        "title": "2D and 3D Shapes for Kids | Geometry for Kids | Twinkl USA",
+        "channel": "Twinkl Teaching Resources - United States",
+        "description": "In this video, children will learn how to identify the traits of common 2D and 3D shapes and how to differentiate them. 00:00 ...",
+        "url": "https://www.youtube.com/watch?v=gk_u1xr7jQg",
+        "video_id": "gk_u1xr7jQg",
+        "thumbnail": "https://i.ytimg.com/vi/gk_u1xr7jQg/mqdefault.jpg",
+        "published": "2023-01-19",
+        "duration": "8 min",
+        "view_count": 917468,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:28:47.509774",
+    "last_accessed": "2025-09-08T22:28:47.509792",
+    "cache_key": "_beginner_Week_2__Diving_Deeper_into_Geometry_Spatial_reasoning_and_3D_shapes__cubes__pyramids__and_cylinders"
+  },
+  "_beginner_Week_2__Diving_Deeper_into_Geometry_Hands-on_activity__Designing_and_building_3D_geometric_models": {
+    "title": "Hands-on activity: Designing and building 3D geometric models",
+    "content": "Hello, I am Sandwich, an expert AI tutor for this subject. Let's dive into the hands-on activity of designing and building 3D geometric models.\n\n**Detailed Explanation:**\nIn this lesson, we'll explore the fascinating world of 3D geometric modeling. 3D models are digital representations of three-dimensional objects, and they are essential in fields like engineering, architecture, and computer graphics. By creating these models, you can bring your ideas to life, experiment with different shapes and forms, and even 3D print your designs.\n\nTo get started, you'll need to choose a 3D modeling software. Some popular options include SketchUp, Fusion 360, and Blender. These tools provide intuitive interfaces and a wide range of features to help you sculpt and manipulate your 3D models. The process typically involves sketching out your design, extruding and shaping the forms, and then refining the details to achieve the desired look and functionality.\n\nAs you work on your 3D models, you'll explore fundamental geometric concepts like vertices, edges, and faces. You'll learn how to combine basic shapes, such as cubes, spheres, and cylinders, to create more complex structures. Additionally, you'll experiment with different materials, textures, and lighting to make your models visually appealing and realistic.\n\n**Key Points:**\n- 3D modeling is the process of creating digital representations of three-dimensional objects\n- Popular 3D modeling software includes SketchUp, Fusion 360, and Blender\n- The modeling process involves sketching, extruding, and refining shapes to achieve the desired design\n- Understanding geometric concepts like vertices, edges, and faces is essential for 3D modeling\n- Combining basic shapes and experimenting with materials, textures, and lighting can enhance the realism and aesthetics of your models\n\n**Real-World Examples:**\n1. Architectural design: Architects use 3D modeling to create detailed plans for buildings, visualize the final product, and collaborate with clients and contractors.\n2. Product design: Engineers and industrial designers use 3D modeling to design and prototype new products, such as household appliances, toys, or automotive parts.\n3. Video game development: 3D modeling is crucial in the creation of characters, environments, and objects for video games, allowing game developers to bring their virtual worlds to life.\n\n**Common Mistakes:**\n1. Overlooking the importance of planning and sketching: Successful 3D modeling often starts with a well-thought-out plan and initial sketches to guide the modeling process.\n2. Neglecting the use of basic shapes: Beginners may struggle to create complex forms without a solid understanding of how to combine and manipulate basic geometric shapes.\n3. Failing to consider the final application: Students may focus too much on the aesthetics of the model without considering its intended use or functionality.\n\nRemember, 3D modeling is a skill that takes time and practice to develop. Embrace the learning process, experiment with different techniques, and don't be afraid to make mistakes – they are often the best learning opportunities. Enjoy your journey into the world of 3D geometric modeling!",
+    "videos": [
+      {
+        "title": "3D cube model by Fortyshmama | Building 3D Shapes | How To Build a Pyramid School Project",
+        "channel": "fortysh mama",
+        "description": "This 3D cube model by Fortyshmama is so easy to make. You can do it with your kids. Children learn much more when they are ...",
+        "url": "https://www.youtube.com/watch?v=2wyKcBTEJHY",
+        "video_id": "2wyKcBTEJHY",
+        "thumbnail": "https://i.ytimg.com/vi/2wyKcBTEJHY/mqdefault.jpg",
+        "published": "2021-04-14",
+        "duration": "8 min",
+        "view_count": 127,
+        "relevance_score": 3.0
+      },
+      {
+        "title": "SolidWorks - Tutorial for Beginners in 13 MINUTES!  [ COMPLETE ]",
+        "channel": "Skills Factory",
+        "description": "[ 3K LIKES! ] Watch this SolidWorks (2024) tutorial and start making 2D and 3D Part and Assembly projects in 13 minutes!",
+        "url": "https://www.youtube.com/watch?v=CiBwrjUeB8U",
+        "video_id": "CiBwrjUeB8U",
+        "thumbnail": "https://i.ytimg.com/vi/CiBwrjUeB8U/mqdefault.jpg",
+        "published": "2022-04-12",
+        "duration": "13 min",
+        "view_count": 581611,
+        "relevance_score": 1.5
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T22:29:01.201328",
+    "last_accessed": "2025-09-08T22:29:26.708663",
+    "cache_key": "_beginner_Week_2__Diving_Deeper_into_Geometry_Hands-on_activity__Designing_and_building_3D_geometric_models"
   }
 }
