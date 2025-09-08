@@ -50,11 +50,62 @@
       "additional_resources": [],
       "created_at": "2025-09-07T04:36:51.246348",
       "status": "ready"
+    },
+    {
+      "week_number": 2,
+      "title": "Week 2: The Foundations of Knowledge",
+      "difficulty_level": "standard",
+      "overview": "This week builds on previous concepts with new challenging material.",
+      "lesson_topics": [
+        {
+          "title": "Lesson Topics:",
+          "type": "lesson",
+          "content": "Detailed content for lesson 1 covering key concepts.",
+          "learning_objectives": [
+            "Understand key concept 1",
+            "Apply learned principles in practical scenarios",
+            "Analyze complex problems using new methods"
+          ]
+        },
+        {
+          "title": "Advanced Topic 2",
+          "type": "lesson",
+          "content": "Comprehensive coverage of advanced topic 2.",
+          "learning_objectives": [
+            "Master advanced concept 2",
+            "Apply knowledge to real-world scenarios",
+            "Develop critical thinking skills"
+          ]
+        },
+        {
+          "title": "Advanced Topic 3",
+          "type": "lesson",
+          "content": "Comprehensive coverage of advanced topic 3.",
+          "learning_objectives": [
+            "Master advanced concept 3",
+            "Apply knowledge to real-world scenarios",
+            "Develop critical thinking skills"
+          ]
+        },
+        {
+          "title": "Advanced Topic 4",
+          "type": "lesson",
+          "content": "Comprehensive coverage of advanced topic 4.",
+          "learning_objectives": [
+            "Master advanced concept 4",
+            "Apply knowledge to real-world scenarios",
+            "Develop critical thinking skills"
+          ]
+        }
+      ],
+      "additional_resources": [],
+      "created_at": "2025-09-08T20:21:30.377009",
+      "status": "ready"
     }
   ],
   "navigation": {
-    "current_week": 3,
-    "total_weeks": 1,
+    "current_week": 2,
+    "total_weeks": 2,
     "course_status": "in_progress"
   }
 }

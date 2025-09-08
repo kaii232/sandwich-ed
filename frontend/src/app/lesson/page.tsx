@@ -139,7 +139,7 @@ export default function LessonPage() {
 
     // Check if previous week's quiz is completed using saved results
     const prevWeekResult = savedQuizResults[`week${weekNumber - 1}`];
-    return prevWeekResult && prevWeekResult.results?.percentage >= 60;
+    return prevWeekResult && prevWeekResult.results?.percentage > 40; // Must score above 40% to unlock next week
   };
 
   const isWeekCompleted = (weekNumber: number) => {
@@ -265,8 +265,8 @@ export default function LessonPage() {
                   setSavedQuizResults(allResults);
 
                   // Mark quiz as completed and unlock next week if passed
-                  if (results.percentage >= 60) {
-                    // Pass threshold
+                  if (results.percentage > 40) {
+                    // Pass threshold - above 40%
                     const updatedWeeks = courseData.weeks.map((w: any) => {
                       if (w.week_number === weekNum) {
                         return { ...w, quiz_completed: true };
@@ -291,7 +291,7 @@ export default function LessonPage() {
                   // Check if this was the last week and quiz was passed
                   if (weekNum >= totalWeeks) {
                     const lastQuizResult = savedQuizResults[`week${weekNum}`];
-                    if (lastQuizResult?.results?.percentage >= 60) {
+                    if (lastQuizResult?.results?.percentage > 40) {
                       // Course completed successfully - redirect to completion page
                       window.location.href = "/completion";
                       return;

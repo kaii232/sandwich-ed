@@ -30,7 +30,7 @@ export default function CompletionPage() {
       const totalQuizzes = weeks.length;
       const averageScore = weeks.reduce((acc: number, week: any) => acc + week.results.percentage, 0) / totalQuizzes;
       const highestScore = Math.max(...weeks.map((week: any) => week.results.percentage));
-      const passedQuizzes = weeks.filter((week: any) => week.results.percentage >= 60).length;
+      const passedQuizzes = weeks.filter((week: any) => week.results.percentage > 40).length;
       
       setOverallStats({
         totalQuizzes,
@@ -152,13 +152,14 @@ export default function CompletionPage() {
                     <div className="flex items-center gap-2">
                       <span className={`font-bold ${
                         result.results.percentage >= 90 ? 'text-green-600' :
-                        result.results.percentage >= 70 ? 'text-blue-600' :
-                        result.results.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
+                        result.results.percentage >= 80 ? 'text-blue-600' :
+                        result.results.percentage >= 60 ? 'text-yellow-600' :
+                        result.results.percentage > 40 ? 'text-orange-600' : 'text-red-600'
                       }`}>
                         {result.results.percentage}%
                       </span>
                       <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs ${
-                        result.results.percentage >= 60 ? 
+                        result.results.percentage > 40 ? 
                         "bg-green-100 text-green-800 border-green-300" : 
                         "bg-red-100 text-red-800 border-red-300"
                       }`}>

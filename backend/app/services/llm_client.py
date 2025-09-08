@@ -4,6 +4,10 @@ from botocore.config import Config
 from botocore.exceptions import ClientError, BotoCoreError
 from threading import BoundedSemaphore
 from typing import List, Dict, Any
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Limit concurrent InvokeModel calls (tune via env)
 _MAX_CONCURRENCY = int(os.getenv("BEDROCK_MAX_CONCURRENCY", "2"))
@@ -18,8 +22,10 @@ _cfg = Config(
 _client = boto3.client(
     "bedrock-runtime",
     region_name=os.getenv("AWS_DEFAULT_REGION", os.getenv("AWS_REGION", "us-east-1")),
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
     config=_cfg,
-    # Credentials: rely on default provider chain (env/role). Do NOT hardcode.
+    # Credentials: loaded from .env file
 )
 
 def _sleep_backoff(attempt: int, base: float = 0.6, cap: float = 8.0) -> None:

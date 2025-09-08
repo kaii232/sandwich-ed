@@ -1,0 +1,332 @@
+{
+  "_beginner_Week_1___Basic_algebraic_terminology_and_notation": {
+    "title": "Basic algebraic terminology and notation",
+    "content": "Hello, I am Sandwich, an expert AI tutor for this subject. Let's dive into the lesson on basic algebraic terminology and notation.\n\n**Detailed Explanation:**\nAlgebra is a branch of mathematics that deals with the study of variables, equations, and expressions. It's a fundamental building block for more advanced mathematical concepts. In algebra, we use letters (usually x, y, z) to represent unknown quantities or variables. These variables can take on different values, and we use various operations (addition, subtraction, multiplication, division) to manipulate them.\n\nOne of the essential elements in algebra is the algebraic expression. An algebraic expression is a combination of variables, constants (numbers), and operations. For example, 3x + 2y - 5 is an algebraic expression, where 3, 2, and 5 are constants, and x and y are variables. We can perform operations on these expressions to solve for the unknown variables or to simplify the expression.\n\nAnother important concept is the algebraic equation. An algebraic equation is a statement that two algebraic expressions are equal. For instance, the equation 2x + 3 = 11 represents the relationship between the variable x and the constant 11. Solving this equation would involve finding the value of x that satisfies the equation.\n\n**Key Points:**\n- Algebra uses letters (variables) to represent unknown quantities\n- Algebraic expressions are combinations of variables, constants, and operations\n- Algebraic equations are statements that two algebraic expressions are equal\n- Variables can take on different values, and we use operations to manipulate them\n- Solving equations involves finding the value(s) of the variable(s) that make the equation true\n\n**Real-World Examples:**\n1. Calculating the cost of a purchase: If a shirt costs $20 and a pair of pants costs $30, the total cost can be represented as an algebraic expression: 20x + 30y, where x represents the number of shirts and y represents the number of pants.\n2. Determining the age of a person: If a person's age is represented by the variable x, and we know that the person's age is 5 years less than twice their sibling's age, we can write the equation 2y - 5 = x, where y represents the sibling's age.\n3. Calculating the area of a rectangle: The area of a rectangle is given by the formula A = lw, where l represents the length and w represents the width. This can be expressed as an algebraic equation, such as A = 5x, where x represents the length or width of the rectangle.\n\n**Common Mistakes:**\n1. Confusing variables and constants: Students may sometimes treat variables as constants or vice versa, leading to errors in their calculations and problem-solving.\n2. Incorrectly applying operations: Students may struggle with the order of operations (PEMDAS: Parentheses, Exponents, Multiplication, Division, Addition, Subtraction) when working with algebraic expressions.\n3. Struggling to translate real-world problems into algebraic equations: Students may have difficulty identifying the variables and setting up the appropriate equation to represent a given problem.\n\n**Quick Tips:**\n1. Remember that variables can take on different values, while constants have a fixed value.\n2. Practice translating real-world problems into algebraic expressions and equations to improve your problem-solving skills.\n3. Carefully apply the order of operations when simplifying or solving algebraic expressions and equations.\n\nI hope this comprehensive content on basic algebraic terminology and notation has been helpful! Let me know if you have any further questions.",
+    "videos": [
+      {
+        "title": "Introduction to Algebra: Basic Algebraic Terminology and Notation",
+        "channel": "Khan Academy",
+        "url": "https://www.youtube.com/watch?v=RzEo0F8thL4",
+        "description": "This video provides an introduction to basic algebraic terminology and notation, including variables, constants, expressions, and equations. It explains the different parts of an algebraic expression and how to interpret and manipulate them.",
+        "duration": "12 minutes"
+      },
+      {
+        "title": "Algebra Basics: What Are Variables?",
+        "channel": "Crash Course Kids",
+        "url": "https://www.youtube.com/watch?v=gLRWOxKC8uA",
+        "description": "This video explores the concept of variables in algebra, explaining what they are, how they are used, and how they differ from constants. It uses simple examples to illustrate the role of variables in algebraic expressions and equations.",
+        "duration": "8 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:02:15.367468",
+    "last_accessed": "2025-09-08T18:02:40.163069",
+    "cache_key": "_beginner_Week_1___Basic_algebraic_terminology_and_notation"
+  },
+  "_beginner_Week_1___Module_1__Introduction_to_Algebra": {
+    "title": "Module 1: Introduction to Algebra",
+    "content": "Hello, I am Sandwich, an expert AI tutor. Let's dive into the introduction to algebra for beginners.\n\n**Detailed Explanation:**\nAlgebra is a branch of mathematics that deals with the study of variables, equations, and functions. It is a fundamental tool used in various fields, from science and engineering to finance and economics. In this introductory module, we will explore the basic concepts of algebra and how they can be applied to solve real-world problems.\n\nAt its core, algebra involves the manipulation of variables, which are represented by letters (such as x, y, or z) to represent unknown quantities. These variables can be used to create equations, which are mathematical statements that express the relationship between different quantities. By solving these equations, we can determine the value of the unknown variables.\n\nOne of the key aspects of algebra is the use of operations, such as addition, subtraction, multiplication, and division, to manipulate variables and expressions. Students will learn how to perform these operations and apply them to solve a variety of algebraic problems. Additionally, we will cover the concept of functions, which are mathematical relationships between input and output values, and how they can be used to model and analyze real-world phenomena.\n\n**Key Points:**\n- Algebra deals with the study of variables, equations, and functions\n- Variables are represented by letters (e.g., x, y, z) to represent unknown quantities\n- Equations express the relationships between different quantities\n- Algebraic operations (addition, subtraction, multiplication, division) are used to manipulate variables and expressions\n- Functions are mathematical relationships between input and output values\n\n**Real-World Examples:**\n1. Calculating the cost of a purchase: If a shirt costs $20 and you have $50, how much change will you receive?\n2. Determining the speed of a car: If a car travels 300 miles in 5 hours, what is its average speed?\n3. Budgeting for a trip: If you have a budget of $1,000 for a trip and you've already spent $500, how much do you have left to spend?\n\n**Common Mistakes:**\n1. Confusing variables with numbers: Students may struggle to understand that variables represent unknown quantities and cannot be treated the same as numbers.\n2. Incorrectly performing algebraic operations: Students may make mistakes when adding, subtracting, multiplying, or dividing variables and expressions.\n3. Misunderstanding the concept of functions: Students may have difficulty grasping the relationship between input and output values in a function.\n\n**Quick Tips:**\n1. Practice, practice, practice: The more you work through algebraic problems, the more comfortable and proficient you will become.\n2. Visualize the problem: Representing algebraic concepts visually can help you better understand and solve them.\n3. Ask questions: If you're ever unsure about a concept or a step in the problem-solving process, don't hesitate to ask for clarification.\n\nRemember, algebra is a powerful tool that will serve you well in many areas of life. With dedication and a willingness to learn, you can master the fundamental concepts and apply them to solve a wide range of problems. Let's continue exploring the exciting world of algebra together!",
+    "videos": [
+      {
+        "title": "Introduction to Algebra",
+        "channel": "Khan Academy",
+        "url": "https://www.youtube.com/watch?v=NybHckSEQBI",
+        "description": "This video from Khan Academy provides a comprehensive introduction to algebra, covering basic concepts such as variables, expressions, and equations. It explains how algebra is used to solve real-world problems and set the foundation for more advanced mathematical topics.",
+        "duration": "20 minutes"
+      },
+      {
+        "title": "Algebra Basics: What Is Algebra?",
+        "channel": "Crash Course Kids",
+        "url": "https://www.youtube.com/watch?v=NV-Dn14a-Yw",
+        "description": "This video from Crash Course Kids offers a fun and engaging introduction to algebra, explaining what it is, why it's important, and how it's used in everyday life. It covers the basics of variables, expressions, and solving equations in a clear and accessible way.",
+        "duration": "12 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:02:33.226140",
+    "last_accessed": "2025-09-08T18:02:46.722763",
+    "cache_key": "_beginner_Week_1___Module_1__Introduction_to_Algebra"
+  },
+  "_beginner_Week_1__Mastering_the_Basics_Lesson_1__Introduction_to_the_English_Alphabet_and_Pronunciation": {
+    "title": "Lesson 1: Introduction to the English Alphabet and Pronunciation",
+    "content": "Hello, I am Sandwich, an expert AI tutor, and I'm here to guide you through the first lesson of your English language learning journey - an introduction to the English alphabet and pronunciation.\n\n**Detailed Explanation:**\nThe English alphabet consists of 26 letters - 5 vowels (A, E, I, O, U) and 21 consonants. These letters form the building blocks of the English language, and understanding how to properly pronounce them is crucial for effective communication. Each letter has a unique sound, and mastering these sounds will help you speak English more clearly and confidently.\n\nPronunciation in English can be tricky, as there are often inconsistencies between how a word is spelled and how it is pronounced. This is because English has absorbed words from many different languages over the centuries, each with their own unique pronunciation rules. As a beginner, focus on learning the basic sounds of the letters, and gradually build your understanding of the more complex pronunciation patterns.\n\nRemember that pronunciation is a skill that takes time and practice to develop. Don't get discouraged if you struggle at first - with consistent effort and exposure to the language, your pronunciation will steadily improve. Embrace the challenges and enjoy the journey of mastering the English alphabet and sounds.\n\n**Key Points:**\n- The English alphabet consists of 26 letters - 5 vowels and 21 consonants\n- Each letter has a unique sound that must be learned and practiced\n- Pronunciation in English can be tricky due to inconsistencies between spelling and sound\n- Mastering the basic sounds of the letters is the foundation for improving pronunciation\n- Consistent practice and exposure to the language are key to developing strong pronunciation skills\n\n**Real-World Examples:**\n1. The word \"cat\" is spelled with three letters (C, A, T), but the pronunciation is a single sound - \"kat\".\n2. The letter \"G\" can be pronounced differently in words like \"girl\" (hard \"g\" sound) and \"gem\" (soft \"j\" sound).\n3. The letter \"C\" can make either a \"k\" sound (as in \"cat\") or an \"s\" sound (as in \"city\"), depending on the word.\n\n**Common Mistakes:**\n1. Confusing similar-sounding letters, such as \"b\" and \"p\" or \"d\" and \"t\".\n2. Mispronouncing vowel sounds, especially the short vowel sounds (e.g., pronouncing \"cat\" as \"cot\").\n3. Struggling with the different sounds of the same letter (e.g., the \"c\" sound in \"cat\" versus \"city\").\n\n**Quick Tips:**\n1. Listen carefully to native speakers and pay attention to how they pronounce words.\n2. Practice speaking out loud, focusing on clearly articulating each sound.\n3. Use online resources, such as pronunciation guides and audio lessons, to reinforce your learning.\n\nRemember, the English alphabet and pronunciation are just the beginning of your language learning journey. With patience, dedication, and the right guidance, you'll be speaking English fluently in no time. Let's get started!",
+    "videos": [
+      {
+        "title": "The Alphabet Song | Learn the Alphabet | ABC Song for Kids",
+        "channel": "Busy Beavers - ABC Kids TV",
+        "url": "https://www.youtube.com/watch?v=75p-N9YKqNo",
+        "description": "This video teaches the English alphabet through a catchy and engaging song. It helps children learn the letters and their sounds in a fun and memorable way.",
+        "duration": "3 minutes 16 seconds"
+      },
+      {
+        "title": "English Pronunciation Training | Improve Your Accent & Speak Clearly",
+        "channel": "EnglishClass101.com",
+        "url": "https://www.youtube.com/watch?v=2aCTWCjAQdQ",
+        "description": "This video provides a comprehensive introduction to English pronunciation, covering vowel sounds, consonant sounds, and common pronunciation challenges. It offers practical tips and exercises to help learners improve their English speaking skills.",
+        "duration": "12 minutes 34 seconds"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:04:45.470853",
+    "last_accessed": "2025-09-08T18:09:05.286024",
+    "cache_key": "_beginner_Week_1__Mastering_the_Basics_Lesson_1__Introduction_to_the_English_Alphabet_and_Pronunciation"
+  },
+  "_beginner_Week_1__Mastering_the_Basics_Lesson_2__Essential_Vocabulary_for_Greetings_and_Introductions": {
+    "title": "Lesson 2: Essential Vocabulary for Greetings and Introductions",
+    "content": "*Hello there! I'm Sandwich, an expert AI tutor in this subject. Let's dive into the essential vocabulary for greetings and introductions.*\n\n**Detailed Explanation:**\nGreetings and introductions are the foundation of effective communication. They help us establish connections, make a good first impression, and set the tone for our interactions. In this lesson, we'll explore the key vocabulary and phrases you'll need to confidently greet and introduce yourself or others.\n\nGreetings are the polite and friendly ways we acknowledge someone's presence and begin a conversation. Common greetings include \"Hello,\" \"Hi,\" \"Good morning/afternoon/evening,\" and \"How are you?\" These expressions can be used in both formal and informal settings, and they help create a welcoming atmosphere.\n\nIntroductions, on the other hand, are how we formally present ourselves or someone else. They typically include your name, where you're from, and sometimes your occupation or other relevant information. Phrases like \"My name is...\" or \"I'd like to introduce...\" are commonly used to make introductions.\n\nUnderstanding and using the right greetings and introductions can go a long way in building positive relationships and making a great first impression. Whether you're meeting a new colleague, greeting a friend, or introducing yourself to a group, mastering these essential vocabulary words and phrases will help you communicate with confidence and ease.\n\n**Key Points:**\n- Greetings are polite and friendly ways to acknowledge someone's presence and begin a conversation.\n- Common greetings include \"Hello,\" \"Hi,\" \"Good morning/afternoon/evening,\" and \"How are you?\"\n- Introductions are how we formally present ourselves or someone else, typically including your name, where you're from, and other relevant information.\n- Phrases like \"My name is...\" and \"I'd like to introduce...\" are commonly used for introductions.\n- Mastering greetings and introductions can help you build positive relationships and make a great first impression.\n\n**Real-World Examples:**\n1. At a networking event, you approach a group of people and say, \"Hello, my name is Sandwich. It's nice to meet you all.\"\n2. You're meeting a new coworker for the first time and say, \"Good morning! I'm Sandwich, the new marketing assistant. It's a pleasure to meet you.\"\n3. You're introducing your friend to your family and say, \"Mom, Dad, this is my friend, Samantha. She's from New York and works as a graphic designer.\"\n\n**Common Mistakes:**\n1. Using overly informal or casual greetings in professional settings (e.g., \"Hey,\" \"Yo\").\n2. Forgetting to include your name when introducing yourself.\n3. Rushing through introductions without making eye contact or appearing disinterested.\n\n**Quick Tips:**\n1. Tailor your greetings and introductions to the formality of the situation.\n2. Practice introducing yourself and others to become more comfortable and confident.\n3. Remember to smile, make eye contact, and speak clearly when greeting and introducing people.\n\nI hope this comprehensive lesson on essential vocabulary for greetings and introductions has been helpful! Let me know if you have any other questions.",
+    "videos": [
+      {
+        "title": "Greetings and Introductions in English",
+        "channel": "English with Lucy",
+        "url": "https://www.youtube.com/watch?v=VW4Yk_vk4Eo",
+        "description": "This video covers essential English vocabulary and phrases for greeting people and introducing yourself. It includes common greetings, polite introductions, and tips for making a good first impression.",
+        "duration": "12 minutes"
+      },
+      {
+        "title": "How to Introduce Yourself in English",
+        "channel": "Oxford Online English",
+        "url": "https://www.youtube.com/watch?v=eFDPpT_3m7I",
+        "description": "This video teaches effective strategies for introducing yourself in English, including how to start a conversation, share personal information, and make a positive impression. It covers both formal and informal introduction techniques.",
+        "duration": "15 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:05:00.963180",
+    "last_accessed": "2025-09-08T18:09:08.011195",
+    "cache_key": "_beginner_Week_1__Mastering_the_Basics_Lesson_2__Essential_Vocabulary_for_Greetings_and_Introductions"
+  },
+  "_beginner_Week_1__Mastering_the_Basics_Lesson_3__Simple_Grammar__Nouns__Verbs__and_Basic_Sentence_Structure": {
+    "title": "Lesson 3: Simple Grammar: Nouns, Verbs, and Basic Sentence Structure",
+    "content": "Hello there! I'm Sandwich, your expert AI tutor for this lesson on simple grammar. In this lesson, we'll dive into the fundamentals of nouns, verbs, and basic sentence structure. Let's get started!\n\n**Detailed Explanation:**\nNouns and verbs are the building blocks of any sentence. Nouns are words that name people, places, things, or ideas. They are the subjects of a sentence, answering the question \"who\" or \"what.\" Verbs, on the other hand, are action words that describe what the subject is doing. They answer the question \"what is happening?\" \n\nTo create a basic sentence, you need a noun and a verb. For example, \"The dog (noun) runs (verb).\" The noun \"dog\" is the subject, and the verb \"runs\" describes the action. You can also add other elements like adjectives to describe the noun (e.g., \"The big dog runs\") or adverbs to describe the verb (e.g., \"The dog runs quickly\").\n\nUnderstanding the difference between nouns and verbs is crucial because they have different functions in a sentence. Nouns are the \"who\" or \"what,\" while verbs are the \"what's happening.\" Mastering this distinction will help you construct simple, grammatically correct sentences.\n\n**Key Points:**\n- Nouns are words that name people, places, things, or ideas.\n- Verbs are action words that describe what the subject is doing.\n- A basic sentence requires a noun and a verb.\n- Adjectives can be used to describe nouns, and adverbs can be used to describe verbs.\n- Distinguishing between nouns and verbs is essential for building proper sentence structure.\n\n**Real-World Examples:**\n1. \"The cat (noun) jumps (verb) onto the couch.\"\n2. \"My friend (noun) sings (verb) beautifully (adverb) at the concert.\"\n3. \"The tall (adjective) building (noun) stands (verb) proudly in the city.\"\n\n**Common Mistakes:**\n1. Confusing nouns and verbs: For example, saying \"The run (noun) the dog (noun),\" instead of \"The dog (noun) runs (verb).\"\n2. Forgetting to include a verb in a sentence: For example, saying \"The boy (noun) the park (noun),\" instead of \"The boy (noun) plays (verb) in the park (noun).\"\n3. Misusing adjectives and adverbs: For example, saying \"The dog (noun) quickly (adverb) the ball (noun),\" instead of \"The dog (noun) catches (verb) the ball (noun) quickly (adverb).\"\n\nRemember, mastering the basics of nouns, verbs, and sentence structure is essential for building a strong foundation in grammar. Keep practicing, and you'll be constructing clear, grammatically correct sentences in no time!",
+    "videos": [
+      {
+        "title": "Nouns, Verbs, and Basic Sentence Structure",
+        "channel": "Khan Academy",
+        "url": "https://www.youtube.com/watch?v=4A2mWqLUpzw",
+        "description": "This video from Khan Academy provides an overview of the basic parts of speech, including nouns and verbs, and explains how to construct simple sentences using these elements.",
+        "duration": "10 minutes"
+      },
+      {
+        "title": "Parts of Speech: Noun, Verb, Adjective, Adverb",
+        "channel": "Crash Course English Literature",
+        "url": "https://www.youtube.com/watch?v=4Oz7i_7LkXM",
+        "description": "In this Crash Course video, the instructor explains the different parts of speech, including nouns, verbs, adjectives, and adverbs, and how they are used to build sentences.",
+        "duration": "12 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:08:37.304292",
+    "last_accessed": "2025-09-08T18:09:02.468893",
+    "cache_key": "_beginner_Week_1__Mastering_the_Basics_Lesson_3__Simple_Grammar__Nouns__Verbs__and_Basic_Sentence_Structure"
+  },
+  "_beginner_Week_1__Foundations_of_Music_Performance_Introducing_the_art_of_music_performance": {
+    "title": "Introducing the art of music performance",
+    "content": "Hello, I am Sandwich, an expert AI tutor in the art of music performance. In this lesson, we will be introducing the foundations of music performance, which is an essential skill for any aspiring musician.\n\n**Detailed Explanation:**\nMusic performance is the act of bringing a musical composition to life through the use of one's voice or an instrument. It involves a deep understanding of the musical elements, such as rhythm, melody, harmony, and dynamics, as well as the ability to interpret and convey the emotional and artistic intent of the music. Effective music performance requires not only technical proficiency but also a strong connection with the audience and the ability to communicate the music's message.\n\nThe art of music performance is a multifaceted discipline that encompasses various aspects, including stage presence, interpretation, and expression. Performers must develop a keen awareness of their physical and mental state, as well as the ability to control and channel their energy to create a compelling and engaging performance. This involves mastering techniques such as breath control, posture, and stage movement, as well as developing a deep understanding of the musical score and the composer's intentions.\n\nMoreover, music performance is a collaborative art form, often involving the interaction between the performer, the audience, and the musical work itself. Successful performers are able to create a sense of shared experience, drawing the audience into the emotional and artistic journey of the music. This requires a keen understanding of the audience's perspective and the ability to adapt one's performance to connect with the listeners on a deeper level.\n\n**Key Points:**\n- Music performance is the act of bringing a musical composition to life through the use of one's voice or an instrument.\n- Effective music performance requires technical proficiency, interpretation, and the ability to communicate the music's message.\n- Performers must develop a deep understanding of musical elements, stage presence, and the ability to control and channel their energy.\n- Music performance is a collaborative art form that involves the interaction between the performer, the audience, and the musical work.\n- Successful performers are able to create a sense of shared experience and connect with the audience on a deeper level.\n\n**Real-World Examples:**\n1. A classical pianist performing a Beethoven sonata: The pianist must have a deep understanding of the musical score, the composer's intentions, and the technical demands of the piece. They must also be able to interpret the music in a way that conveys the emotional and artistic message to the audience, while maintaining a strong stage presence and connection with the listeners.\n\n2. A singer-songwriter performing an original song: The performer must not only have a strong vocal technique and the ability to play their instrument, but also the ability to interpret the lyrics and melody in a way that resonates with the audience. They must also be able to engage the audience through their stage presence and storytelling abilities.\n\n3. A jazz ensemble performing an improvised piece: The musicians in the ensemble must have a deep understanding of jazz theory, the ability to listen and respond to each other in real-time, and the technical proficiency to execute complex improvisations. They must also be able to create a sense of shared experience with the audience, drawing them into the musical journey.\n\n**Common Mistakes:**\n1. Neglecting the importance of stage presence and connection with the audience: Many beginner performers focus solely on technical proficiency, without considering the importance of engaging the audience and creating a compelling performance.\n\n2. Failing to interpret the musical work: Some performers may simply play or sing the notes without fully understanding the emotional and artistic intent of the music, resulting in a flat and uninspired performance.\n\n3. Lack of preparation and practice: Successful music performance requires extensive preparation and practice, both in terms of technical mastery and interpretation. Failing to put in the necessary time and effort can lead to a subpar performance.\n\nRemember, music performance is an art form that requires a combination of technical skill, musical understanding, and the ability to connect with the audience. By developing these skills and continuously refining your craft, you can become a truly captivating and inspiring performer.",
+    "videos": [
+      {
+        "title": "\"The Fundamentals of Music Performance\"",
+        "channel": "Crash Course",
+        "url": "https://www.youtube.com/watch?v=4NjssV8UuVA",
+        "description": "This Crash Course video provides an introduction to the essential elements of music performance, including rhythm, melody, harmony, and dynamics. It explores how these components work together to create a compelling musical experience.",
+        "duration": "12 minutes"
+      },
+      {
+        "title": "\"The Art of Interpretation in Music Performance\"",
+        "channel": "Khan Academy",
+        "url": "https://www.youtube.com/watch?v=Bb5IgnLlXQU",
+        "description": "In this Khan Academy video, the instructor discusses the importance of interpretation in music performance. It covers topics such as understanding the composer's intent, using musical expression, and developing a personal interpretation of a piece.",
+        "duration": "15 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:10:49.819750",
+    "last_accessed": "2025-09-08T18:11:26.795304",
+    "cache_key": "_beginner_Week_1__Foundations_of_Music_Performance_Introducing_the_art_of_music_performance"
+  },
+  "_beginner_Week_1__Foundations_of_Music_Performance_Understanding_stage_presence_and_body_language": {
+    "title": "Understanding stage presence and body language",
+    "content": "Hello, I'm Sandwich, your expert AI tutor for this lesson on understanding stage presence and body language. As a beginner in the foundations of music performance, this is an essential topic that will help you captivate your audience and deliver a powerful performance.\n\n**Detailed Explanation:**\nStage presence and body language are crucial elements of music performance that go beyond just playing the notes correctly. Your physical presence on stage and the way you carry yourself can significantly impact the audience's experience and perception of your performance. \n\nGood stage presence involves projecting confidence, energy, and connection with the music and the audience. This is achieved through deliberate and expressive body language, such as maintaining eye contact, using open and welcoming gestures, and moving purposefully around the stage. Your body language should reflect the emotions and mood of the music, drawing the audience in and enhancing their enjoyment of the performance.\n\nAdditionally, stage presence is not just about the performer; it's also about creating a dynamic and engaging interaction with the audience. By being aware of your body language and using it to connect with the people watching, you can build a stronger rapport and create a more immersive and memorable performance experience.\n\n**Key Points:**\n- Stage presence is the physical and emotional projection of the performer on stage\n- Effective body language, such as eye contact, gestures, and movement, can enhance the audience's engagement and perception of the performance\n- Stage presence is about creating a dynamic interaction between the performer and the audience\n- Aligning your body language with the mood and emotions of the music can help convey the intended artistic expression\n- Developing strong stage presence takes practice and self-awareness\n\n**Real-World Examples:**\n1. Imagine a classical pianist who sits upright, maintains eye contact with the audience, and uses expressive hand movements to accentuate the dynamics and phrasing of the music. This type of stage presence can captivate the audience and draw them deeper into the performance.\n\n2. In a rock concert, the lead singer might move around the stage, engage the crowd with high-energy gestures, and make direct eye contact with individual audience members. This interactive and energetic stage presence helps to create an exciting and immersive experience for the audience.\n\n3. A jazz saxophonist might sway and move with the rhythm of the music, occasionally closing their eyes and leaning into the instrument, conveying a sense of deep connection and emotional investment in the performance. This body language can enhance the audience's perception of the artist's artistic expression.\n\n**Common Mistakes:**\n1. Staying completely still or stiff on stage, which can make the performance feel disconnected and unappealing to the audience.\n2. Excessive or distracting movements that draw attention away from the music and the intended artistic expression.\n3. Avoiding eye contact with the audience, which can create a barrier and make the performance feel less engaging.\n\nRemember, developing strong stage presence takes time and practice, but it's a crucial aspect of becoming a captivating and memorable music performer. By focusing on your body language and creating a dynamic interaction with the audience, you can elevate your performances and leave a lasting impression.",
+    "videos": [
+      {
+        "title": "The Power of Body Language | Cuddy | TEDxHamilton",
+        "channel": "TED",
+        "url": "https://www.youtube.com/watch?v=Ks-_Mh1QhMc",
+        "description": "In this TED Talk, social psychologist Amy Cuddy discusses how our body language shapes who we are, and how it can affect our confidence and presence on stage.",
+        "duration": "21 minutes"
+      },
+      {
+        "title": "How to Improve Your Stage Presence",
+        "channel": "Crash Course",
+        "url": "https://www.youtube.com/watch?v=_sPVKAlgfrc",
+        "description": "In this Crash Course video, the presenter explores various techniques and strategies for developing a strong stage presence, including body language, eye contact, and vocal delivery.",
+        "duration": "12 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:11:08.646161",
+    "last_accessed": "2025-09-08T18:11:28.128867",
+    "cache_key": "_beginner_Week_1__Foundations_of_Music_Performance_Understanding_stage_presence_and_body_language"
+  },
+  "_beginner_Week_1___Introduction_to_C_Programming": {
+    "title": "Introduction to C Programming",
+    "content": "Hello! I'm Sandwich, an expert AI tutor in the field of C programming. Let's dive into the introduction to C programming.\n\n**Detailed Explanation:**\nC is a powerful and versatile programming language that has been around since the 1970s. It was developed by Dennis Ritchie at Bell Labs and has since become one of the most widely used languages in the world. C is known for its efficiency, low-level control, and portability, making it a popular choice for a wide range of applications, from operating systems and device drivers to embedded systems and game development.\n\nOne of the key features of C is its simplicity. The language has a straightforward syntax and a small set of keywords, making it relatively easy to learn, even for beginners. C is also a procedural language, which means that programs are written as a series of instructions or functions that perform specific tasks. This makes C a great choice for learning the fundamentals of programming, as it provides a solid foundation for understanding more complex languages and concepts.\n\nAnother important aspect of C is its low-level nature. C provides direct access to the computer's memory and hardware, allowing programmers to manipulate data at a very granular level. This makes C a popular choice for systems programming, where performance and control are critical. However, this low-level control also comes with a greater responsibility for the programmer, as they must carefully manage memory and handle errors to avoid common pitfalls like memory leaks and segmentation faults.\n\n**Key Points:**\n- C is a procedural, general-purpose programming language developed in the 1970s.\n- C is known for its efficiency, low-level control, and portability.\n- C has a straightforward syntax and a small set of keywords, making it relatively easy to learn.\n- C provides direct access to the computer's memory and hardware, allowing for low-level control.\n- C is widely used in a variety of applications, from operating systems to embedded systems.\n\n**Real-World Examples:**\n1. **Operating Systems**: C is the primary language used in the development of many operating systems, including Linux, macOS, and Windows.\n2. **Embedded Systems**: C is often used in the development of embedded systems, such as those found in household appliances, automobiles, and industrial equipment.\n3. **Game Development**: C is a popular choice for game development, particularly for low-level game engines and performance-critical components.\n\n**Common Mistakes:**\n1. **Memory Management**: One of the most common mistakes in C programming is improper memory management, leading to issues like memory leaks and segmentation faults.\n2. **Undefined Behavior**: C allows for certain undefined behaviors, which can lead to unpredictable program behavior. Programmers must be vigilant in avoiding these situations.\n3. **Array Indexing**: Off-by-one errors in array indexing are a common mistake, often leading to unexpected behavior or even crashes.\n\nRemember, as a beginner, it's important to take the time to understand the fundamentals of C programming and to practice regularly. With dedication and persistence, you'll be well on your way to becoming a proficient C programmer.",
+    "videos": [
+      {
+        "title": "C Programming Tutorial for Beginners",
+        "channel": "freeCodeCamp.org",
+        "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0",
+        "description": "This comprehensive C programming tutorial covers the basics of the C language, including data types, functions, loops, arrays, and more. It's designed for beginners and provides a solid foundation for learning C programming.",
+        "duration": "4 hours 20 minutes"
+      },
+      {
+        "title": "C Programming Language - Intro",
+        "channel": "The Cherno",
+        "url": "https://www.youtube.com/watch?v=Rub-JsjMhWY",
+        "description": "This video provides an introduction to the C programming language, covering its history, features, and how it differs from other programming languages. It's a great starting point for those new to C programming.",
+        "duration": "30 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:14:26.760175",
+    "last_accessed": "2025-09-08T19:46:15.867879",
+    "cache_key": "_beginner_Week_1___Introduction_to_C_Programming"
+  },
+  "_beginner_Week_1___History_and_overview_of_the_C_language": {
+    "title": "History and overview of the C language",
+    "content": "Hello, I am Sandwich, an expert AI tutor for this subject. Let's dive into the history and overview of the C programming language.\n\n**Detailed Explanation:**\nThe C programming language was developed in the early 1970s by Dennis Ritchie at Bell Labs. It was designed as a general-purpose language that could be used for a wide range of applications, from system programming to application development. C was initially created to write the Unix operating system, and it quickly became one of the most widely used programming languages in the world.\n\nOne of the key features of C is its low-level, close-to-the-hardware approach. C provides direct access to computer memory and allows programmers to manipulate data at a very granular level. This makes C highly efficient and performant, making it a popular choice for system-level programming, embedded systems, and other applications where performance is critical.\n\nC is also known for its simplicity and portability. The language has a relatively small set of keywords and syntax rules, making it easy to learn and understand. Additionally, C code can be easily ported to different hardware and software platforms, making it a versatile choice for cross-platform development.\n\n**Key Points:**\n- C was developed in the early 1970s by Dennis Ritchie at Bell Labs.\n- C is a general-purpose, low-level programming language designed for system programming and applications development.\n- C provides direct access to computer memory and allows for efficient, low-level manipulation of data.\n- C is known for its simplicity, portability, and performance, making it a popular choice for a wide range of applications.\n- C has a relatively small set of keywords and syntax rules, making it easy to learn and understand.\n\n**Real-World Examples:**\n1. **Operating Systems**: C is widely used in the development of operating systems, such as Unix, Linux, and Windows. The core of these systems is often written in C, providing a stable and efficient foundation.\n2. **Embedded Systems**: C is a popular language for programming embedded systems, such as microcontrollers, sensors, and other hardware devices. Its low-level capabilities and performance make it well-suited for these types of applications.\n3. **Game Development**: Many classic and modern video games have been developed using C, as it provides the performance and control needed for creating high-quality gaming experiences.\n\n**Common Mistakes:**\n1. **Pointer Misuse**: C's use of pointers can be a source of confusion for beginners, leading to common mistakes like dereferencing null pointers or accessing memory outside of allocated bounds.\n2. **Memory Leaks**: Improper memory management in C can result in memory leaks, where allocated memory is not properly freed, leading to performance issues and potential crashes.\n3. **Lack of Bounds Checking**: C does not perform automatic bounds checking on array and string operations, which can lead to buffer overflow vulnerabilities if not handled carefully.\n\nRemember, as you begin your journey with C, it's important to focus on understanding the language's fundamentals, practicing good programming habits, and being mindful of potential pitfalls. With dedication and persistence, you'll be well on your way to becoming a proficient C programmer.",
+    "videos": [
+      {
+        "title": "The History of C Programming Language",
+        "channel": "Crash Course Computer Science",
+        "url": "https://www.youtube.com/watch?v=de2Hsvxaf8M",
+        "description": "This video provides a comprehensive overview of the history and development of the C programming language, from its origins in the 1970s to its widespread adoption and influence on modern programming.",
+        "duration": "12 minutes"
+      },
+      {
+        "title": "C Programming Language: History and Overview",
+        "channel": "Khan Academy",
+        "url": "https://www.youtube.com/watch?v=Rk-_syQluvc",
+        "description": "This video gives a detailed introduction to the C programming language, including its history, key features, and the reasons for its popularity and widespread use in various applications.",
+        "duration": "15 minutes"
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T18:15:08.534969",
+    "last_accessed": "2025-09-08T18:15:08.562260",
+    "cache_key": "_beginner_Week_1___History_and_overview_of_the_C_language"
+  },
+  "_beginner_Week_1___Module_1__Introduction_to_Basic_Math_Operations": {
+    "title": "Module 1: Introduction to Basic Math Operations",
+    "content": "Hello! I am Sandwich, an expert AI tutor, and I'm here to guide you through the introductory module on basic math operations.\n\n**Detailed Explanation:**\nIn this module, we'll be exploring the fundamental mathematical operations that form the building blocks of all numerical calculations. These operations include addition, subtraction, multiplication, and division. Understanding these core concepts is crucial as they underpin more advanced mathematical skills and problem-solving techniques.\n\nLet's start with addition. Addition is the process of combining two or more numbers to find their sum. For example, if you have 3 apples and your friend gives you 2 more, the total number of apples you have is 5 (3 + 2 = 5). Subtraction, on the other hand, is the opposite of addition. It involves taking away a number from another number to find the difference. For instance, if you had 10 cookies and ate 4 of them, you would have 6 cookies left (10 - 4 = 6).\n\nMultiplication is a way of repeated addition. It allows you to find the total number of items when you have a certain number of groups, each with the same amount. For example, if you have 3 boxes, each with 5 pencils, the total number of pencils is 15 (3 x 5 = 15). Division is the inverse of multiplication, where you divide a number by another number to find how many times the divisor goes into the dividend. Imagine you have 12 cookies and you want to share them equally with 3 friends. Each person would get 4 cookies (12 ÷ 3 = 4).\n\n**Key Points:**\n- Addition combines two or more numbers to find their sum.\n- Subtraction takes away a number from another number to find the difference.\n- Multiplication is a way of repeated addition, finding the total number of items in groups of the same size.\n- Division is the inverse of multiplication, dividing a number by another number to find how many times the divisor goes into the dividend.\n\n**Real-World Examples:**\n1. Grocery shopping: When you go to the grocery store, you might need to add the prices of the items in your cart to find the total cost. Subtraction can be used to calculate the change you receive after paying.\n2. Baking: In a recipe for chocolate chip cookies, you might need to multiply the number of cookies per batch by the number of batches to find the total number of cookies.\n3. Sharing snacks: If you have a bag of 20 candies and want to share them equally with 4 friends, you can use division to determine that each person will receive 5 candies.\n\n**Common Mistakes:**\n1. Confusing addition and subtraction: Students sometimes mix up the order of operations, subtracting when they should be adding, or vice versa.\n2. Forgetting to \"carry\" or \"borrow\" in multi-digit calculations: When dealing with larger numbers, it's important to remember to carry or borrow appropriately to ensure accurate results.\n3. Misunderstanding the relationship between multiplication and division: Some students struggle to grasp that division is the inverse operation of multiplication, and vice versa.\n\nRemember, practice is key to mastering these basic math operations. Don't hesitate to ask questions or seek additional support if you encounter any difficulties along the way. I'm here to help you succeed!",
+    "videos": [
+      {
+        "title": "Algebra Basics: What Is Algebra? - Math Antics",
+        "channel": "mathantics",
+        "description": "This video gives an overview of Algebra and introduces the concepts of unknown values and variables. It also explains that ...",
+        "url": "https://www.youtube.com/watch?v=NybHckSEQBI",
+        "video_id": "NybHckSEQBI",
+        "thumbnail": "https://i.ytimg.com/vi/NybHckSEQBI/mqdefault.jpg",
+        "published": "2015-05-22",
+        "duration": "12 min",
+        "view_count": 9718109,
+        "relevance_score": 7.5
+      },
+      {
+        "title": "Linear Algebra - Matrix Operations",
+        "channel": "Postcard Professor",
+        "description": "A quick review of basic matrix operations.",
+        "url": "https://www.youtube.com/watch?v=p48uw2vFWQs",
+        "video_id": "p48uw2vFWQs",
+        "thumbnail": "https://i.ytimg.com/vi/p48uw2vFWQs/mqdefault.jpg",
+        "published": "2020-08-18",
+        "duration": "7 min",
+        "view_count": 692716,
+        "relevance_score": 6.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T19:48:20.649572",
+    "last_accessed": "2025-09-08T19:48:20.681448",
+    "cache_key": "_beginner_Week_1___Module_1__Introduction_to_Basic_Math_Operations"
+  },
+  "_beginner_Week_1___Addition__subtraction__multiplication__and_division": {
+    "title": "Addition, subtraction, multiplication, and division",
+    "content": "Hello, I'm Sandwich, an expert AI tutor here to guide you through the fundamental mathematical operations of addition, subtraction, multiplication, and division.\n\n**Detailed Explanation:**\nIn mathematics, the four basic operations are addition, subtraction, multiplication, and division. These operations form the foundation for all other mathematical calculations and are essential for everyday problem-solving.\n\nAddition is the process of combining two or more numbers to find their sum. For example, if you have 3 apples and your friend gives you 2 more, the total number of apples you have is 5, which is the result of adding 3 and 2 together. Subtraction, on the other hand, is the opposite of addition. It involves taking away one number from another to find the difference. If you have 7 pencils and you give 3 to your classmate, you will have 4 pencils left, which is the result of subtracting 3 from 7.\n\nMultiplication is a way of adding a number to itself a certain number of times. For instance, if you have 3 bags, each containing 4 oranges, the total number of oranges you have is 12, which is the result of multiplying 3 by 4. Division is the process of splitting a number into equal parts or groups. If you have 12 cookies and you want to share them equally with 3 friends, each person will get 4 cookies, which is the result of dividing 12 by 3.\n\n**Key Points:**\n- Addition combines two or more numbers to find their sum.\n- Subtraction takes away one number from another to find the difference.\n- Multiplication adds a number to itself a certain number of times.\n- Division splits a number into equal parts or groups.\n- These four operations are the foundation of all mathematical calculations.\n\n**Real-World Examples:**\n1. Addition: You have 5 pencils and your friend gives you 3 more. How many pencils do you have in total? The answer is 8, which is the result of adding 5 and 3.\n2. Subtraction: You have 10 cookies, and you eat 4 of them. How many cookies do you have left? The answer is 6, which is the result of subtracting 4 from 10.\n3. Multiplication: You have 2 bags, and each bag contains 6 apples. How many apples do you have in total? The answer is 12, which is the result of multiplying 2 by 6.\n\n**Common Mistakes:**\n1. Confusing addition and subtraction, or multiplication and division.\n2. Forgetting to \"carry over\" or \"borrow\" when performing multi-digit operations.\n3. Misaligning numbers when setting up a calculation, leading to incorrect results.\n\nRemember, practice is key to mastering these fundamental mathematical operations. Don't be afraid to ask questions and seek help if you encounter any difficulties. With consistent effort and the right guidance, you'll soon become an expert in these essential skills.",
+    "videos": [
+      {
+        "title": "Math Antics - Order Of Operations",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=dAgfnK528RA",
+        "video_id": "dAgfnK528RA",
+        "thumbnail": "https://i.ytimg.com/vi/dAgfnK528RA/mqdefault.jpg",
+        "published": "2012-04-16",
+        "duration": "9 min",
+        "view_count": 8980212,
+        "relevance_score": 0.0
+      },
+      {
+        "title": "Math Antics - Multi-Digit Subtraction",
+        "channel": "mathantics",
+        "description": "Learn More at mathantics.com Visit http://www.mathantics.com for more Free math videos and additional subscription based ...",
+        "url": "https://www.youtube.com/watch?v=Y6M89-6106I",
+        "video_id": "Y6M89-6106I",
+        "thumbnail": "https://i.ytimg.com/vi/Y6M89-6106I/mqdefault.jpg",
+        "published": "2012-04-16",
+        "duration": "6 min",
+        "view_count": 5165224,
+        "relevance_score": 0.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T19:48:56.480669",
+    "last_accessed": "2025-09-08T19:48:56.512970",
+    "cache_key": "_beginner_Week_1___Addition__subtraction__multiplication__and_division"
+  },
+  "_beginner_Week_1__Grammar_Essentials_Introduction_to_the_parts_of_speech__nouns__verbs__adjectives__adverbs__etc__": {
+    "title": "Introduction to the parts of speech (nouns, verbs, adjectives, adverbs, etc.)",
+    "content": "Hello there! I'm Sandwich, an expert AI tutor, and I'm excited to help you learn about the essential parts of speech. In this introductory lesson, we'll explore the building blocks of language and how understanding them can improve your communication skills.\n\n**Detailed Explanation:**\nThe parts of speech are the different categories of words in a language, each serving a specific function. These include nouns, verbs, adjectives, adverbs, pronouns, prepositions, conjunctions, and interjections. Nouns are words that name people, places, things, or ideas, such as \"teacher,\" \"city,\" \"book,\" or \"happiness.\" Verbs are action words that describe what is happening, like \"run,\" \"think,\" or \"create.\" Adjectives are words that describe or modify nouns, such as \"big,\" \"red,\" or \"intelligent.\" Adverbs, on the other hand, modify verbs, adjectives, or other adverbs, and they often end in \"-ly,\" like \"quickly,\" \"carefully,\" or \"very.\"\n\nPronouns, such as \"I,\" \"you,\" \"he,\" and \"they,\" stand in for nouns to avoid repetition. Prepositions, like \"in,\" \"on,\" and \"under,\" show the relationship between a noun or pronoun and other parts of the sentence. Conjunctions, such as \"and,\" \"but,\" and \"because,\" connect words, phrases, or clauses. Lastly, interjections are words or phrases that express emotion, like \"Wow!\" or \"Ouch!\"\n\nUnderstanding the parts of speech is crucial for constructing clear, grammatically correct sentences and effectively communicating your ideas. By recognizing the different roles that words play in a sentence, you can become a more confident and articulate speaker and writer.\n\n**Key Points:**\n- The parts of speech are the different categories of words in a language, each with a specific function.\n- The main parts of speech are nouns, verbs, adjectives, adverbs, pronouns, prepositions, conjunctions, and interjections.\n- Nouns name people, places, things, or ideas, while verbs describe actions or states of being.\n- Adjectives modify nouns, and adverbs modify verbs, adjectives, or other adverbs.\n- Pronouns stand in for nouns, prepositions show relationships, conjunctions connect parts of a sentence, and interjections express emotion.\n\n**Real-World Examples:**\n1. Nouns: \"The teacher assigned a research paper on the history of the city.\" (teacher, paper, city)\n2. Verbs: \"The students read the book carefully and then discussed their thoughts with the class.\" (read, discussed)\n3. Adjectives and Adverbs: \"The tall, intelligent student quickly finished the difficult assignment.\" (tall, intelligent, quickly, difficult)\n\n**Common Mistakes:**\n1. Confusing nouns and verbs: \"I will dog the park\" (correct: \"I will walk the dog in the park\")\n2. Misusing adjectives and adverbs: \"The runner fast completed the race\" (correct: \"The runner completed the race quickly\")\n3. Forgetting to use pronouns: \"John saw John's friend at the park\" (correct: \"John saw his friend at the park\")\n\nRemember, understanding the parts of speech is the foundation for building strong, grammatically correct sentences. With practice and patience, you'll be on your way to becoming a more confident and effective communicator. Let me know if you have any other questions!",
+    "videos": [
+      {
+        "title": "The 8 Parts of Speech in English Grammar (+ Free PDF &amp; Quiz)",
+        "channel": "English with Lucy",
+        "description": "Do you know the 8 parts of speech? Nouns, verbs, adjectives, adverbs, pronouns, conjunctions and prepositions? *GET THE ...",
+        "url": "https://www.youtube.com/watch?v=chjmnCSPnbw",
+        "video_id": "chjmnCSPnbw",
+        "thumbnail": "https://i.ytimg.com/vi/chjmnCSPnbw/mqdefault.jpg",
+        "published": "2021-09-30",
+        "duration": "15 min",
+        "view_count": 1991293,
+        "relevance_score": 9.0
+      },
+      {
+        "title": "PARTS OF SPEECH 📚 | English Grammar | Learn with examples",
+        "channel": "Learn Easy English",
+        "description": "We hope you enjoyed this video! If you have any questions please ask in the comments.",
+        "url": "https://www.youtube.com/watch?v=0l69KEx7GQo",
+        "video_id": "0l69KEx7GQo",
+        "thumbnail": "https://i.ytimg.com/vi/0l69KEx7GQo/mqdefault.jpg",
+        "published": "2019-09-06",
+        "duration": "6 min",
+        "view_count": 10570787,
+        "relevance_score": 6.0
+      }
+    ],
+    "duration_estimate": "15-20 minutes",
+    "difficulty": "beginner",
+    "generated_at": "2025-09-08T20:19:31.003589",
+    "last_accessed": "2025-09-08T20:19:31.042129",
+    "cache_key": "_beginner_Week_1__Grammar_Essentials_Introduction_to_the_parts_of_speech__nouns__verbs__adjectives__adverbs__etc__"
+  }
+}
