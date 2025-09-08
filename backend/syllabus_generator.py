@@ -8,6 +8,7 @@ import boto3
 from botocore.exceptions import ClientError, BotoCoreError
 import requests
 from urllib.parse import quote_plus
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -18,7 +19,8 @@ load_dotenv()
 class SyllabusGenerator:
     def __init__(self):
         self.client = self._get_bedrock_client()
-        self.youtube_api_key = os.getenv("YOUTUBE_API_KEY")  # Optional for enhanced search
+        self.youtube_api_key = os.getenv("YOUTUBE_API_KEY", "AIzaSyBtUxbZLYX0-LE1qyOecXi2GO-nZJ-T5rY")  # Your API key as fallback
+        self.lesson_content_file = "lesson_content_cache.json"  # Cache for lesson content
     
     def _get_bedrock_client(self):
         """Initialize Bedrock client"""
@@ -32,6 +34,37 @@ class SyllabusGenerator:
         except Exception as e:
             logger.error(f"Failed to initialize Bedrock client: {str(e)}")
             raise
+    
+    def _load_lesson_content_cache(self) -> Dict:
+        """Load cached lesson content from file"""
+        try:
+            if os.path.exists(self.lesson_content_file):
+                with open(self.lesson_content_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading lesson content cache: {str(e)}")
+        return {}
+    
+    def _save_lesson_content_cache(self, cache: Dict) -> None:
+        """Save lesson content cache to file"""
+        try:
+            with open(self.lesson_content_file, 'w', encoding='utf-8') as f:
+                json.dump(cache, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Error saving lesson content cache: {str(e)}")
+    
+    def _generate_lesson_cache_key(self, lesson_info: Dict, course_context: Dict) -> str:
+        """Generate a unique cache key for lesson content"""
+        lesson_title = lesson_info.get('title', '')
+        topic = course_context.get('topic', '')
+        difficulty = course_context.get('difficulty', 'beginner')
+        week_title = lesson_info.get('week_title', '')
+        
+        # Create a unique key based on the lesson details
+        cache_key = f"{topic}_{difficulty}_{week_title}_{lesson_title}"
+        # Clean the key to be filesystem-safe
+        cache_key = re.sub(r'[^\w\-_]', '_', cache_key)
+        return cache_key
     
     def _ask_claude(self, messages: list, temperature: float = 0.7, max_tokens: int = 1200) -> str:
         """Send request to Claude"""
@@ -49,7 +82,8 @@ class SyllabusGenerator:
             return response_body['content'][0]['text'].strip()
         except Exception as e:
             logger.error(f"Error calling Claude: {str(e)}")
-            return "I'm having trouble generating content right now. Please try again."
+            logger.error(f"AWS Credentials - Access Key: {self.client._client_config.region_name if hasattr(self.client, '_client_config') else 'Not found'}")
+            return "⚠️ FALLBACK CONTENT: I'm having trouble generating content right now. Please try again."
     
     def parse_course_structure(self, syllabus_text: str) -> List[Dict]:
         """Parse the generated syllabus into structured weeks/modules"""
@@ -281,7 +315,30 @@ class SyllabusGenerator:
         return processed_title
 
     def generate_lesson_content(self, lesson_info: Dict, course_context: Dict) -> Dict:
-        """Generate detailed content for a specific lesson point"""
+        """Generate detailed content for a specific lesson point with caching"""
+        
+        # Generate cache key for this lesson
+        cache_key = self._generate_lesson_cache_key(lesson_info, course_context)
+        
+        # Load existing cache
+        content_cache = self._load_lesson_content_cache()
+        
+        # Check if content already exists in cache
+        if cache_key in content_cache:
+            logger.info(f"Loading cached lesson content for: {lesson_info.get('title', '')}")
+            cached_content = content_cache[cache_key]
+            
+            # Add current timestamp for when it was accessed
+            cached_content['last_accessed'] = datetime.now().isoformat()
+            
+            # Save updated cache with new access time
+            content_cache[cache_key] = cached_content
+            self._save_lesson_content_cache(content_cache)
+            
+            return cached_content
+        
+        # Generate new content if not in cache
+        logger.info(f"Generating new lesson content for: {lesson_info.get('title', '')}")
         
         content_prompt = f"""You are Sandwich, an expert AI tutor in {course_context.get('topic', 'this subject')}. 
 
@@ -300,20 +357,50 @@ Create detailed content including:
 2. **Key Points** (4-5 bullet points of essential information)  
 3. **Real-World Examples** (2-3 practical examples)
 4. **Common Mistakes** (2-3 things students often get wrong)
-5. **Quick Tips** (2-3 helpful tips for understanding/remembering)
 
 Make it engaging and appropriate for {course_context.get('difficulty', 'beginner')} level students."""
 
         messages = [{"role": "user", "content": content_prompt}]
         detailed_content = self._ask_claude(messages, temperature=0.6, max_tokens=1000)
         
-        return {
+        # Create the lesson content object
+        lesson_content = {
             "title": lesson_info.get('title', ''),
             "content": detailed_content,
             "videos": self._get_youtube_videos(lesson_info.get('title', ''), course_context),
             "duration_estimate": "15-20 minutes",
-            "difficulty": course_context.get('difficulty', 'beginner')
+            "difficulty": course_context.get('difficulty', 'beginner'),
+            "generated_at": datetime.now().isoformat(),
+            "last_accessed": datetime.now().isoformat(),
+            "cache_key": cache_key
         }
+        
+        # Save to cache
+        content_cache[cache_key] = lesson_content
+        self._save_lesson_content_cache(content_cache)
+        
+        logger.info(f"Cached new lesson content with key: {cache_key}")
+        
+        return lesson_content
+
+    def clear_lesson_content_cache(self) -> None:
+        """Clear all cached lesson content"""
+        try:
+            if os.path.exists(self.lesson_content_file):
+                os.remove(self.lesson_content_file)
+                logger.info("Lesson content cache cleared")
+        except Exception as e:
+            logger.error(f"Error clearing lesson content cache: {str(e)}")
+    
+    def get_cached_lesson_count(self) -> int:
+        """Get the number of cached lessons"""
+        cache = self._load_lesson_content_cache()
+        return len(cache)
+    
+    def list_cached_lessons(self) -> List[str]:
+        """List all cached lesson keys"""
+        cache = self._load_lesson_content_cache()
+        return list(cache.keys())
 
     def _get_youtube_videos(self, lesson_title: str, course_context: Dict, max_videos: int = 2) -> List[Dict]:
         """Get YouTube videos using API or AI suggestions"""
@@ -324,73 +411,241 @@ Make it engaging and appropriate for {course_context.get('difficulty', 'beginner
             return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
 
     def _search_youtube_api(self, lesson_title: str, course_context: Dict, max_videos: int) -> List[Dict]:
-        """Search YouTube using the actual YouTube Data API"""
+        """Search YouTube using the actual YouTube Data API for direct video links"""
         try:
-            # Build search query
+            # Build search query for better relevance
             topic = course_context.get('topic', '')
-            difficulty = course_context.get('difficulty', '')
+            difficulty = course_context.get('difficulty', 'beginner')
             
-            search_terms = [topic, lesson_title]
+            # Create focused search terms
+            search_terms = []
+            if topic:
+                search_terms.append(topic)
+            
+            # Clean and add lesson title
+            lesson_clean = lesson_title.replace('Lesson', '').replace('Week', '').strip()
+            search_terms.append(lesson_clean)
+            
+            # Add educational modifiers based on difficulty
             if 'beginner' in difficulty.lower():
-                search_terms.append('tutorial basics')
+                search_terms.extend(['tutorial', 'explained', 'basics'])
+            elif 'intermediate' in difficulty.lower():
+                search_terms.extend(['guide', 'walkthrough'])
             elif 'advanced' in difficulty.lower():
-                search_terms.append('advanced')
+                search_terms.extend(['advanced', 'deep dive', 'masterclass'])
+            else:
+                search_terms.append('tutorial')
                 
-            query = ' '.join(search_terms)
+            query = ' '.join(search_terms[:6])  # Limit to avoid overly long queries
+            logger.info(f"YouTube search query: {query}")
             
-            # YouTube API request
-            url = "https://www.googleapis.com/youtube/v3/search"
-            params = {
+            # YouTube API search request
+            search_url = "https://www.googleapis.com/youtube/v3/search"
+            search_params = {
                 'part': 'snippet',
                 'q': query,
                 'type': 'video',
-                'maxResults': max_videos,
+                'maxResults': max_videos * 2,  # Get more results to filter better ones
                 'order': 'relevance',
-                'videoDuration': 'medium',  # 4-20 minutes
+                'videoDuration': 'medium',  # 4-20 minutes videos
+                'videoDefinition': 'high',
+                'key': self.youtube_api_key,
+                'regionCode': 'US',  # Focus on English content
+                'relevanceLanguage': 'en'
+            }
+            
+            search_response = requests.get(search_url, params=search_params, timeout=10)
+            search_data = search_response.json()
+            
+            if 'error' in search_data:
+                logger.error(f"YouTube API error: {search_data['error']}")
+                return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
+            
+            if 'items' not in search_data or len(search_data['items']) == 0:
+                logger.warning("No YouTube videos found for query")
+                return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
+            
+            # Get video details for duration filtering
+            video_ids = [item['id']['videoId'] for item in search_data['items']]
+            details_url = "https://www.googleapis.com/youtube/v3/videos"
+            details_params = {
+                'part': 'contentDetails,statistics',
+                'id': ','.join(video_ids),
                 'key': self.youtube_api_key
             }
             
-            response = requests.get(url, params=params)
-            data = response.json()
+            details_response = requests.get(details_url, params=details_params, timeout=10)
+            details_data = details_response.json()
+            
+            # Create duration lookup
+            duration_lookup = {}
+            if 'items' in details_data:
+                for item in details_data['items']:
+                    duration_lookup[item['id']] = {
+                        'duration': item['contentDetails']['duration'],
+                        'view_count': int(item['statistics'].get('viewCount', 0))
+                    }
             
             videos = []
-            if 'items' in data:
-                for item in data['items']:
-                    videos.append({
-                        'title': item['snippet']['title'],
-                        'channel': item['snippet']['channelTitle'],
-                        'description': item['snippet']['description'][:150] + '...',
-                        'url': f"https://www.youtube.com/watch?v={item['id']['videoId']}",
-                        'thumbnail': item['snippet']['thumbnails']['medium']['url'],
-                        'published': item['snippet']['publishedAt'][:10]
-                    })
+            for item in search_data['items']:
+                video_id = item['id']['videoId']
+                details = duration_lookup.get(video_id, {})
+                
+                # Parse duration (PT15M30S format)
+                duration_str = details.get('duration', 'PT0S')
+                duration_minutes = self._parse_youtube_duration(duration_str)
+                
+                # Filter: prefer videos between 5-25 minutes for educational content
+                if duration_minutes < 3 or duration_minutes > 60:
+                    continue
+                
+                # Skip if very low view count (likely poor quality)
+                if details.get('view_count', 0) < 100:
+                    continue
+                
+                video_data = {
+                    'title': item['snippet']['title'],
+                    'channel': item['snippet']['channelTitle'],
+                    'description': item['snippet']['description'][:200] + ('...' if len(item['snippet']['description']) > 200 else ''),
+                    'url': f"https://www.youtube.com/watch?v={video_id}",
+                    'video_id': video_id,
+                    'thumbnail': item['snippet']['thumbnails'].get('medium', {}).get('url', ''),
+                    'published': item['snippet']['publishedAt'][:10],
+                    'duration': f"{duration_minutes} min",
+                    'view_count': details.get('view_count', 0),
+                    'relevance_score': self._calculate_relevance(item['snippet'], lesson_title, topic)
+                }
+                
+                videos.append(video_data)
             
-            return videos
+            # Sort by relevance score and view count, then limit results
+            videos.sort(key=lambda x: (x['relevance_score'], x['view_count']), reverse=True)
+            filtered_videos = videos[:max_videos]
+            
+            logger.info(f"Found {len(filtered_videos)} relevant YouTube videos")
+            return filtered_videos
             
         except Exception as e:
             logger.error(f"YouTube API error: {str(e)}")
+            # Fallback to AI suggestions
             return self._generate_video_suggestions_ai(lesson_title, course_context, max_videos)
+    
+    def _parse_youtube_duration(self, duration_str: str) -> int:
+        """Parse YouTube duration format (PT15M30S) to minutes"""
+        try:
+            import re
+            # Extract hours, minutes, seconds
+            pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
+            match = re.match(pattern, duration_str)
+            if not match:
+                return 0
+                
+            hours = int(match.group(1) or 0)
+            minutes = int(match.group(2) or 0)
+            seconds = int(match.group(3) or 0)
+            
+            total_minutes = hours * 60 + minutes + (seconds / 60)
+            return int(total_minutes)
+        except:
+            return 10  # Default fallback
+    
+    def _calculate_relevance(self, snippet: Dict, lesson_title: str, topic: str) -> float:
+        """Calculate relevance score for video ranking"""
+        score = 0.0
+        
+        title = snippet.get('title', '').lower()
+        description = snippet.get('description', '').lower()
+        channel = snippet.get('channelTitle', '').lower()
+        
+        lesson_words = lesson_title.lower().split()
+        topic_words = topic.lower().split()
+        
+        # Title relevance (highest weight)
+        for word in lesson_words + topic_words:
+            if len(word) > 3:  # Skip short words
+                if word in title:
+                    score += 3.0
+                elif word in description:
+                    score += 1.0
+        
+        # Educational channel bonus
+        educational_channels = [
+            'khan academy', 'crash course', '3blue1brown', 'professor', 'mit',
+            'stanford', 'harvard', 'freecodecamp', 'programming', 'tutorial',
+            'academy', 'university', 'college', 'education'
+        ]
+        
+        for edu_term in educational_channels:
+            if edu_term in channel:
+                score += 2.0
+                break
+        
+        # Educational keywords bonus
+        educational_keywords = [
+            'tutorial', 'explained', 'guide', 'course', 'lesson', 
+            'introduction', 'basics', 'fundamentals', 'walkthrough'
+        ]
+        
+        for keyword in educational_keywords:
+            if keyword in title:
+                score += 1.5
+        
+        return score
 
     def _generate_video_suggestions_ai(self, lesson_title: str, course_context: Dict, max_videos: int) -> List[Dict]:
-        """Generate realistic YouTube video suggestions using AI"""
+        """Generate YouTube search URLs targeting relevant educational content"""
         
-        prompt = f"""You are an expert at finding educational YouTube videos. For the lesson "{lesson_title}" in {course_context.get('topic', '')}, suggest {max_videos} REAL YouTube videos that actually exist and would be helpful.
-
-For each video, provide:
-- **Title:** [Exact video title as it appears on YouTube]
-- **Channel:** [Actual channel name - use well-known educational channels]
-- **URL:** [Actual YouTube URL if you know it, or realistic search URL]
-- **Description:** [Brief description of video content]
-- **Duration:** [Realistic duration]
-
-Use channels like: Khan Academy, Crash Course, 3Blue1Brown, Professor Leonard, StatQuest, etc. for educational content.
-
-Format each video clearly separated."""
-
-        messages = [{"role": "user", "content": prompt}]
-        response = self._ask_claude(messages, temperature=0.7, max_tokens=400)
+        # Create focused search queries for better results
+        topic = course_context.get('topic', '')
+        difficulty = course_context.get('difficulty', 'beginner')
         
-        return self._parse_video_suggestions(response, lesson_title, course_context)
+        videos = []
+        
+        # Generate multiple targeted search queries
+        search_queries = []
+        
+        # Query 1: Basic lesson + topic
+        query1 = f"{topic} {lesson_title} tutorial"
+        if 'beginner' in difficulty.lower():
+            query1 += " explained basics"
+        elif 'advanced' in difficulty.lower():
+            query1 += " advanced"
+        search_queries.append(query1)
+        
+        # Query 2: Educational channel focused
+        query2 = f"{lesson_title} khan academy OR crash course OR 3blue1brown"
+        search_queries.append(query2)
+        
+        # Generate videos for each query
+        for i, query in enumerate(search_queries[:max_videos]):
+            encoded_query = quote_plus(query)
+            
+            # Create realistic video entries with YouTube search URLs
+            video = {
+                'title': f"{lesson_title} - Educational Tutorial",
+                'channel': "Educational Content",
+                'description': f"Learn {lesson_title} in {topic}. This search will show you the most relevant educational videos for this topic.",
+                'url': f"https://www.youtube.com/results?search_query={encoded_query}&sp=EgIQAQ%253D%253D",  # &sp=EgIQAQ%253D%253D filters for videos only
+                'duration': "10-20 min",
+                'search_query': query,
+                'is_search_url': True
+            }
+            
+            if i == 0:
+                video.update({
+                    'title': f"{lesson_title} Tutorial - {topic}",
+                    'description': f"Comprehensive tutorial covering {lesson_title} concepts in {topic}. Click to find the best educational videos."
+                })
+            elif i == 1:
+                video.update({
+                    'title': f"{topic}: {lesson_title} Explained",
+                    'description': f"Find educational videos from top channels like Khan Academy, Crash Course, and more covering {lesson_title}."
+                })
+            
+            videos.append(video)
+        
+        logger.info(f"Generated {len(videos)} YouTube search URLs for lesson: {lesson_title}")
+        return videos
 
     def _parse_video_suggestions(self, response: str, lesson_title: str, course_context: Dict) -> List[Dict]:
         """Parse AI-generated video suggestions into structured format"""

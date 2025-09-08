@@ -1015,12 +1015,12 @@ D) {options[3] if len(options) > 3 else 'N/A'}
             return "🎉 Excellent work! You have a strong understanding of this week's material."
         elif percentage >= 80:
             return "👍 Good job! You understand most of the concepts well. Review the missed questions."
-        elif percentage >= 70:
-            return "📚 Decent effort! You have a basic understanding, but consider reviewing the material."
         elif percentage >= 60:
-            return "⚠️ You're getting there! Please review this week's content and retake the quiz."
+            return "📚 Good progress! You have a solid understanding. Review any missed concepts to strengthen your knowledge."
+        elif percentage > 40:
+            return "⚠️ You're making progress! Review this week's content and you can continue to the next week."
         else:
-            return "📖 You might want to go back and review the material before continuing to the next week."
+            return "📖 You need to retake this quiz. Please review the material - you need more than 40% to continue."
     
     def provide_tutoring(self, question: str, week_info: Dict, course_context: Dict) -> str:
         """Provide AI tutoring for student questions"""
@@ -1258,13 +1258,15 @@ Keep your response friendly, encouraging, and educational. If the question is ou
                 return "📈 Great progress! You're really getting the hang of this."
             else:
                 return "👍 You're doing well! Keep up the good work."
-        elif avg_score >= 70:
+        elif avg_score >= 60:
             if trend == "improving":
-                return "📚 You're making good progress! Keep studying and you'll master this."
+                return "📚 Good progress! Keep studying and you'll master this."
             else:
                 return "💪 You're on the right track. A little more practice and you'll excel."
+        elif avg_score > 40:
+            return "🎯 Keep learning! Every expert was once a beginner. You'll improve with practice."
         else:
-            return "🎯 Every expert was once a beginner. Keep learning and you'll improve!"
+            return "📖 Don't give up! Review the material and retake quizzes to build your understanding."
 
     def _verify_quiz_accuracy_lenient(self, quiz_data: Dict, week_info: Dict, course_context: Dict) -> Dict:
         """More lenient verification for later attempts to ensure we get enough questions"""
@@ -1441,10 +1443,10 @@ def adjust_next_week_content(week_info: Dict, course_context: Dict, recent_quiz:
     weak_topics = list(set(weak_topics))
     
     # Determine performance level and adaptation strategy
-    if percentage >= 90:
+    if percentage >= 80:
         adaptation_type = "accelerate"
         difficulty_adjustment = "increase"
-    elif percentage >= 70:
+    elif percentage >= 60:
         adaptation_type = "maintain"
         difficulty_adjustment = "same"
     else:

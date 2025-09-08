@@ -221,12 +221,12 @@ export default function QuizComponent({
               </p>
 
               {/* Navigation guidance */}
-              {quizResults.percentage >= 60 ? (
+              {quizResults.percentage > 40 ? (
                 <div className="space-y-3">
                   <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-sm text-green-800">
-                      🎉 <strong>Congratulations!</strong> You've passed this
-                      week's {assessmentType.toLowerCase()}.{" "}
+                      🎉 <strong>Great work!</strong> You can continue to the next
+                      week.{" "}
                       {(weekInfo?.week_number || 1) >=
                       (courseContext?.navigation?.total_weeks ||
                         courseContext?.weeks?.length ||
@@ -265,9 +265,9 @@ export default function QuizComponent({
                     )}
                 </div>
               ) : (
-                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-sm text-yellow-800">
-                    📚 You need at least 60% to pass. Review the material and
+                <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-sm text-red-800">
+                    📚 You need to score above 40% to continue. Please review the material and
                     retake the quiz when ready.
                   </p>
                 </div>

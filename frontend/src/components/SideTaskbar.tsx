@@ -101,7 +101,7 @@ export default function SideTaskbar({
   const isWeekUnlocked = (n: number) => {
     if (n === 1) return true;
     const prev = savedQuizResults[`week${n - 1}`];
-    return !!(prev && prev.results?.percentage >= 60);
+    return !!(prev && prev.results?.percentage > 40); // Must score above 40% to unlock next week
   };
 
   const isWeekCompleted = (n: number) => {
@@ -227,10 +227,12 @@ export default function SideTaskbar({
                             className={`font-medium ${
                               result.results.percentage >= 90
                                 ? "text-green-600"
-                                : result.results.percentage >= 70
+                                : result.results.percentage >= 80
                                 ? "text-blue-600"
                                 : result.results.percentage >= 60
                                 ? "text-yellow-600"
+                                : result.results.percentage > 40
+                                ? "text-orange-600"
                                 : "text-red-600"
                             }`}
                           >
@@ -383,8 +385,7 @@ export default function SideTaskbar({
                             }`}
                           >
                             <div className="flex-shrink-0">
-                              {savedQuizResults[`week${n}`]?.results
-                                ?.percentage >= 60 ? (
+                              {savedQuizResults[`week${n}`]?.results?.percentage > 40 ? (
                                 <CheckCircle className="w-3.5 h-3.5 text-green-500" />
                               ) : (
                                 <Target className="w-3.5 h-3.5 text-neutral-500" />
