@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 export function Card({ className, ...props }: any) {
-  return <div className={cn("border bg-white", className)} {...props} />;
+  return <div className={cn("border ", className)} {...props} />;
 }
 export function CardHeader({ className, ...props }: any) {
   return <div className={cn("p-4 border-b", className)} {...props} />;

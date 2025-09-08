@@ -1,12 +1,15 @@
 import os
 import json
 import logging
+import re
 from typing import Dict, List, Optional, Tuple
 from dotenv import load_dotenv
 import boto3
 from botocore.exceptions import ClientError, BotoCoreError
 import random
 from datetime import datetime
+from app.services.llm_client import invoke_claude_json  # robust Bedrock client wrapper
+from app.services.inflight import inflight  # singleflight pattern to dedupe identical requests 
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -14,37 +17,34 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
+FALLBACK_TIPS = [
+        "Study in 25–30 min sprints; take 5 min breaks.",
+        "Teach the concept aloud to check gaps.",
+        "Mix easy and medium questions to build momentum.",
+        "Write a 3-sentence summary for each subsection.",
+        "Review mistakes first; turn them into flashcards.",
+        "Space reviews: today, tomorrow, and in 3 days.",
+        "Practice retrieval before rereading your notes.",
+        "Sleep well; retention improves after rest.",
+    ]
+
 class AITutor:
     def __init__(self):
-        self.client = self._get_bedrock_client()
+        # keep model configurable; default to your current Haiku
+        self.model_id = os.getenv(
+            "BEDROCK_MODEL_ID",
+            "anthropic.claude-3-haiku-20240307-v1:0",
+        )
     
-    def _get_bedrock_client(self):
-        """Initialize Bedrock client"""
-        try:
-            return boto3.client(
-                'bedrock-runtime',
-                region_name=os.getenv("AWS_DEFAULT_REGION", "us-east-1"),
-                aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-                aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
-            )
-        except Exception as e:
-            logger.error(f"Failed to initialize Bedrock client: {str(e)}")
-            raise
     
     def _ask_claude(self, messages: list, temperature: float = 0.7, max_tokens: int = 1000) -> str:
-        """Send request to Claude"""
         try:
-            response = self.client.invoke_model(
-                modelId="anthropic.claude-3-haiku-20240307-v1:0",
-                body=json.dumps({
-                    "anthropic_version": "bedrock-2023-05-31",
-                    "max_tokens": max_tokens,
-                    "temperature": temperature,
-                    "messages": messages
-                })
+            return invoke_claude_json(
+                model_id=self.model_id,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
             )
-            response_body = json.loads(response['body'].read())
-            return response_body['content'][0]['text'].strip()
         except Exception as e:
             logger.error(f"Error calling Claude: {str(e)}")
             return "I'm having trouble right now. Please try again."
@@ -618,34 +618,6 @@ Generate {questions_needed} questions NOW following this exact format."""
         except Exception as e:
             logger.error(f"Error in hallucination check: {str(e)}")
             return True  # Default to accepting if check fails
-        """Parse AI-generated quiz into structured format"""
-        quiz = {
-            "quiz_id": f"week_{week_info['week_number']}_{datetime.now().strftime('%Y%m%d')}",
-            "week_number": week_info['week_number'],
-            "week_title": week_info['title'],
-            "course_topic": course_context.get('topic', ''),
-            "questions": [],
-            "total_points": 0,
-            "time_limit_minutes": 30,
-            "created_at": datetime.now().isoformat()
-        }
-        
-        # Split response into individual questions
-        sections = response.split('Question ')
-        valid_questions = []
-        question_counter = 1
-        
-        for section in sections[1:]:  # Skip the first empty section
-            question_data = self._parse_single_question(section.strip())
-            if question_data:  # Only add valid questions
-                # Ensure consistent question numbering
-                question_data["question_number"] = question_counter
-                valid_questions.append(question_data)
-                quiz["total_points"] += question_data.get("points", 2)
-                question_counter += 1
-        
-        quiz["questions"] = valid_questions
-        return quiz
     
     def _parse_single_question(self, section: str) -> Optional[Dict]:
         """Parse a single question from the AI response"""
@@ -1074,40 +1046,167 @@ Keep your response friendly, encouraging, and educational. If the question is ou
         messages = [{"role": "user", "content": prompt}]
         return self._ask_claude(messages, temperature=0.7, max_tokens=800)
     
+    def chat_about_lesson(self, course_context: Dict, week_context: Dict, question: str, history: list) -> str:
+        topic = (course_context or {}).get("topic", "this course")
+        difficulty = (course_context or {}).get("difficulty", "beginner")
+
+        week_title = (week_context or {}).get("title", "")
+        overview = (week_context or {}).get("overview", "")
+        activities = (week_context or {}).get("activities", "")
+        resources = (week_context or {}).get("resources", "")
+
+        lesson_titles = []
+        for lt in (week_context or {}).get("lesson_topics", []) or []:
+            name = lt.get("title") or (lt.get("lesson_info") or {}).get("title")
+            if name:
+                lesson_titles.append(name)
+        lesson_list = "; ".join(lesson_titles[:8])
+
+        sys_rules = (
+            "You are Sandwich, a friendly, concise AI tutor. "
+            "Answer briefly (2–5 sentences). "
+            "Ground answers in the provided course/week context when relevant; if unrelated, say so. "
+            "Use numbered steps for procedures; be correct with code/math."
+        )
+
+        context_blob = f"""Course Topic: {topic}
+    Difficulty: {difficulty}
+    Week: {week_title}
+
+    Week Overview:
+    {(overview or '')[:800]}
+
+    Lesson Topics:
+    {lesson_list}
+
+    Activities (excerpt):
+    {(activities or '')[:400]}
+
+    Resources (excerpt):
+    {(resources or '')[:400]}
+    """.strip()
+
+        # ---- Build Bedrock messages (first MUST be 'user') ----
+        messages: list[dict] = []
+
+        # 1) Add recent history (filtered)
+        for m in (history or [])[-8:]:
+            role = (m.get("role") or "").strip()
+            content = (m.get("content") or "").strip()
+            if role in ("user", "assistant") and content:
+                messages.append({"role": role, "content": content})
+
+        # 2) Ensure the very first message is a 'user'
+        if not messages or messages[0]["role"] != "user":
+            messages.insert(0, {"role": "user", "content": "(continuing lesson Q&A)"} )
+
+        # 3) Append the current question as a final user turn with context
+        messages.append({
+            "role": "user",
+            "content": f"Context:\n{context_blob}\n\nQuestion: {question}"
+        })
+
+        # 4) Call Bedrock (system prompt at TOP LEVEL)
+        from app.core.bedrock import ask_claude
+        return ask_claude(messages, temperature=0.3, max_tokens=500, system=sys_rules)
+
+
+    
     def generate_study_tips(self, week_info: Dict, course_context: Dict, student_performance: Optional[Dict] = None) -> List[str]:
-        """Generate personalized study tips"""
-        prompt = f"""You are Sandwich, an AI learning coach. Generate 5 personalized study tips for this student.
+        """Generate 5 short, actionable study tips with robust parsing."""
+        topic = (course_context.get("topic") or "").strip()
+        week_title = (week_info.get("title") or "").strip()
+        learner_type = (course_context.get("learner_type") or "").strip().lower()
+        difficulty = (course_context.get("difficulty") or "").strip()
+        pct = None
+        try:
+            pct = student_performance.get("percentage") if student_performance else None
+        except Exception:
+            pct = None
 
-**Context:**
-- Topic: {course_context.get('topic', '')}
-- Week: {week_info.get('title', '')}
-- Learning style: {course_context.get('learner_type', '')}
-- Difficulty level: {course_context.get('difficulty', '')}
+        # Tiny hint to steer style-specific tips
+        style_hints = {
+            "visual": "use visuals, diagrams, color-coding",
+            "auditory": "read aloud, explain out loud, use audio",
+            "kinesthetic": "hands-on practice, movement, real objects",
+            "read/write": "take notes, lists, rewrite summaries",
+        }
+        style_hint = style_hints.get(learner_type, "balanced strategies")
 
-{f"Recent quiz performance: {student_performance.get('percentage', 0)}%" if student_performance else ""}
+        # Ask for strict JSON to avoid brittle parsing
+        prompt = f"""You are Sandwich, an AI learning coach.
+    Return ONLY a JSON array of EXACTLY 5 strings (no backticks, no keys, no commentary).
+    Each string:
+    - Imperative voice, practical and specific to this week
+    - ≤ 120 characters
+    - No numbering, no emojis
+    - Mix of practice, recall, reflection, and planning
 
-Generate 5 specific, actionable study tips that:
-1. Are tailored to their learning style
-2. Help with this week's specific topics
-3. Are practical and easy to implement
-4. Will improve their understanding and retention
+    Context:
+    - Topic: {topic}
+    - Week: {week_title}
+    - Learning style: {learner_type} ({style_hint})
+    - Difficulty level: {difficulty}
+    {f"- Recent quiz performance: {pct}%" if pct is not None else ""}
 
-Format as a simple numbered list."""
+    JSON array only:"""
 
         messages = [{"role": "user", "content": prompt}]
-        response = self._ask_claude(messages, temperature=0.6, max_tokens=600)
-        
-        # Parse into list
-        tips = []
-        for line in response.split('\n'):
-            line = line.strip()
-            if line and (line[0].isdigit() or line.startswith('-') or line.startswith('•')):
-                # Remove numbering/bullets and clean up
-                tip = line.lstrip('0123456789.-• ').strip()
-                if tip:
-                    tips.append(tip)
-        
-        return tips[:5]  # Ensure max 5 tips
+        resp = self._ask_claude(messages, temperature=0.5, max_tokens=400)
+
+        tips: List[str] = []
+
+        # 1) Prefer JSON array parsing
+        try:
+            # Extract first [...] block to be safe if model adds stray text
+            match = re.search(r"\[[\s\S]*\]", resp)
+            if match:
+                arr = json.loads(match.group(0))
+                if isinstance(arr, list):
+                    tips = [str(x) for x in arr if isinstance(x, (str, int, float))]
+        except Exception:
+            tips = []
+
+        # 2) Fallback: parse bullets/numbered lines if JSON failed
+        if not tips:
+            for line in (resp or "").splitlines():
+                s = line.strip()
+                if not s:
+                    continue
+                # strip leading numbers/bullets
+                s = re.sub(r"^\s*(?:[-•]+|\d+[\.)\-:]?)\s*", "", s)
+                if s:
+                    tips.append(s)
+
+        # 3) Normalize, dedupe, trim length, ensure sentence end
+        cleaned: List[str] = []
+        seen = set()
+        for t in tips:
+            t = re.sub(r"\s+", " ", str(t)).strip()
+            if not t:
+                continue
+            if len(t) > 120:
+                t = t[:117].rstrip() + "…"
+            if not t.endswith((".", "!", "?")):
+                t += "."
+            key = t.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            cleaned.append(t)
+
+        # 4) Guarantee exactly 5 with safe fallbacks
+        i = 0
+        while len(cleaned) < 5 and i < len(FALLBACK_TIPS):
+            ft = FALLBACK_TIPS[i]
+            if not ft.endswith((".", "!", "?")):
+                ft += "."
+            if ft.lower() not in seen:
+                cleaned.append(ft)
+                seen.add(ft.lower())
+            i += 1
+
+        return cleaned[:5]
     
     def get_progress_insights(self, quiz_history: List[Dict], course_context: Dict) -> Dict:
         """Analyze student progress and provide insights"""

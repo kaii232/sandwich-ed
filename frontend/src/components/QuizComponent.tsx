@@ -33,12 +33,12 @@ interface QuizComponentProps {
   onContinueToNextWeek?: () => void;
 }
 
-export default function QuizComponent({ 
-  quiz, 
-  weekInfo, 
-  courseContext, 
+export default function QuizComponent({
+  quiz,
+  weekInfo,
+  courseContext,
   onQuizComplete,
-  onContinueToNextWeek
+  onContinueToNextWeek,
 }: QuizComponentProps) {
   const [quizSession, setQuizSession] = useState<any>(null);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
@@ -54,8 +54,8 @@ export default function QuizComponent({
         week_number: weekInfo?.week_number || 1,
         title: weekInfo?.title || `Week ${weekInfo?.week_number || 1}`,
         topics: weekInfo?.lesson_topics?.map((lesson: any) => lesson.title) || [
-          courseContext?.topic || "General topics"
-        ]
+          courseContext?.topic || "General topics",
+        ],
       };
 
       console.log("Starting quiz with week data:", weekData);
@@ -66,8 +66,8 @@ export default function QuizComponent({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           week_info: weekData,
-          course_context: courseContext
-        })
+          course_context: courseContext,
+        }),
       });
 
       const data = await response.json();
@@ -84,7 +84,7 @@ export default function QuizComponent({
   // Timer functionality
   const startTimer = (seconds: number) => {
     const timer = setInterval(() => {
-      setTimeRemaining(prev => {
+      setTimeRemaining((prev) => {
         if (prev && prev <= 1) {
           clearInterval(timer);
           submitQuiz(); // Auto-submit when time runs out
@@ -98,7 +98,7 @@ export default function QuizComponent({
   // Submit Quiz
   const submitQuiz = async () => {
     if (!quizSession) return;
-    
+
     setIsSubmitting(true);
     try {
       const response = await fetch("http://localhost:8000/submit_quiz", {
@@ -106,38 +106,43 @@ export default function QuizComponent({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           quiz_session: quizSession,
-          user_answers: userAnswers
-        })
+          user_answers: userAnswers,
+        }),
       });
 
       const data = await response.json();
       if (data.success) {
         const results = data.results || data.quiz_results;
-        
+
         // Handle progressive content generation
         if (data.next_week_ready && results.percentage >= 70) {
           console.log("Next week content is being generated...");
           results.contentGenerationStatus = "generating";
           results.nextWeekReady = true;
         }
-        
+
         // Handle adaptive learning feedback
         if (data.adaptation_summary) {
           console.log("Adaptive Learning Applied:", data.adaptation_summary);
           results.adaptationSummary = data.adaptation_summary;
         }
-        
+
         setQuizResults(results);
-        
+
         // Store quiz results in session storage
-        const sessionResults = JSON.parse(sessionStorage.getItem('sessionQuizResults') || '{}');
+        const sessionResults = JSON.parse(
+          sessionStorage.getItem("sessionQuizResults") || "{}"
+        );
         sessionResults[`week${weekInfo?.week_number}`] = {
           results: results,
           completed_at: new Date().toISOString(),
-          adaptationSummary: data.adaptation_summary
+          adaptationSummary: data.adaptation_summary,
         };
-        sessionStorage.setItem('sessionQuizResults', JSON.stringify(sessionResults));
-        
+        sessionStorage.setItem(
+          "sessionQuizResults",
+          JSON.stringify(sessionResults)
+        );
+
         onQuizComplete(results, data.adaptation_summary);
       }
     } catch (error) {
@@ -149,9 +154,9 @@ export default function QuizComponent({
 
   // Handle answer selection
   const handleAnswerChange = (questionNumber: number, answer: string) => {
-    setUserAnswers(prev => ({
+    setUserAnswers((prev) => ({
       ...prev,
-      [questionNumber.toString()]: answer
+      [questionNumber.toString()]: answer,
     }));
   };
 
@@ -159,13 +164,17 @@ export default function QuizComponent({
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
   // Determine if this is a final assessment (final week) or regular quiz
-  const isFinalAssessment = weekInfo?.week_number >= (courseContext?.navigation?.total_weeks || courseContext?.weeks?.length || 1);
+  const isFinalAssessment =
+    weekInfo?.week_number >=
+    (courseContext?.navigation?.total_weeks ||
+      courseContext?.weeks?.length ||
+      1);
   const assessmentType = isFinalAssessment ? "Final Assessment" : "Quiz";
-  
+
   // Show quiz results
   if (quizResults) {
     return (
@@ -204,46 +213,62 @@ export default function QuizComponent({
                 <div className="text-sm text-orange-700">Grade</div>
               </div>
             </div>
-            
-            <div className="mt-4 p-3 bg-white rounded-lg">
+
+            <div className="mt-4 p-3 rounded-lg">
               <h4 className="font-medium mb-2">Overall Feedback</h4>
               <p className="text-sm text-neutral-700">
                 {quizResults.overall_feedback}
               </p>
-              
+
               {/* Navigation guidance */}
               {quizResults.percentage >= 60 ? (
                 <div className="space-y-3">
                   <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-sm text-green-800">
-                      🎉 <strong>Congratulations!</strong> You've passed this week's {assessmentType.toLowerCase()}.{" "}
-                      {(weekInfo?.week_number || 1) >= (courseContext?.navigation?.total_weeks || courseContext?.weeks?.length || 1) ? (
+                      🎉 <strong>Congratulations!</strong> You've passed this
+                      week's {assessmentType.toLowerCase()}.{" "}
+                      {(weekInfo?.week_number || 1) >=
+                      (courseContext?.navigation?.total_weeks ||
+                        courseContext?.weeks?.length ||
+                        1) ? (
                         <span>
-                          Use the <strong>"Complete Course 🎉"</strong> button at the bottom to finish the course and see your completion certificate!
+                          Use the <strong>"Complete Course 🎉"</strong> button
+                          at the bottom to finish the course and see your
+                          completion certificate!
                         </span>
                       ) : (
                         <span>
-                          Use the <strong>"Continue to Week {(weekInfo?.week_number || 1) + 1}"</strong> button at the bottom of the page to proceed to the next week's overview and materials.
+                          Use the{" "}
+                          <strong>
+                            "Continue to Week {(weekInfo?.week_number || 1) + 1}
+                            "
+                          </strong>{" "}
+                          button at the bottom of the page to proceed to the
+                          next week's overview and materials.
                         </span>
                       )}
                     </p>
                   </div>
-                  
+
                   {/* Progressive Content Generation Notification */}
-                  {quizResults.nextWeekReady && quizResults.percentage >= 70 && (
-                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-sm text-blue-800 flex items-center gap-2">
-                        <span className="animate-pulse">🚀</span>
-                        <strong>Great news!</strong> Your performance has unlocked Week {(weekInfo?.week_number || 1) + 1}! 
-                        The content has been automatically generated and personalized based on your progress.
-                      </p>
-                    </div>
-                  )}
+                  {quizResults.nextWeekReady &&
+                    quizResults.percentage >= 70 && (
+                      <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p className="text-sm text-blue-800 flex items-center gap-2">
+                          <span className="animate-pulse">🚀</span>
+                          <strong>Great news!</strong> Your performance has
+                          unlocked Week {(weekInfo?.week_number || 1) + 1}! The
+                          content has been automatically generated and
+                          personalized based on your progress.
+                        </p>
+                      </div>
+                    )}
                 </div>
               ) : (
                 <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <p className="text-sm text-yellow-800">
-                    📚 You need at least 60% to pass. Review the material and retake the quiz when ready.
+                    📚 You need at least 60% to pass. Review the material and
+                    retake the quiz when ready.
                   </p>
                 </div>
               )}
@@ -257,40 +282,63 @@ export default function QuizComponent({
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div>
-                    <span className="font-medium text-blue-700">Your Performance:</span>{" "}
-                    <span className={`font-bold ${
-                      quizResults.adaptationSummary.performance >= 90 ? 'text-green-600' :
-                      quizResults.adaptationSummary.performance >= 70 ? 'text-yellow-600' : 'text-red-600'
-                    }`}>
+                    <span className="font-medium text-blue-700">
+                      Your Performance:
+                    </span>{" "}
+                    <span
+                      className={`font-bold ${
+                        quizResults.adaptationSummary.performance >= 90
+                          ? "text-green-600"
+                          : quizResults.adaptationSummary.performance >= 70
+                          ? "text-yellow-600"
+                          : "text-red-600"
+                      }`}
+                    >
                       {quizResults.adaptationSummary.performance}%
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-blue-700">Next Week Adaptation:</span>{" "}
+                    <span className="font-medium text-blue-700">
+                      Next Week Adaptation:
+                    </span>{" "}
                     <span className="capitalize text-purple-600 font-medium">
                       {quizResults.adaptationSummary.adaptation_type}
                     </span>
                   </div>
                   <div className="mt-3 p-3 bg-white/70 rounded border-l-4 border-blue-400">
-                    {quizResults.adaptationSummary.adaptation_type === 'accelerated' && (
+                    {quizResults.adaptationSummary.adaptation_type ===
+                      "accelerated" && (
                       <div className="text-green-700">
-                        <span className="font-medium">🚀 Excellent work!</span> Week {quizResults.adaptationSummary.current_week + 1} will be more challenging with advanced topics and harder quiz questions.
+                        <span className="font-medium">🚀 Excellent work!</span>{" "}
+                        Week {quizResults.adaptationSummary.current_week + 1}{" "}
+                        will be more challenging with advanced topics and harder
+                        quiz questions.
                       </div>
                     )}
-                    {quizResults.adaptationSummary.adaptation_type === 'reinforced' && (
+                    {quizResults.adaptationSummary.adaptation_type ===
+                      "reinforced" && (
                       <div className="text-blue-700">
-                        <span className="font-medium">💪 Building strength!</span> Week {quizResults.adaptationSummary.current_week + 1} will review challenging concepts with extra support and practice.
+                        <span className="font-medium">
+                          💪 Building strength!
+                        </span>{" "}
+                        Week {quizResults.adaptationSummary.current_week + 1}{" "}
+                        will review challenging concepts with extra support and
+                        practice.
                       </div>
                     )}
-                    {quizResults.adaptationSummary.adaptation_type === 'balanced' && (
+                    {quizResults.adaptationSummary.adaptation_type ===
+                      "balanced" && (
                       <div className="text-purple-700">
-                        <span className="font-medium">⚖️ Steady progress!</span> Week {quizResults.adaptationSummary.current_week + 1} will maintain current pace with balanced content.
+                        <span className="font-medium">⚖️ Steady progress!</span>{" "}
+                        Week {quizResults.adaptationSummary.current_week + 1}{" "}
+                        will maintain current pace with balanced content.
                       </div>
                     )}
                   </div>
                   {quizResults.nextWeekPreview && (
                     <div className="mt-3 text-xs text-neutral-600">
-                      <span className="font-medium">Next week preview:</span> {quizResults.nextWeekPreview.title}
+                      <span className="font-medium">Next week preview:</span>{" "}
+                      {quizResults.nextWeekPreview.title}
                     </div>
                   )}
                 </div>
@@ -301,8 +349,14 @@ export default function QuizComponent({
             <div className="mt-6 space-y-3">
               <h4 className="font-medium">Question Review</h4>
               {quizResults.feedback?.map((questionFeedback: any) => (
-                <Card key={questionFeedback.question_number} 
-                      className={questionFeedback.is_correct ? "border-green-200" : "border-red-200"}>
+                <Card
+                  key={questionFeedback.question_number}
+                  className={
+                    questionFeedback.is_correct
+                      ? "border-green-200"
+                      : "border-red-200"
+                  }
+                >
                   <CardContent className="p-3">
                     <div className="flex items-start gap-2">
                       <div className="flex-shrink-0">
@@ -320,14 +374,24 @@ export default function QuizComponent({
                           {questionFeedback.question_text}
                         </div>
                         <div className="text-xs">
-                          <span className="text-neutral-500">Your answer: </span>
-                          <span className={questionFeedback.is_correct ? "text-green-600" : "text-red-600"}>
+                          <span className="text-neutral-500">
+                            Your answer:{" "}
+                          </span>
+                          <span
+                            className={
+                              questionFeedback.is_correct
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }
+                          >
                             {questionFeedback.user_answer || "No answer"}
                           </span>
                         </div>
                         {!questionFeedback.is_correct && (
                           <div className="text-xs mt-1">
-                            <span className="text-neutral-500">Correct answer: </span>
+                            <span className="text-neutral-500">
+                              Correct answer:{" "}
+                            </span>
                             <span className="text-green-600">
                               {questionFeedback.correct_answer}
                             </span>
@@ -358,20 +422,23 @@ export default function QuizComponent({
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>
-                Week {quizSession.quiz.week_number} Quiz
-              </CardTitle>
+              <CardTitle>Week {quizSession.quiz.week_number} Quiz</CardTitle>
               {timeRemaining !== null && (
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
-                  <span className={`font-mono ${timeRemaining < 300 ? 'text-red-600' : ''}`}>
+                  <span
+                    className={`font-mono ${
+                      timeRemaining < 300 ? "text-red-600" : ""
+                    }`}
+                  >
                     {formatTime(timeRemaining)}
                   </span>
                 </div>
               )}
             </div>
             <p className="text-sm text-neutral-600">
-              {quizSession.quiz.questions?.length} questions • {quizSession.quiz.total_points} points
+              {quizSession.quiz.questions?.length} questions •{" "}
+              {quizSession.quiz.total_points} points
             </p>
           </CardHeader>
         </Card>
@@ -386,7 +453,8 @@ export default function QuizComponent({
                     <h4 className="font-medium">
                       Question {question.question_number}
                       <span className="text-sm text-neutral-500 ml-2">
-                        ({question.points} {question.points === 1 ? 'point' : 'points'})
+                        ({question.points}{" "}
+                        {question.points === 1 ? "point" : "points"})
                       </span>
                     </h4>
                     <p className="text-sm text-neutral-700 mt-1">
@@ -398,16 +466,26 @@ export default function QuizComponent({
                   {question.type === "multiple_choice" && question.options && (
                     <div className="space-y-2">
                       {["A", "B", "C", "D"].map((letter, index) => (
-                        <label key={letter} className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-neutral-50">
+                        <label
+                          key={letter}
+                          className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-neutral-50"
+                        >
                           <input
                             type="radio"
                             name={`question_${question.question_number}`}
                             value={letter}
-                            onChange={(e) => handleAnswerChange(question.question_number, e.target.value)}
+                            onChange={(e) =>
+                              handleAnswerChange(
+                                question.question_number,
+                                e.target.value
+                              )
+                            }
                             className="w-4 h-4"
                           />
                           <span className="text-sm">
-                            <span className="font-medium">{letter})</span> {(question.options && question.options[index]) || `Option ${letter}`}
+                            <span className="font-medium">{letter})</span>{" "}
+                            {(question.options && question.options[index]) ||
+                              `Option ${letter}`}
                           </span>
                         </label>
                       ))}
@@ -444,44 +522,56 @@ export default function QuizComponent({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Week {weekInfo?.week_number} {assessmentType}</CardTitle>
-        <p className="text-sm text-neutral-600">
-          {isFinalAssessment 
-            ? "Review the assessment guidelines and complete your final evaluation" 
-            : "Test your understanding of this week's material"
-          }
+        <CardTitle>
+          Week {weekInfo?.week_number} {assessmentType}
+        </CardTitle>
+        <p className="text-sm">
+          {isFinalAssessment
+            ? "Review the assessment guidelines and complete your final evaluation"
+            : "Test your understanding of this week's material"}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <div className="font-medium">Questions</div>
-            <div className="text-neutral-600">10 multiple choice</div>
+            <div>10 multiple choice</div>
           </div>
           <div>
             <div className="font-medium">Points</div>
-            <div className="text-neutral-600">20 points total</div>
+            <div>20 points total</div>
           </div>
         </div>
-        
+
         <div className="bg-neutral-50 p-3 rounded-lg text-sm">
-          <h4 className="font-medium mb-1">Instructions:</h4>
+          <h4 className="font-medium mb-1 text-black">Instructions:</h4>
           <ul className="text-neutral-600 space-y-1 text-xs">
             {isFinalAssessment ? (
               <>
-                <li>• This final assessment helps evaluate your overall understanding</li>
-                <li>• Review each question carefully and select your best answer</li>
-                <li>• Use this as a learning opportunity to reinforce key concepts</li>
+                <li>
+                  • This final assessment helps evaluate your overall
+                  understanding
+                </li>
+                <li>
+                  • Review each question carefully and select your best answer
+                </li>
+                <li>
+                  • Use this as a learning opportunity to reinforce key concepts
+                </li>
                 <li>• Your responses will help determine course completion</li>
                 <li>• Complete this final assessment to finish the course</li>
               </>
             ) : (
               <>
-                <li>• Select the best answer (A, B, C, or D) for each question</li>
+                <li>
+                  • Select the best answer (A, B, C, or D) for each question
+                </li>
                 <li>• Each question is worth 2 points</li>
                 <li>• You can review and change answers before submitting</li>
                 <li>• The quiz will auto-submit when time runs out</li>
-                <li>• You need to complete this quiz to unlock the next week</li>
+                <li>
+                  • You need to complete this quiz to unlock the next week
+                </li>
               </>
             )}
           </ul>
