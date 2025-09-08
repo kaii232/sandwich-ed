@@ -19,7 +19,7 @@ load_dotenv()
 class SyllabusGenerator:
     def __init__(self):
         self.client = self._get_bedrock_client()
-        self.youtube_api_key = os.getenv("YOUTUBE_API_KEY", "AIzaSyBtUxbZLYX0-LE1qyOecXi2GO-nZJ-T5rY")  # Your API key as fallback
+        self.youtube_api_key = os.getenv("YOUTUBE_API_KEY")  # Your API key as fallback
         self.lesson_content_file = "lesson_content_cache.json"  # Cache for lesson content
     
     def _get_bedrock_client(self):

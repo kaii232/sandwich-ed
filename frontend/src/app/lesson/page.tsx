@@ -134,6 +134,41 @@ export default function LessonPage() {
     }
   }
 
+  const getNextIngredientPrompt = () => {
+    const wk = courseData?.weeks?.find((w: any) => w.week_number === weekNum);
+    if (!wk) return null;
+
+    // What’s the next action?
+    // overview -> first lesson
+    if (activeSection === "overview" && wk.lesson_topics?.[0]) {
+      return `Start “${wk.lesson_topics[0].title}” to earn your next ingredient 🍅`;
+    }
+
+    // lesson -> next lesson/resources/quiz
+    const idx =
+      wk.lesson_topics?.findIndex((ls: any) => ls.id === activeSection) ?? -1;
+    if (idx >= 0 && idx < (wk.lesson_topics?.length ?? 0) - 1) {
+      return `Finish “${wk.lesson_topics[idx].title}” to unlock “${
+        wk.lesson_topics[idx + 1].title
+      }” 🧀`;
+    }
+    if (idx >= 0 && idx === (wk.lesson_topics?.length ?? 0) - 1) {
+      return `Check the Resources next to add an ingredient 🫑`;
+    }
+
+    if (activeSection === "resources") {
+      return `Pass Week ${weekNum} quiz to add your ingredient 🥬`;
+    }
+    if (activeSection === "quiz") {
+      const passed =
+        (savedQuizResults[`week${weekNum}`]?.results?.percentage ?? 0) > 40;
+      return passed
+        ? `Nice! You added an ingredient. Continue to Week ${weekNum + 1} 🥪`
+        : `Score above 40% to add this week’s ingredient 🥓`;
+    }
+    return null;
+  };
+
   const isWeekUnlocked = (weekNumber: number) => {
     if (weekNumber === 1) return true;
 
@@ -157,12 +192,55 @@ export default function LessonPage() {
   const totalWeeks =
     courseData?.navigation?.total_weeks || courseData?.weeks?.length || 0;
   const progressPct = useMemo(() => {
-    const completedWeeks = Array.from(
-      { length: totalWeeks },
-      (_, i) => i + 1
-    ).filter((w) => isWeekCompleted(w)).length;
-    return Math.min(100, Math.max(0, (completedWeeks / totalWeeks) * 100));
-  }, [totalWeeks, completedLessons]);
+    if (!courseData?.weeks?.length) return 0;
+
+    // Count sections per week (overview + lessons + resources? + quiz)
+    const countWeek = (wk: any) => {
+      const lessons = wk.lesson_topics?.length ?? 0;
+      const hasResources = !!wk.resources; // count only if exists
+      // If every week always has a quiz, keep quiz=1; otherwise use !!wk.quiz ? 1 : 0
+      const quiz = 1;
+
+      const total = 1 /* overview */ + lessons + (hasResources ? 1 : 0) + quiz;
+
+      // Completed:
+      // - overview: count as done (baseline) since we always land here first
+      let completed = 1;
+
+      // - lessons: use your completedLessons set (week_<n>_<lesson.id>)
+      if (lessons) {
+        completed += (wk.lesson_topics || []).reduce((acc: number, ls: any) => {
+          const id = `week_${wk.week_number}_${ls.id}`;
+          return acc + (completedLessons.has(id) ? 1 : 0);
+        }, 0);
+      }
+
+      // - resources: (optional) mark as done only if you want to track "visited"
+      // For now we don't track visit, so keep 0. If you add tracking, toggle here.
+
+      // - quiz: count when passed (> 40%)
+      const quizPassed =
+        (savedQuizResults[`week${wk.week_number}`]?.results?.percentage ?? 0) >
+        40;
+      if (quizPassed) completed += 1;
+
+      return { total, completed };
+    };
+
+    const sum = courseData.weeks.reduce(
+      (agg: { total: number; completed: number }, wk: any) => {
+        const { total, completed } = countWeek(wk);
+        return {
+          total: agg.total + total,
+          completed: agg.completed + completed,
+        };
+      },
+      { total: 0, completed: 0 }
+    );
+
+    if (sum.total === 0) return 0;
+    return Math.round((sum.completed / sum.total) * 100);
+  }, [courseData?.weeks, completedLessons, savedQuizResults]);
 
   if (!courseData) {
     return (
@@ -175,6 +253,82 @@ export default function LessonPage() {
       </main>
     );
   }
+
+  // helpers
+  const getCurrentWeekData = () =>
+    courseData?.weeks?.find((w: any) => w.week_number === weekNum);
+
+  const gotoNext = () => {
+    const wk = getCurrentWeekData();
+    if (!wk) return;
+
+    // overview → first lesson
+    if (activeSection === "overview" && wk.lesson_topics?.[0]) {
+      setActiveSection(wk.lesson_topics[0].id);
+      return;
+    }
+
+    // lesson → next lesson | resources | quiz
+    const idx =
+      wk.lesson_topics?.findIndex((ls: any) => ls.id === activeSection) ?? -1;
+
+    if (idx >= 0 && idx < wk.lesson_topics.length - 1) {
+      setActiveSection(wk.lesson_topics[idx + 1].id);
+      return;
+    }
+
+    if (activeSection !== "resources" && activeSection !== "quiz") {
+      setActiveSection("resources");
+      return;
+    }
+
+    if (activeSection === "resources") {
+      setActiveSection("quiz");
+      return;
+    }
+  };
+
+  const gotoPrev = async () => {
+    const wk = getCurrentWeekData();
+    if (!wk) return;
+
+    // quiz → resources
+    if (activeSection === "quiz") {
+      setActiveSection("resources");
+      return;
+    }
+
+    // resources → last lesson | overview
+    if (activeSection === "resources") {
+      const lastLesson = wk.lesson_topics?.slice(-1)[0];
+      if (lastLesson) setActiveSection(lastLesson.id);
+      else setActiveSection("overview");
+      return;
+    }
+
+    // lessons → previous lesson | overview
+    const idx =
+      wk.lesson_topics?.findIndex((ls: any) => ls.id === activeSection) ?? -1;
+
+    if (idx > 0) {
+      setActiveSection(wk.lesson_topics[idx - 1].id);
+      return;
+    }
+    if (idx === 0) {
+      setActiveSection("overview");
+      return;
+    }
+
+    // overview at Week 1: nothing to do
+    if (activeSection === "overview" && weekNum <= 1) return;
+
+    // overview at Week N>1 → jump to previous week's quiz
+    if (activeSection === "overview" && weekNum > 1) {
+      await fetchWeek(weekNum - 1);
+      setActiveSection("quiz");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <main className="relative max-w-7xl mx-auto lg:pl-80">
@@ -190,7 +344,7 @@ export default function LessonPage() {
         onChangeActiveSection={setActiveSection}
       />
 
-      {/* <StudyTipsLoader
+      <StudyTipsLoader
         open={tipsOpen}
         weekInfo={week ?? { week_number: weekNum }}
         courseContext={courseData}
@@ -199,7 +353,7 @@ export default function LessonPage() {
           overallProgress: Math.round(progressPct),
         }}
         iconSrc="/sandwich-ed.png"
-      /> */}
+      />
 
       {/* Main Content */}
       <section className="p-4 md:p-6 space-y-4">
@@ -210,6 +364,11 @@ export default function LessonPage() {
               {week?.title || `Week ${weekNum}`}
             </h1>
             <p className="text-sm">Continue your personalized curriculum</p>
+            {getNextIngredientPrompt() && (
+              <div className="mt-2 inline-flex items-center rounded-lg border px-2.5 py-1 text-sm bg-yellow-50 border-yellow-200 text-yellow-800">
+                {getNextIngredientPrompt()}
+              </div>
+            )}
           </div>
         </div>
 
@@ -370,19 +529,19 @@ export default function LessonPage() {
             {!loading && (
               <div className="mt-6 pt-6 border-t">
                 <div className="flex items-center justify-between">
+                  {/* ← Previous (section-aware) */}
                   <Button
-                    onClick={() => {
-                      if (weekNum > 1) fetchWeek(weekNum - 1);
-                    }}
+                    onClick={gotoPrev}
                     variant="outline"
                     className="bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
-                    disabled={weekNum <= 1}
+                    // disable only when truly at the very start: Week 1 + overview
+                    disabled={weekNum <= 1 && activeSection === "overview"}
                   >
-                    ← Previous Week
+                    ← Previous
                   </Button>
 
-                  {/* Center content showing current status */}
-                  <div className="flex items-center gap-4 text-sm text-neutral-600">
+                  {/* Center status */}
+                  <div className="flex items-center gap-4 text-sm text-white">
                     <span>
                       Week {weekNum} of {totalWeeks}
                     </span>
@@ -394,88 +553,36 @@ export default function LessonPage() {
                     )}
                   </div>
 
-                  {/* Smart Next Button */}
+                  {/* → Next (keeps your quiz/continue logic) */}
                   {activeSection === "quiz" ? (
-                    // On quiz page - show different states
                     savedQuizResults[`week${weekNum}`]?.results?.percentage >=
                     60 ? (
-                      // Quiz passed - show continue to next week or completion
                       <Button
                         onClick={() => {
                           if (weekNum >= totalWeeks) {
-                            // Course completed - go to completion page
                             window.location.href = "/completion";
-                          } else if (weekNum < totalWeeks) {
+                          } else {
                             fetchWeek(weekNum + 1);
                             setActiveSection("overview");
-                            setExpandedWeeks(
-                              (prev) => new Set([...prev, weekNum + 1])
-                            );
                           }
                         }}
                         className="bg-green-600 hover:bg-green-700"
                       >
                         {weekNum >= totalWeeks
                           ? "Complete Course 🎉"
-                          : "Continue to Week " + (weekNum + 1) + " →"}
+                          : `Continue to Week ${weekNum + 1} →`}
                       </Button>
                     ) : (
-                      // Quiz not completed yet - show encouragement to complete
-                      <Button disabled variant="outline">
+                      <Button
+                        variant="outline"
+                        className="bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
+                        disabled
+                      >
                         Complete Quiz to Continue
                       </Button>
                     )
                   ) : (
-                    // On other content pages - show regular next navigation
-                    <Button
-                      onClick={() => {
-                        const currentWeekData = courseData.weeks?.find(
-                          (w: any) => w.week_number === weekNum
-                        );
-                        if (currentWeekData) {
-                          // Navigate through sections: overview → lesson1 → lesson2 → ... → resources → quiz/assessment
-                          if (
-                            activeSection === "overview" &&
-                            currentWeekData.lesson_topics?.[0]
-                          ) {
-                            // Go to first lesson
-                            setActiveSection(
-                              currentWeekData.lesson_topics[0].id
-                            );
-                          } else {
-                            // Find current lesson and go to next lesson, or to resources if we're on the last lesson
-                            const currentLessonIndex =
-                              currentWeekData.lesson_topics?.findIndex(
-                                (lesson: any) => lesson.id === activeSection
-                              );
-
-                            if (
-                              currentLessonIndex >= 0 &&
-                              currentLessonIndex <
-                                currentWeekData.lesson_topics.length - 1
-                            ) {
-                              // Go to next lesson
-                              setActiveSection(
-                                currentWeekData.lesson_topics[
-                                  currentLessonIndex + 1
-                                ].id
-                              );
-                            } else if (
-                              activeSection !== "resources" &&
-                              activeSection !== "quiz"
-                            ) {
-                              // From last lesson, go to resources
-                              setActiveSection("resources");
-                            } else if (activeSection === "resources") {
-                              setActiveSection("quiz");
-                            }
-                          }
-                        }
-                      }}
-                      disabled={activeSection === "quiz"}
-                    >
-                      Next →
-                    </Button>
+                    <Button onClick={gotoNext}>Next →</Button>
                   )}
                 </div>
               </div>

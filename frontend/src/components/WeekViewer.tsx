@@ -24,14 +24,14 @@ export type Lesson = {
 };
 
 // Lesson component for individual lesson content
-function LessonComponent({ 
-  lesson, 
+function LessonComponent({
+  lesson,
   onLoadLesson,
   weekInfo,
-  onNavigateNext
-}: { 
-  lesson: any; 
-  onLoadLesson?: (info: any) => Promise<any | null>; 
+  onNavigateNext,
+}: {
+  lesson: any;
+  onLoadLesson?: (info: any) => Promise<any | null>;
   weekInfo?: any;
   onNavigateNext?: () => void;
 }) {
@@ -49,7 +49,7 @@ function LessonComponent({
 
   const loadContent = async () => {
     if (!onLoadLesson || loading) return;
-    
+
     setLoading(true);
     try {
       const loadedContent = await onLoadLesson(lesson.lesson_info);
@@ -86,7 +86,9 @@ function LessonComponent({
   return (
     <div className="space-y-6">
       <div className="prose prose-neutral max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: mdToHtml(content.content || "") }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: mdToHtml(content.content || "") }}
+        />
         {content.videos && content.videos.length > 0 && (
           <div className="not-prose mt-6">
             <h4 className="text-lg font-semibold mb-3">Related Videos</h4>
@@ -96,10 +98,12 @@ function LessonComponent({
                   key={index}
                   href={video.url}
                   target="_blank"
-                  className="block rounded-lg border p-3 hover:bg-neutral-50 transition"
+                  className="block rounded-lg border p-3 hover:bg-neutral-50 hover:text-black transition"
                 >
                   <div className="font-medium text-sm">{video.title}</div>
-                  <div className="text-xs text-neutral-600 mt-1">{video.channel}</div>
+                  <div className="text-xs text-neutral-600 mt-1">
+                    {video.channel}
+                  </div>
                   {video.description && (
                     <div className="text-xs text-neutral-500 mt-2 line-clamp-2">
                       {video.description}
@@ -111,20 +115,11 @@ function LessonComponent({
           </div>
         )}
       </div>
-      
+
       {/* Lesson Navigation */}
       <div className="pt-6 border-t">
         <div className="flex items-center justify-between">
-          <div className="text-sm text-neutral-600">
-            {lesson.title}
-          </div>
-          
-          <Button 
-            onClick={() => onNavigateNext && onNavigateNext()}
-            disabled={!onNavigateNext}
-          >
-            Next →
-          </Button>
+          <div className="text-sm">{lesson.title}</div>
         </div>
       </div>
     </div>
@@ -154,7 +149,7 @@ export default function WeekViewer({
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [lessonMap, setLessonMap] = useState<Record<string, Lesson>>({});
-  
+
   if (!week) {
     return (
       <div className="text-sm text-neutral-600">
@@ -168,7 +163,9 @@ export default function WeekViewer({
     return (
       <div className="space-y-6">
         <div className="prose prose-neutral max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }}
+          />
         </div>
       </div>
     );
@@ -178,17 +175,21 @@ export default function WeekViewer({
     return (
       <div className="space-y-6">
         <div className="prose prose-neutral max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.activities || "") }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mdToHtml(week.activities || ""),
+            }}
+          />
         </div>
-        
+
         {/* Activities Navigation */}
         <div className="pt-6 border-t">
           <div className="flex items-center justify-between">
             <div className="text-sm text-neutral-600">
               Week {weekInfo?.week_number || 1} Activities
             </div>
-            
-            <Button 
+
+            <Button
               onClick={() => onNavigateNext && onNavigateNext()}
               disabled={!onNavigateNext}
             >
@@ -204,17 +205,19 @@ export default function WeekViewer({
     return (
       <div className="space-y-6">
         <div className="prose prose-neutral max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.resources || "") }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: mdToHtml(week.resources || "") }}
+          />
         </div>
-        
+
         {/* Resources Navigation */}
         <div className="pt-6 border-t">
           <div className="flex items-center justify-between">
             <div className="text-sm text-neutral-600">
               Week {weekInfo?.week_number || 1} Additional Resources
             </div>
-            
-            <Button 
+
+            <Button
               onClick={() => onNavigateNext && onNavigateNext()}
               disabled={!onNavigateNext}
             >
@@ -242,8 +245,8 @@ export default function WeekViewer({
   const lesson = week.lesson_topics?.find((l: any) => l.id === activeSection);
   if (lesson) {
     return (
-      <LessonComponent 
-        lesson={lesson} 
+      <LessonComponent
+        lesson={lesson}
         onLoadLesson={onLoadLesson}
         weekInfo={weekInfo}
         onNavigateNext={onNavigateNext}
@@ -255,61 +258,147 @@ export default function WeekViewer({
   return (
     <div className="space-y-6">
       <div className="prose prose-neutral max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: mdToHtml(week.overview || "") }}
+        />
       </div>
     </div>
   );
 }
 
-// Simple markdown-to-HTML helper
-function mdToHtml(md: string) {
-  if (!md) return "";
-  
-  let html = md;
-  
-  // Headers
-  html = html.replace(/^###\s(.+)$/gm, "<h3>$1</h3>");
-  html = html.replace(/^##\s(.+)$/gm, "<h2>$1</h2>");
-  html = html.replace(/^#\s(.+)$/gm, "<h1>$1</h1>");
-  
-  // Bold and italic
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
-  
-  // Simple list handling
-  const lines = html.split('\n');
-  const processedLines = [];
-  let inList = false;
-  
-  for (const line of lines) {
-    if (line.match(/^\s*[-*]\s(.+)$/)) {
-      if (!inList) {
-        processedLines.push('<ul>');
-        inList = true;
-      }
-      processedLines.push(`<li>${line.replace(/^\s*[-*]\s/, '')}</li>`);
-    } else {
-      if (inList) {
-        processedLines.push('</ul>');
-        inList = false;
-      }
-      processedLines.push(line);
+// Plain-text → lightweight HTML formatter (headings, lists, links, code)
+function mdToHtml(input: string) {
+  if (!input) return "";
+
+  let text = input.replace(/\r\n?/g, "\n").trim();
+
+  // --- Code fences (triple backticks) ---
+  const CODE_FENCE = /```(\w+)?\n([\s\S]*?)\n```/g;
+  const fenceBlocks: string[] = [];
+  text = text.replace(CODE_FENCE, (_, lang = "", code) => {
+    const i =
+      fenceBlocks.push(
+        `<pre><code class="language-${lang}">${escapeHtml(code)}</code></pre>`
+      ) - 1;
+    return `__FENCE_${i}__`;
+  });
+
+  // --- Inline code ---
+  text = text.replace(/`([^`]+?)`/g, (_, code) => {
+    return `<code>${escapeHtml(code)}</code>`;
+  });
+
+  // --- Bold / Italic ---
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  text = text.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+  // --- Auto-link URLs ---
+  text = text.replace(
+    /(https?:\/\/[^\s)]+)(?![^<]*>)/g,
+    (m) => `<a href="${m}" target="_blank" rel="noopener noreferrer">${m}</a>`
+  );
+
+  // Split into lines to build blocks
+  const lines = text.split("\n");
+  const out: string[] = [];
+  let inUl = false;
+  let inOl = false;
+  let inP = false;
+
+  const closeLists = () => {
+    if (inUl) {
+      out.push("</ul>");
+      inUl = false;
     }
+    if (inOl) {
+      out.push("</ol>");
+      inOl = false;
+    }
+  };
+  const closeP = () => {
+    if (inP) {
+      out.push("</p>");
+      inP = false;
+    }
+  };
+
+  for (let raw of lines) {
+    const line = raw.trim();
+
+    // Blank line = paragraph/list break
+    if (!line) {
+      closeP();
+      closeLists();
+      continue;
+    }
+
+    // Headings: lines ending with ":" or markdown-style #
+    if (/^#{1,3}\s/.test(line)) {
+      closeP();
+      closeLists();
+      const lvl = line.match(/^#{1,3}/)![0].length;
+      out.push(`<h${lvl}>${line.replace(/^#{1,3}\s/, "")}</h${lvl}>`);
+      continue;
+    }
+    if (/^[A-Z].+:\s*$/.test(line)) {
+      closeP();
+      closeLists();
+      out.push(`<h3>${line.replace(/:\s*$/, "")}</h3>`);
+      continue;
+    }
+
+    // Unordered list
+    if (/^[-*•]\s+/.test(line)) {
+      if (!inUl) {
+        closeP();
+        closeLists();
+        out.push("<ul>");
+        inUl = true;
+      }
+      out.push(`<li>${line.replace(/^[-*•]\s+/, "")}</li>`);
+      continue;
+    }
+
+    // Ordered list (1. text / 1) text)
+    if (/^\d+[\.)]\s+/.test(line)) {
+      if (!inOl) {
+        closeP();
+        closeLists();
+        out.push("<ol>");
+        inOl = true;
+      }
+      out.push(`<li>${line.replace(/^\d+[\.)]\s+/, "")}</li>`);
+      continue;
+    }
+
+    // Blockquote
+    if (/^>\s+/.test(line)) {
+      closeP();
+      closeLists();
+      out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
+      continue;
+    }
+
+    // Default: paragraph (preserve soft line breaks with <br/>)
+    if (!inP) {
+      closeLists();
+      out.push("<p>");
+      inP = true;
+    } else out.push("<br/>");
+    out.push(line);
   }
-  
-  if (inList) {
-    processedLines.push('</ul>');
-  }
-  
-  // Join and handle paragraphs
-  html = processedLines.join('\n');
-  html = html.replace(/\n\n+/g, '</p><p>');
-  html = `<p>${html}</p>`;
-  
-  // Clean up
-  html = html.replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/g, "$1");
-  html = html.replace(/<p>(<ul>.*?<\/ul>)<\/p>/g, "$1");
-  html = html.replace(/<p><\/p>/g, "");
-  
+
+  // Close any open blocks
+  closeP();
+  closeLists();
+
+  // Restore code fences
+  let html = out.join("\n");
+  html = html.replace(/__FENCE_(\d+)__/g, (_, i) => fenceBlocks[Number(i)]);
+
   return html;
+}
+
+function escapeHtml(s: string) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

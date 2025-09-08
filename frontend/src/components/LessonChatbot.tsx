@@ -69,7 +69,7 @@ export default function LessonChatbot(props: {
       {/* Floating Action Button */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-4 right-4 z-40 rounded-full p-4 shadow-lg bg-black text-white hover:opacity-90"
+        className="fixed bottom-4 right-4 z-40 rounded-full p-4 shadow-lg bg-[#D7CCFF] text-white hover:opacity-90"
         aria-label="Open lesson tutor"
       >
         {open ? (
@@ -83,7 +83,7 @@ export default function LessonChatbot(props: {
       {open && (
         <div className="fixed bottom-24 right-4 z-40 w-[360px] max-h-[70vh] rounded-2xl border bg-white shadow-xl flex flex-col">
           <div className="px-4 py-3 border-b font-medium text-black">
-            Lesson Tutor
+            Sandwich-ed
           </div>
           <div
             ref={boxRef}

@@ -215,7 +215,7 @@ export default function QuizComponent({
             </div>
 
             <div className="mt-4 p-3 rounded-lg">
-              <h4 className="font-medium mb-2">Overall Feedback</h4>
+              <h4 className="font-medium mb-2 text-black">Overall Feedback</h4>
               <p className="text-sm text-neutral-700">
                 {quizResults.overall_feedback}
               </p>
@@ -225,8 +225,8 @@ export default function QuizComponent({
                 <div className="space-y-3">
                   <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-sm text-green-800">
-                      🎉 <strong>Great work!</strong> You can continue to the next
-                      week.{" "}
+                      🎉 <strong>Great work!</strong> You can continue to the
+                      next week.{" "}
                       {(weekInfo?.week_number || 1) >=
                       (courseContext?.navigation?.total_weeks ||
                         courseContext?.weeks?.length ||
@@ -267,8 +267,8 @@ export default function QuizComponent({
               ) : (
                 <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-sm text-red-800">
-                    📚 You need to score above 40% to continue. Please review the material and
-                    retake the quiz when ready.
+                    📚 You need to score above 40% to continue. Please review
+                    the material and retake the quiz when ready.
                   </p>
                 </div>
               )}
@@ -347,7 +347,7 @@ export default function QuizComponent({
 
             {/* Question-by-question feedback */}
             <div className="mt-6 space-y-3">
-              <h4 className="font-medium">Question Review</h4>
+              <h4 className="font-medium text-black">Question Review</h4>
               {quizResults.feedback?.map((questionFeedback: any) => (
                 <Card
                   key={questionFeedback.question_number}
@@ -367,7 +367,7 @@ export default function QuizComponent({
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium mb-1">
+                        <div className="text-sm font-medium mb-1 text-black">
                           Question {questionFeedback.question_number}
                         </div>
                         <div className="text-xs text-neutral-600 mb-2">
@@ -468,7 +468,7 @@ export default function QuizComponent({
                       {["A", "B", "C", "D"].map((letter, index) => (
                         <label
                           key={letter}
-                          className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-neutral-50"
+                          className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-neutral-50 hover:text-black"
                         >
                           <input
                             type="radio"
@@ -501,7 +501,7 @@ export default function QuizComponent({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <div className="text-sm text-neutral-600">
+              <div className="text-sm text-white">
                 Make sure all questions are answered before submitting.
               </div>
               <Button

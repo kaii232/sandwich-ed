@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import Sandwich from "@/components/Sandwich";
+
 import {
   BookOpen,
   CheckCircle,
@@ -59,11 +61,6 @@ interface SideTaskbarProps {
   onChangeActiveSection: (sectionId: string) => void;
 }
 
-/**
- * ChatGPT-style collapsible docked sidebar.
- * - Desktop (>=lg): docked left
- * - Mobile: slide-in drawer with overlay and a floating menu button
- */
 export default function SideTaskbar({
   courseData,
   weekNum,
@@ -196,6 +193,24 @@ export default function SideTaskbar({
             </div>
 
             <div className="p-4 space-y-4">
+              <div className="flex justify-center my-4">
+                <Sandwich
+                  totalWeeks={totalWeeks}
+                  /* mark unlocked weeks from your savedQuizResults */
+                  progress={Array.from({ length: totalWeeks }, (_, i) => ({
+                    week: i + 1,
+                    unlocked:
+                      (savedQuizResults[`week${i + 1}`]?.results?.percentage ??
+                        0) > 40,
+                  }))}
+                  themeOffset={0} // try 0..4 to vary first filling
+                  width={320}
+                  overlap={20}
+                  showLockedDimmed // show every week; locked ones are dimmed
+                  altPrefix="Learning geometry"
+                />
+              </div>
+
               {/* Progress */}
               <div>
                 <div className="flex items-center justify-between text-sm mb-2">
@@ -385,7 +400,8 @@ export default function SideTaskbar({
                             }`}
                           >
                             <div className="flex-shrink-0">
-                              {savedQuizResults[`week${n}`]?.results?.percentage > 40 ? (
+                              {savedQuizResults[`week${n}`]?.results
+                                ?.percentage > 40 ? (
                                 <CheckCircle className="w-3.5 h-3.5 text-green-500" />
                               ) : (
                                 <Target className="w-3.5 h-3.5 text-neutral-500" />
