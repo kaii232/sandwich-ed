@@ -4,8 +4,6 @@
 
 import { useState, useEffect } from "react";
 import ChatPanel from "@/components/ChatPanel";
-import SyllabusViewer from "@/components/SyllabusViewer";
-import StartLessonButton from "@/components/StartLessonButton";
 import { useRouter } from "next/navigation";
 import { initializeCourse, getWeekContent } from "@/lib/api";
 
@@ -24,35 +22,19 @@ function StartLessonCTA({
     setLoading(true);
     try {
       // Clear previous session data when starting new lesson
-      sessionStorage.removeItem('sessionQuizResults');
-      sessionStorage.removeItem('currentSessionActive');
-      sessionStorage.removeItem('completedLessons');
-      
+      sessionStorage.removeItem("sessionQuizResults");
+      sessionStorage.removeItem("currentSessionActive");
+      sessionStorage.removeItem("completedLessons");
+
       // Clear individual quiz results
       for (let i = 1; i <= 20; i++) {
         sessionStorage.removeItem(`sessionQuizResult:week${i}`);
       }
-      
-      // fallback syllabus if chat hasn't produced one yet
-      const fallback = `# Machine Learning (Beginner)
-- Week 1: Intro to ML, basic terminology
-- Week 2: Data prep (cleaning, splitting, metrics)
-- Week 3: Regression (linear, evaluation)
-- Week 4: Classification (logistic, kNN)
-- Week 5: Unsupervised (k-means, PCA)
-- Week 6: Mini-project & recap
-`;
-      const syllabusText = syllabus?.trim() ? syllabus : fallback;
 
-      const ctx = {
-        topic: chatState?.topic ?? "Machine Learning",
-        difficulty: chatState?.difficulty ?? "Beginner",
-        duration: chatState?.duration ?? "6 weeks",
-        learner_type: chatState?.learner_type ?? "General",
-      };
+      const syllabusText = syllabus?.trim();
 
       // 1) initialize course
-      const init = await initializeCourse(syllabusText, ctx);
+      const init = await initializeCourse(syllabusText ?? "", chatState ?? {});
 
       // 2) prefetch week 1
       const wk1 = await getWeekContent(1, init.course_data);
@@ -64,9 +46,9 @@ function StartLessonCTA({
         "weekContent:1",
         JSON.stringify(wk1.week_content ?? null)
       );
-      
+
       // 4) Mark session as active
-      sessionStorage.setItem('currentSessionActive', 'true');
+      sessionStorage.setItem("currentSessionActive", "true");
 
       // 5) navigate
       router.push("/lesson");
@@ -98,19 +80,19 @@ export default function Page() {
   // Clear previous session data when page loads (new conversation)
   useEffect(() => {
     // Clear quiz results and session data on page load
-    sessionStorage.removeItem('sessionQuizResults');
-    sessionStorage.removeItem('currentSessionActive');
-    sessionStorage.removeItem('completedLessons');
-    
+    sessionStorage.removeItem("sessionQuizResults");
+    sessionStorage.removeItem("currentSessionActive");
+    sessionStorage.removeItem("completedLessons");
+
     // Clear individual quiz results
     for (let i = 1; i <= 20; i++) {
       sessionStorage.removeItem(`sessionQuizResult:week${i}`);
     }
-    
+
     // Clear any existing course data from previous sessions
-    sessionStorage.removeItem('courseData');
-    sessionStorage.removeItem('currentWeek');
-    
+    sessionStorage.removeItem("courseData");
+    sessionStorage.removeItem("currentWeek");
+
     // Clear cached week content
     for (let i = 1; i <= 20; i++) {
       sessionStorage.removeItem(`weekContent:${i}`);
@@ -137,13 +119,6 @@ export default function Page() {
           }}
         />
       </section>
-
-      {/* 2) Syllabus viewer (only shows if we have one) */}
-      {syllabus && (
-        <section>
-          <SyllabusViewer syllabus={syllabus} chatState={chatState} />
-        </section>
-      )}
 
       {/* 3) Always-visible CTA so you can proceed even if chat didn't produce a syllabus yet */}
       <section className="flex items-center gap-3">
