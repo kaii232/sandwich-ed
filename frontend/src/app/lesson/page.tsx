@@ -190,7 +190,7 @@ export default function LessonPage() {
         onChangeActiveSection={setActiveSection}
       />
 
-      <StudyTipsLoader
+      {/* <StudyTipsLoader
         open={tipsOpen}
         weekInfo={week ?? { week_number: weekNum }}
         courseContext={courseData}
@@ -199,7 +199,7 @@ export default function LessonPage() {
           overallProgress: Math.round(progressPct),
         }}
         iconSrc="/sandwich-ed.png"
-      />
+      /> */}
 
       {/* Main Content */}
       <section className="p-4 md:p-6 space-y-4">

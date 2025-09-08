@@ -14,12 +14,14 @@ export default function ChatPanel(props: {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // syllabus + inline editing
   const [syllabus, setSyllabus] = useState<string>("");
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState("");
+
+  // Mobile drawer toggle for syllabus
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const listRef = useRef<HTMLDivElement>(null);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     (async () => {
@@ -36,19 +38,19 @@ export default function ChatPanel(props: {
   }, []);
 
   useEffect(() => {
-    // autoscroll whenever messages/loading/editing/syllabus change
+    // autoscroll chat list only
     listRef.current?.scrollTo({
       top: listRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [msgs, loading, editing, syllabus, state]);
+  }, [msgs, loading]);
 
   async function send(textOverride?: string) {
     if (loading) return;
     const text = (textOverride ?? input).trim();
     if (!text) return;
-
     if (!textOverride) setInput("");
+
     setMsgs((prev) => [...prev, { role: "user", text }]);
     setLoading(true);
     try {
@@ -56,10 +58,11 @@ export default function ChatPanel(props: {
       setState(resp.state);
       props.onState(resp.state);
       setMsgs((prev) => [...prev, { role: "bot", text: resp.bot }]);
+
       if (resp.syllabus) {
         setSyllabus(resp.syllabus);
         props.onSyllabus(resp.syllabus, resp.state);
-        setEditing(false);
+        // keep the drawer closed on desktop; user opens it on mobile when needed
       }
     } catch {
       setMsgs((prev) => [
@@ -71,7 +74,16 @@ export default function ChatPanel(props: {
     }
   }
 
-  // Quick-reply button rows for specific steps
+  // focus on mount
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  // re-focus whenever a send finishes
+  useEffect(() => {
+    if (!loading) inputRef.current?.focus();
+  }, [loading]);
+
   function QuickReplies() {
     const step = (state as any)?.step as string | undefined;
 
@@ -93,7 +105,6 @@ export default function ChatPanel(props: {
       );
     }
 
-    // Step: duration — helpful presets users can click
     if (step === "duration") {
       const presets = [
         "2 weeks",
@@ -155,103 +166,152 @@ export default function ChatPanel(props: {
       : "Tell the tutor what you want to learn…";
 
   return (
-    <div className="border rounded-xl p-4 flex flex-col">
-      {/* Scrollable chat messages */}
-      <div
-        className="max-h-[360px] overflow-y-auto space-y-3 pr-1"
-        ref={listRef}
-      >
-        {msgs.map((m, i) => (
-          <div key={i}>
-            <span className="font-semibold">
-              {m.role === "bot" ? "Tutor" : "You"}:{" "}
-            </span>
-            <span className="whitespace-pre-wrap">{m.text}</span>
+    <div className="border rounded-xl h-[72vh] flex flex-col overflow-hidden">
+      {/* Pretty scrollbars for the two internal scrollers only */}
+      <style jsx global>{`
+        .nice-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #c7c7c7 transparent;
+        }
+        .nice-scrollbar::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        .nice-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .nice-scrollbar::-webkit-scrollbar-thumb {
+          background: #c7c7c7;
+          border-radius: 999px;
+          border: 2px solid transparent;
+          background-clip: padding-box;
+        }
+        .nice-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #b3b3b3;
+          background-clip: padding-box;
+        }
+      `}</style>
+
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3 p-4 pb-3 border-b">
+        <div className="font-semibold">Tutor Chat</div>
+        {syllabus ? (
+          <button
+            type="button"
+            className="md:hidden text-sm rounded-md border px-3 py-1.5"
+            onClick={() => setDrawerOpen(true)}
+            title="Open syllabus"
+          >
+            Syllabus
+          </button>
+        ) : null}
+      </div>
+
+      {/* Content: two columns (only this row grows) */}
+      <div className="flex-1 overflow-hidden grid md:grid-cols-[1fr_380px] gap-4 p-4">
+        {/* LEFT: Chat column (single scroll area) */}
+        <div className="flex flex-col min-h-0">
+          <div
+            ref={listRef}
+            className="flex-1 overflow-y-auto nice-scrollbar space-y-3 pr-1"
+          >
+            {msgs.map((m, i) => (
+              <div key={i} className="border-b last:border-0 pb-2">
+                <span className="font-semibold">
+                  {m.role === "bot" ? "Tutor" : "You"}:{" "}
+                </span>
+                <span className="whitespace-pre-wrap">{m.text}</span>
+              </div>
+            ))}
+            {loading && <div className="text-sm text-gray-500">Typing…</div>}
+
+            {/* Quick replies */}
+            <QuickReplies />
           </div>
-        ))}
-        {loading && <div className="text-sm text-gray-500">Typing…</div>}
 
-        {/* Quick replies directly under the latest bot message */}
-        <QuickReplies />
-
-        {/* Syllabus area (appears only when available) — BEFORE the textbox */}
-        {syllabus && !editing && (
-          <div className="mt-4 space-y-3">
-            <div className="flex gap-2 flex-wrap">
-              <button
-                className="px-3 py-1.5 rounded-md border"
-                onClick={() => {
-                  setDraft(syllabus);
-                  setEditing(true);
-                }}
-                title="Edit the Markdown directly"
-              >
-                Edit syllabus
-              </button>
-              <button
-                className="px-3 py-1.5 rounded-md border"
-                onClick={() => send("regenerate")}
-                title="Regenerate with the same settings (type tweaks above if needed)"
-              >
-                Regenerate
-              </button>
-            </div>
-
-            <SyllabusViewer syllabus={syllabus} chatState={state} />
-          </div>
-        )}
-
-        {/* Inline editor */}
-        {syllabus && editing && (
-          <div className="mt-4 space-y-2">
-            <label className="text-sm font-medium">
-              Edit syllabus (Markdown)
-            </label>
-            <textarea
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              className="w-full h-56 border rounded-lg p-3 font-mono text-sm"
+          {/* Input row (pinned at bottom of left column) */}
+          <div className="pt-3 border-t mt-3 flex gap-2">
+            <input
+              ref={inputRef}
+              className="flex-1 border rounded-lg px-3 py-2"
+              placeholder={placeholder}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && send()}
+              disabled={loading}
             />
-            <div className="flex gap-2">
-              <button
-                className="px-3 py-1.5 rounded-md bg-black text-white"
-                onClick={() => {
-                  setSyllabus(draft);
-                  props.onSyllabus(draft, state);
-                  setEditing(false);
-                }}
-              >
-                Save
-              </button>
-              <button
-                className="px-3 py-1.5 rounded-md border"
-                onClick={() => setEditing(false)}
-              >
-                Cancel
-              </button>
+
+            <button
+              onClick={() => send()}
+              disabled={loading}
+              className="px-4 py-2 rounded-lg bg-[#D7CCFF] text-black disabled:opacity-60"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT: Docked syllabus (desktop only; single scroll area inside) */}
+        <aside className="hidden md:flex flex-col min-h-0">
+          <div className="rounded-lg border bg-white/30 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between gap-2 p-3 border-b">
+              <div className="text-md font-medium">Your Syllabus</div>
+              <div className="flex gap-2">
+                <button
+                  className="px-3 py-1.5 rounded-md border"
+                  onClick={() => send("regenerate")}
+                  title="Regenerate with same settings"
+                >
+                  Regenerate
+                </button>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto nice-scrollbar p-3">
+              {syllabus ? (
+                <SyllabusViewer syllabus={syllabus} chatState={state} />
+              ) : (
+                <div className="text-sm text-white">
+                  The syllabus will appear here once generated.
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </aside>
       </div>
 
-      {/* Textbox row (moved AFTER syllabus area) */}
-      <div className="mt-3 flex gap-2">
-        <input
-          className="flex-1 border rounded-lg px-3 py-2"
-          placeholder={placeholder}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send()}
-          disabled={loading}
-        />
-        <button
-          onClick={() => send()}
-          disabled={loading}
-          className="px-4 py-2 rounded-lg bg-black text-white disabled:opacity-60"
-        >
-          Send
-        </button>
-      </div>
+      {/* MOBILE: Syllabus drawer (replaces inline preview to avoid duplicate scroll) */}
+      {syllabus && drawerOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setDrawerOpen(false)}
+          />
+          <div className="absolute inset-x-0 bottom-0 h-[80vh] bg-white rounded-t-2xl shadow-xl flex flex-col text-black">
+            <div className="flex items-center justify-between gap-2 p-3 border-b">
+              <div className="text-sm font-medium">Your Syllabus</div>
+              <div className="flex gap-2">
+                <button
+                  className="px-3 py-1.5 rounded-md border"
+                  onClick={() => send("regenerate")}
+                  title="Regenerate with same settings"
+                >
+                  Regenerate
+                </button>
+                <button
+                  className="px-3 py-1.5 rounded-md border"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto nice-scrollbar p-3">
+              <SyllabusViewer syllabus={syllabus} chatState={state} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
