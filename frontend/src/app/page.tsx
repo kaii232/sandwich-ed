@@ -100,10 +100,10 @@ export default function Page() {
   }, []); // Empty dependency array means this runs once when component mounts
 
   return (
-    <main className="max-w-4xl mx-auto p-6 space-y-6">
+    <main className="max-w-6xl mx-auto p-6 space-y-6">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold">AI Course Tutor</h1>
-        <p className="text-sm text-gray-600">
+        <h1 className="text-2xl font-bold">SANDWICH-ED</h1>
+        <p className="text-sm text-white-600">
           Tell the tutor what you want to learn → get a syllabus → click{" "}
           <b>Start Lesson</b>.
         </p>
@@ -126,15 +126,6 @@ export default function Page() {
           Complete the chat (topic, level, duration, style) or generate a
           syllabus to enable <b>Start Lesson</b>.
         </span>
-      </section>
-
-      {/* 4) tiny status row for debugging */}
-      <section className="text-xs text-gray-500">
-        <div>Has syllabus: {syllabus ? "yes" : "no"}</div>
-        <div>
-          Topic: {chatState?.topic ?? "—"} | Difficulty:{" "}
-          {chatState?.difficulty ?? "—"}
-        </div>
       </section>
     </main>
   );

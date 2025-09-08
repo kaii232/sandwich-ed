@@ -99,7 +99,7 @@ export default function StartLessonButton({ syllabus, chatState }: Props) {
       onClick={handleStart}
       disabled={loading}
       aria-busy={loading}
-      className="px-4 py-2 rounded-lg bg-green-600 text-white disabled:opacity-60"
+      className="px-4 py-2 rounded-lg border text-white disabled:opacity-60"
       title="Generate your first lesson"
     >
       {loading ? "Starting…" : "Start Lesson"}

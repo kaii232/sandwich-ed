@@ -457,7 +457,7 @@ export default function QuizComponent({
                         {question.points === 1 ? "point" : "points"})
                       </span>
                     </h4>
-                    <p className="text-sm text-neutral-700 mt-1">
+                    <p className="text-sm text-white mt-1">
                       {question.question_text}
                     </p>
                   </div>
